@@ -16,6 +16,20 @@
 		18706F512B9F3BDD008FFB19 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706F502B9F3BDD008FFB19 /* HomeVC.swift */; };
 		18706F532B9F3BE1008FFB19 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706F522B9F3BE1008FFB19 /* HomeView.swift */; };
 		18706F552B9F3E36008FFB19 /* TabBarNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706F542B9F3E36008FFB19 /* TabBarNavigator.swift */; };
+		18706F582B9F41DF008FFB19 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 18706F572B9F41DF008FFB19 /* SnapKit */; };
+		18D5B6BF2BA0589000699F3D /* ZooVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6BE2BA0589000699F3D /* ZooVC.swift */; };
+		18D5B6C12BA058C300699F3D /* ZooView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6C02BA058C300699F3D /* ZooView.swift */; };
+		18D5B6C32BA058CC00699F3D /* MyFotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6C22BA058CC00699F3D /* MyFotoVC.swift */; };
+		18D5B6C52BA058D100699F3D /* MyFotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6C42BA058D100699F3D /* MyFotoView.swift */; };
+		18D5B6C72BA058E100699F3D /* MyWorkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6C62BA058E100699F3D /* MyWorkVC.swift */; };
+		18D5B6C92BA058E800699F3D /* MyWorkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6C82BA058E800699F3D /* MyWorkView.swift */; };
+		18D5B6CB2BA058EE00699F3D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6CA2BA058EE00699F3D /* ProfileVC.swift */; };
+		18D5B6CD2BA058F200699F3D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6CC2BA058F200699F3D /* ProfileView.swift */; };
+		18D5B6D02BA0750400699F3D /* UD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6CF2BA0750400699F3D /* UD.swift */; };
+		18D5B6D22BA0750900699F3D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6D12BA0750900699F3D /* Settings.swift */; };
+		18D5B6D42BA0752300699F3D /* Font + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6D32BA0752300699F3D /* Font + Extension.swift */; };
+		18D5B6D92BA0917400699F3D /* CarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6D82BA0917400699F3D /* CarouselFlowLayout.swift */; };
+		18D5B6DC2BA0A91800699F3D /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6DB2BA0A91800699F3D /* CustomLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +44,19 @@
 		18706F502B9F3BDD008FFB19 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		18706F522B9F3BE1008FFB19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		18706F542B9F3E36008FFB19 /* TabBarNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarNavigator.swift; sourceTree = "<group>"; };
+		18D5B6BE2BA0589000699F3D /* ZooVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZooVC.swift; sourceTree = "<group>"; };
+		18D5B6C02BA058C300699F3D /* ZooView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZooView.swift; sourceTree = "<group>"; };
+		18D5B6C22BA058CC00699F3D /* MyFotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFotoVC.swift; sourceTree = "<group>"; };
+		18D5B6C42BA058D100699F3D /* MyFotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFotoView.swift; sourceTree = "<group>"; };
+		18D5B6C62BA058E100699F3D /* MyWorkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWorkVC.swift; sourceTree = "<group>"; };
+		18D5B6C82BA058E800699F3D /* MyWorkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWorkView.swift; sourceTree = "<group>"; };
+		18D5B6CA2BA058EE00699F3D /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		18D5B6CC2BA058F200699F3D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		18D5B6CF2BA0750400699F3D /* UD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UD.swift; sourceTree = "<group>"; };
+		18D5B6D12BA0750900699F3D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		18D5B6D32BA0752300699F3D /* Font + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font + Extension.swift"; sourceTree = "<group>"; };
+		18D5B6D82BA0917400699F3D /* CarouselFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselFlowLayout.swift; sourceTree = "<group>"; };
+		18D5B6DB2BA0A91800699F3D /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18706F582B9F41DF008FFB19 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				18706F4F2B9F3BC0008FFB19 /* Start */,
-				18706F4E2B9F3BB8008FFB19 /* Home */,
+				18D5B6B92BA0567B00699F3D /* TabNavigator */,
+				18D5B6CE2BA074C300699F3D /* Helpers */,
 			);
 			path = Flow;
 			sourceTree = "<group>";
@@ -92,9 +121,11 @@
 		18706F4E2B9F3BB8008FFB19 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				18D5B6DA2BA0A90900699F3D /* Layout */,
 				18706F502B9F3BDD008FFB19 /* HomeVC.swift */,
 				18706F522B9F3BE1008FFB19 /* HomeView.swift */,
-				18706F542B9F3E36008FFB19 /* TabBarNavigator.swift */,
+				18D5B6D82BA0917400699F3D /* CarouselFlowLayout.swift */,
+				18D5B6D52BA08E3D00699F3D /* Levels */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -106,6 +137,80 @@
 				18706F4C2B9F3B8A008FFB19 /* StartView.swift */,
 			);
 			path = Start;
+			sourceTree = "<group>";
+		};
+		18D5B6B92BA0567B00699F3D /* TabNavigator */ = {
+			isa = PBXGroup;
+			children = (
+				18706F542B9F3E36008FFB19 /* TabBarNavigator.swift */,
+				18706F4E2B9F3BB8008FFB19 /* Home */,
+				18D5B6BD2BA0588400699F3D /* Zoo */,
+				18D5B6BC2BA057AD00699F3D /* MyFoto */,
+				18D5B6BA2BA056A400699F3D /* Profile */,
+				18D5B6BB2BA056B000699F3D /* MyWork */,
+			);
+			path = TabNavigator;
+			sourceTree = "<group>";
+		};
+		18D5B6BA2BA056A400699F3D /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				18D5B6CA2BA058EE00699F3D /* ProfileVC.swift */,
+				18D5B6CC2BA058F200699F3D /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		18D5B6BB2BA056B000699F3D /* MyWork */ = {
+			isa = PBXGroup;
+			children = (
+				18D5B6C62BA058E100699F3D /* MyWorkVC.swift */,
+				18D5B6C82BA058E800699F3D /* MyWorkView.swift */,
+			);
+			path = MyWork;
+			sourceTree = "<group>";
+		};
+		18D5B6BC2BA057AD00699F3D /* MyFoto */ = {
+			isa = PBXGroup;
+			children = (
+				18D5B6C22BA058CC00699F3D /* MyFotoVC.swift */,
+				18D5B6C42BA058D100699F3D /* MyFotoView.swift */,
+			);
+			path = MyFoto;
+			sourceTree = "<group>";
+		};
+		18D5B6BD2BA0588400699F3D /* Zoo */ = {
+			isa = PBXGroup;
+			children = (
+				18D5B6BE2BA0589000699F3D /* ZooVC.swift */,
+				18D5B6C02BA058C300699F3D /* ZooView.swift */,
+			);
+			path = Zoo;
+			sourceTree = "<group>";
+		};
+		18D5B6CE2BA074C300699F3D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				18D5B6CF2BA0750400699F3D /* UD.swift */,
+				18D5B6D12BA0750900699F3D /* Settings.swift */,
+				18D5B6D32BA0752300699F3D /* Font + Extension.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		18D5B6D52BA08E3D00699F3D /* Levels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Levels;
+			sourceTree = "<group>";
+		};
+		18D5B6DA2BA0A90900699F3D /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				18D5B6DB2BA0A91800699F3D /* CustomLayout.swift */,
+			);
+			path = Layout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,6 +229,9 @@
 			dependencies = (
 			);
 			name = jogoDoBicho;
+			packageProductDependencies = (
+				18706F572B9F41DF008FFB19 /* SnapKit */,
+			);
 			productName = jogoDoBicho;
 			productReference = 18706F2F2B9F3948008FFB19 /* jogoDoBicho.app */;
 			productType = "com.apple.product-type.application";
@@ -152,6 +260,9 @@
 				Base,
 			);
 			mainGroup = 18706F262B9F3948008FFB19;
+			packageReferences = (
+				18706F562B9F41DF008FFB19 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 18706F302B9F3948008FFB19 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -180,11 +291,24 @@
 			files = (
 				18706F4D2B9F3B8A008FFB19 /* StartView.swift in Sources */,
 				18706F552B9F3E36008FFB19 /* TabBarNavigator.swift in Sources */,
+				18D5B6CB2BA058EE00699F3D /* ProfileVC.swift in Sources */,
+				18D5B6D92BA0917400699F3D /* CarouselFlowLayout.swift in Sources */,
+				18D5B6D22BA0750900699F3D /* Settings.swift in Sources */,
+				18D5B6D42BA0752300699F3D /* Font + Extension.swift in Sources */,
+				18D5B6DC2BA0A91800699F3D /* CustomLayout.swift in Sources */,
 				18706F512B9F3BDD008FFB19 /* HomeVC.swift in Sources */,
+				18D5B6C72BA058E100699F3D /* MyWorkVC.swift in Sources */,
+				18D5B6C92BA058E800699F3D /* MyWorkView.swift in Sources */,
+				18D5B6C12BA058C300699F3D /* ZooView.swift in Sources */,
+				18D5B6CD2BA058F200699F3D /* ProfileView.swift in Sources */,
 				18706F332B9F3948008FFB19 /* AppDelegate.swift in Sources */,
+				18D5B6C52BA058D100699F3D /* MyFotoView.swift in Sources */,
 				18706F532B9F3BE1008FFB19 /* HomeView.swift in Sources */,
 				18706F352B9F3948008FFB19 /* SceneDelegate.swift in Sources */,
+				18D5B6D02BA0750400699F3D /* UD.swift in Sources */,
 				18706F4B2B9F3B85008FFB19 /* StartVC.swift in Sources */,
+				18D5B6C32BA058CC00699F3D /* MyFotoVC.swift in Sources */,
+				18D5B6BF2BA0589000699F3D /* ZooVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +454,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = jogoDoBicho/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Do you camera?";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Do you Library foto?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -357,6 +483,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = jogoDoBicho/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Do you camera?";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Do you Library foto?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -397,6 +525,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		18706F562B9F41DF008FFB19 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		18706F572B9F41DF008FFB19 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18706F562B9F41DF008FFB19 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 18706F272B9F3948008FFB19 /* Project object */;
 }
