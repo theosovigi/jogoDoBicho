@@ -1,11 +1,11 @@
 //
-//  ZooView.swift
+//  Image3View.swift
 
 
 import Foundation
 import UIKit
 
-class ZooView: UIView {
+class Image3View: UIView {
     
     
     
@@ -22,7 +22,7 @@ class ZooView: UIView {
     
     
     private func setupUI() {
-        backgroundColor = .gray
+        backgroundColor = .red
     }
     
     private func setupConstraints() {

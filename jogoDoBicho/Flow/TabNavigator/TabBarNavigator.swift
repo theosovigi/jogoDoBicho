@@ -15,12 +15,12 @@ class TabBarNavigator: UITabBarController {
         UITabBar.appearance().backgroundColor = .black
         
         
-        let homeVC = HomeVC()
-        buildConfig(homeVC, title: "Home")
+        let homeVC = CarouselViewController()
+        let homeNavigator = UINavigationController(rootViewController: homeVC)
+        buildConfig(homeNavigator, title: "Home")
 
-        let zooVC = ZooVC()
-        let zooNavigation = UINavigationController(rootViewController: zooVC)
-        buildConfig(zooNavigation, title: "Zoo")
+        let leadVC = LeadVC()
+        buildConfig(leadVC, title: "Leader")
         
         let myFotoVC = MyFotoVC()
         let myFotoNavigation = UINavigationController(rootViewController: myFotoVC)
@@ -33,7 +33,9 @@ class TabBarNavigator: UITabBarController {
         buildConfig(myWork, title: "My Work")
         
         
-        viewControllers = [homeVC,zooNavigation,myFotoNavigation,profileVC,myWork]
+        viewControllers = [leadVC,myFotoNavigation,homeNavigator,profileVC,myWork]
+        selectedViewController = homeNavigator
+
         
     }
     

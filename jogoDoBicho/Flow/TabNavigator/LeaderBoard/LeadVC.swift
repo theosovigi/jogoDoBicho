@@ -6,15 +6,15 @@ import Foundation
 import UIKit
 import SnapKit
 
-class ZooVC: UIViewController {
+class LeadVC: UIViewController {
     
     
-    var contentView: ZooView {
-        view as? ZooView ?? ZooView()
+    var contentView: LeadView {
+        view as? LeadView ?? LeadView()
     }
     
     override func loadView() {
-        view = ZooView()
+        view = LeadView()
     }
     override func viewDidLoad() {
         super.viewDidLoad()

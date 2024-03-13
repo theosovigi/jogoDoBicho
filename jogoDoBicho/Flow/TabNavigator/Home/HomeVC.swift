@@ -47,7 +47,7 @@ class HomeVC: UIViewController {
     }
 
     private func setupViews() {
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .cyan
         collectionView.decelerationRate = .fast
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsHorizontalScrollIndicator = false
@@ -132,6 +132,7 @@ extension HomeVC {
         let indexPath = IndexPath(item: layout.currentPage, section: 0)
         if let cell = collectionView.cellForItem(at: indexPath) {
             transformCell(cell)
+            
         }
     }
     
@@ -147,7 +148,6 @@ extension HomeVC {
         
         for otherCell in collectionView.visibleCells {
             if let indexPath = collectionView.indexPath(for: otherCell) {
-                
                 if indexPath.item != layout.currentPage {
                     UIView.animate(withDuration: 0.2) {
                         otherCell.transform = .identity
