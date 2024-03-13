@@ -43,9 +43,7 @@ class HomeVC: UIViewController {
 
     private func setupInfiniteScroll() {
         let totalCount = images.count
-        let startIndex = totalCount * 1000  // Arbitrary large number to simulate infinite scrolling
         
-        collectionView.scrollToItem(at: IndexPath(item: startIndex, section: 0), at: .left, animated: false)
     }
 
     private func setupViews() {
@@ -79,7 +77,7 @@ class HomeVC: UIViewController {
 
 extension HomeVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count * 10000
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -148,6 +146,7 @@ extension HomeVC {
         
         for otherCell in collectionView.visibleCells {
             if let indexPath = collectionView.indexPath(for: otherCell) {
+                
                 if indexPath.item != layout.currentPage {
                     UIView.animate(withDuration: 0.2) {
                         otherCell.transform = .identity
@@ -157,3 +156,5 @@ extension HomeVC {
         }
     }
 }
+
+
