@@ -77,18 +77,19 @@ class HomeVC: UIViewController {
 
 extension HomeVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        let adjustedIndex = indexPath.item % images.count
-        let imageView = UIImageView(image: images[adjustedIndex])
-        imageView.contentMode = .scaleAspectFit
-        cell.contentView.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        cell.contentView.backgroundColor = .green
+//        let adjustedIndex = indexPath.item % images.count
+//        let imageView = UIImageView(image: images[adjustedIndex])
+//        imageView.contentMode = .scaleAspectFit
+//        cell.contentView.addSubview(imageView)
+//        imageView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
         return cell
     }
     
