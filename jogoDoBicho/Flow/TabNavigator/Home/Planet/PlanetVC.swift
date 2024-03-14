@@ -1,22 +1,21 @@
 //
-//  ZooVC.swift
+//  Image3VC.swift
 
 
 import Foundation
 import UIKit
 import SnapKit
 
-class LeadVC: UIViewController {
+class PlanetVC: UIViewController {
     
     
-    var contentView: LeadView {
-        view as? LeadView ?? LeadView()
+    var contentView: PlanetView {
+        view as? PlanetView ?? PlanetView()
     }
     
     override func loadView() {
-        view = LeadView()
+        view = PlanetView()
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tappedButtons()

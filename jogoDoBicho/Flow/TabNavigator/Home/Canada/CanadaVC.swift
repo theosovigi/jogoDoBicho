@@ -1,22 +1,21 @@
 //
-//  ZooVC.swift
+//  Image2VC.swift
 
 
 import Foundation
 import UIKit
 import SnapKit
 
-class LeadVC: UIViewController {
+class CanadaVC: UIViewController {
     
     
-    var contentView: LeadView {
-        view as? LeadView ?? LeadView()
+    var contentView: CanadaView {
+        view as? CanadaView ?? CanadaView()
     }
     
     override func loadView() {
-        view = LeadView()
+        view = CanadaView()
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tappedButtons()

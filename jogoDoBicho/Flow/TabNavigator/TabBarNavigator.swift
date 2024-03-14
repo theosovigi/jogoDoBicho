@@ -9,37 +9,33 @@ class TabBarNavigator: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UITabBar.appearance().backgroundColor = .clear
         
-        UITabBar.appearance().unselectedItemTintColor = .white
-        UITabBar.appearance().tintColor = .yellow
-        UITabBar.appearance().backgroundColor = .black
-        
-        
-        let homeVC = CarouselViewController()
-        let homeNavigator = UINavigationController(rootViewController: homeVC)
-        buildConfig(homeNavigator, title: "Home")
-
         let leadVC = LeadVC()
-        buildConfig(leadVC, title: "Leader")
+        buildConfig(leadVC, imageName: "leadBtn", selectedImageName: "tappedLeadBtn")
         
         let myFotoVC = MyFotoVC()
         let myFotoNavigation = UINavigationController(rootViewController: myFotoVC)
-        buildConfig(myFotoNavigation, title: "My Foto")
+        buildConfig(myFotoNavigation, imageName: "importBtn", selectedImageName: "tappedMyFotoBtn")
+
+        let homeVC = HomeVC()
+        let homeNavigator = UINavigationController(rootViewController: homeVC)
+        buildConfig(homeNavigator, imageName: "homeBtn", selectedImageName: "tappedHomeBtn")
 
         let profileVC = ProfileVC()
-        buildConfig(profileVC, title: "Profile")
+        buildConfig(profileVC, imageName: "profileBtn", selectedImageName: "tappedProfileBtn")
 
         let myWork = MyWorkVC()
-        buildConfig(myWork, title: "My Work")
+        buildConfig(myWork, imageName: "myArtBtn", selectedImageName: "tappedMyArtBtn")
         
         
         viewControllers = [leadVC,myFotoNavigation,homeNavigator,profileVC,myWork]
         selectedViewController = homeNavigator
 
-        
     }
     
-    private func buildConfig(_ vc: UIViewController, title: String) {
-        vc.tabBarItem.title = title
+    private func buildConfig(_ vc: UIViewController, imageName: String, selectedImageName: String) {
+        vc.tabBarItem.image = UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal)
+        vc.tabBarItem.selectedImage = UIImage(named: selectedImageName)?.withRenderingMode(.alwaysOriginal)
     }
 }
