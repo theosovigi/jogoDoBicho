@@ -31,6 +31,13 @@ final class ProfileVC: UIViewController {
     
     private func tappedButtons() {
         contentView.chosePhotoBtn.addTarget(self, action: #selector(goTakePhoto), for: .touchUpInside)
+        contentView.infoBtn.addTarget(self, action: #selector(tappedInfo), for: .touchUpInside)
+    
+    }
+    
+    @objc func tappedInfo() {
+        let infoVC = InfoVC()
+        navigationController?.pushViewController(infoVC, animated: true)
     }
     
     private func checkFotoLoad() {

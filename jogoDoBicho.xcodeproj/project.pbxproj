@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		181BF10B2BA44EF6002936AB /* CustomTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BF10A2BA44EF6002936AB /* CustomTextStyle.swift */; };
+		181BF1142BA4997A002936AB /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BF1132BA4997A002936AB /* InfoVC.swift */; };
+		181BF1162BA49982002936AB /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BF1152BA49982002936AB /* InfoView.swift */; };
 		18706F332B9F3948008FFB19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706F322B9F3948008FFB19 /* AppDelegate.swift */; };
 		18706F352B9F3948008FFB19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706F342B9F3948008FFB19 /* SceneDelegate.swift */; };
 		18706F3C2B9F394B008FFB19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18706F3B2B9F394B008FFB19 /* Assets.xcassets */; };
@@ -45,6 +47,8 @@
 
 /* Begin PBXFileReference section */
 		181BF10A2BA44EF6002936AB /* CustomTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextStyle.swift; sourceTree = "<group>"; };
+		181BF1132BA4997A002936AB /* InfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
+		181BF1152BA49982002936AB /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		18706F2F2B9F3948008FFB19 /* jogoDoBicho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jogoDoBicho.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18706F322B9F3948008FFB19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18706F342B9F3948008FFB19 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +97,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		181BF10C2BA49917002936AB /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				181BF1132BA4997A002936AB /* InfoVC.swift */,
+				181BF1152BA49982002936AB /* InfoView.swift */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
 		18706F262B9F3948008FFB19 = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +157,7 @@
 		18706F4E2B9F3BB8008FFB19 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				181BF10C2BA49917002936AB /* Info */,
 				18D5B6DA2BA0A90900699F3D /* Layout */,
 				18D5B6D82BA0917400699F3D /* HomeVC.swift */,
 				18706F522B9F3BE1008FFB19 /* HomeView.swift */,
@@ -369,7 +383,9 @@
 				18D5B6C72BA058E100699F3D /* MyWorkVC.swift in Sources */,
 				18D5B6C92BA058E800699F3D /* MyWorkView.swift in Sources */,
 				18D5B6C12BA058C300699F3D /* LeadView.swift in Sources */,
+				181BF1142BA4997A002936AB /* InfoVC.swift in Sources */,
 				18DBDA662BA221C900746C2D /* PlanetView.swift in Sources */,
+				181BF1162BA49982002936AB /* InfoView.swift in Sources */,
 				18D5B6CD2BA058F200699F3D /* ProfileView.swift in Sources */,
 				18DBDA692BA329BD00746C2D /* PixelArtView.swift in Sources */,
 				181BF10B2BA44EF6002936AB /* CustomTextStyle.swift in Sources */,

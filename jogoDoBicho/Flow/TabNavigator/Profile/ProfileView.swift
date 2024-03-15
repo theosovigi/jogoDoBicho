@@ -139,8 +139,13 @@ class ProfileView: UIView,UITextFieldDelegate {
         label.numberOfLines = 0
         return label
     }()
-
     
+    private(set) lazy var infoBtn: UIButton = {
+        let button = UIButton()
+        button.setImage(.infoBtn, for: .normal)
+        return button
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -153,7 +158,7 @@ class ProfileView: UIView,UITextFieldDelegate {
     }
     
     private func setupUI() {
-        [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,profileContainer ] .forEach(addSubview(_:))
+        [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,profileContainer,infoBtn ] .forEach(addSubview(_:))
         starsConteiner.addSubview(starsImg)
         starsConteiner.addSubview(starsScore)
         profileContainer.addSubview(containerImg)
@@ -215,6 +220,11 @@ class ProfileView: UIView,UITextFieldDelegate {
         starsScore.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-12)
             make.centerY.equalToSuperview()
+        }
+
+        infoBtn.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.right.equalToSuperview().offset(-16)
         }
 
         profileContainer.snp.makeConstraints { make in

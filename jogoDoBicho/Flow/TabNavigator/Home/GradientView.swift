@@ -28,7 +28,3 @@ class GradientBackgroundView: UIView {
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
     }
 }
-
-// Пример использования:
-let gradientView = GradientBackgroundView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-// Добавьте gradientView в иерархию ваших UIView, чтобы он был виден на экране

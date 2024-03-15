@@ -1,8 +1,13 @@
 //
 //  Settings.swift
 //  jogoDoBicho
-//
-//  Created by apple on 12.03.2024.
-//
+
 
 import Foundation
+
+class Settings {
+    
+    static let appTitle = "Jogo Do Bicho"
+    static let appsFlyerKey = ""
+    
+}

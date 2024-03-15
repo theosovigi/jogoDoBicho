@@ -1,13 +1,20 @@
+//
+//  InfoView.swift
+//  jogoDoBicho
+
+
+import Foundation
 import UIKit
 import SnapKit
 
-class HomeView: UIView {
+class InfoView: UIView {
     
-    private lazy var bgView: GradientBackgroundView = {
+    
+    private lazy var bgImage: GradientBackgroundView = {
         let view = GradientBackgroundView()
         return view
     }()
-
+    
     private lazy var cloudOneImg: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .one
@@ -36,16 +43,6 @@ class HomeView: UIView {
         return imageView
     }()
 
-    private(set) lazy var welcomeLabel: UILabel = {
-        let label = UILabel()
-        label.font = .customFont(font: .baloo, style: .regular, size: 36)
-        let attrString = CustomTextStyle.labelAttrString.attributedString(with: "Welcome\nto Africa Planet")
-        label.attributedText = attrString
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
-
     private(set) lazy var starsConteiner: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 20
@@ -70,40 +67,60 @@ class HomeView: UIView {
         return label
     }()
 
-    private(set) lazy var leftBtn: UIButton = {
+    private(set) lazy var closeBtn: UIButton = {
         let button = UIButton()
-        button.setImage(.leftBtn, for: .normal)
-        button.setImage(.leftTappedBtn, for: .highlighted)
-        return button
-    }()
-    
-    private(set) lazy var enterBtn: UIButton = {
-        let button = UIButton()
-        button.setImage(.enterBtn, for: .normal)
-        button.setImage(.enterTappedBtn, for: .highlighted)
+        button.setImage(.closeBtn, for: .normal)
         return button
     }()
 
+    let infoContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.layer.cornerRadius = 4
+        return view
+    }()
     
-    private(set) lazy var rightBtn: UIButton = {
-        let button = UIButton()
-        button.setImage(.rightBtn, for: .normal)
-        button.setImage(.rightTapped, for: .highlighted)
-        return button
+    private lazy var containerImg: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .containerImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private(set) lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 28)
+        let attrString = CustomTextStyle.labelAttrString.attributedString(with: "\(Settings.appTitle)")
+        label.attributedText = attrString
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
     }()
 
-    private(set) lazy var collectionView: UICollectionView = {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        collectionView.backgroundColor = .clear
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        return collectionView
+    private lazy var iconImageView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 4
+        view.backgroundColor = .white
+        view.layer.borderColor = UIColor.customOrange.cgColor
+        view.layer.borderWidth = 2
+        return view
     }()
-    
+
+    private(set) lazy var contentLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 16)
+        label.text = "Lorem ipsum dolor sit amet consectetur. Egestas lorem arcu pretium gravida turpis. Ut ornare ultricies suspendisse a odio leo posuere cursus vitae. Et venenatis eget nunc tortor. Tortor urna tincidunt aliquet eu.\nVulputate in nibh pulvinar feugiat semper curabitur euismod nullam nulla. Luctus sed diam feugiat in neque nisi. Tincidunt quam porta sollicitudin sed faucibus turpis sed.\nPlatea fermentum aliquet malesuada massa leo nec pretium imperdiet. Est odio scelerisque ultrices congue. Volutpat enim libero tempus risus elementum gravida urna nibh. Porttitor nunc condimentum nullam."
+        label.textAlignment = .center
+        label.textColor = .customBlue
+        label.numberOfLines = 0
+        return label
+    }()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        setupConstraints()
+        setUpConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -111,17 +128,23 @@ class HomeView: UIView {
     }
     
     private func setupUI() {
-        [bgView,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,collectionView,enterBtn,leftBtn,rightBtn,welcomeLabel] .forEach(addSubview(_:))
+        [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,closeBtn,infoContainer] .forEach(addSubview(_:))
         starsConteiner.addSubview(starsImg)
         starsConteiner.addSubview(starsScore)
+        infoContainer.addSubview(containerImg)
+        infoContainer.addSubview(titleLabel)
+        infoContainer.addSubview(iconImageView)
+        infoContainer.addSubview(contentLabel)
+
+
     }
     
-    private func setupConstraints() {
+    private func setUpConstraints(){
         
-        bgView.snp.makeConstraints { make in
+        bgImage.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-
+        
         cloudOneImg.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(68)
             make.left.equalToSuperview().offset(36)
@@ -150,6 +173,11 @@ class HomeView: UIView {
             make.width.equalTo(173)
         }
 
+        closeBtn.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.right.equalToSuperview().offset(-16)
+            make.size.equalTo(46)
+        }
 
         starsConteiner.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
@@ -168,48 +196,33 @@ class HomeView: UIView {
             make.centerY.equalToSuperview()
         }
 
-        collectionView.snp.makeConstraints { make in
-             make.centerY.equalToSuperview()
-             make.centerX.equalToSuperview()
-             make.height.equalTo(400)
-             make.width.equalToSuperview()
-         }
+        infoContainer.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(56)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-32)
+            make.left.right.equalToSuperview().inset(16)
+        }
         
-        enterBtn.snp.makeConstraints { make in
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-64)
+        containerImg.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(40)
             make.centerX.equalToSuperview()
         }
-
-        leftBtn.snp.makeConstraints { make in
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-60)
-            make.right.equalTo(enterBtn.snp.left).offset(-24)
-        }
-
-        rightBtn.snp.makeConstraints { make in
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-60)
-            make.left.equalTo(enterBtn.snp.right).offset(24)
-        }
-
-        welcomeLabel.snp.makeConstraints { make in
-            make.top.equalTo(starsConteiner.snp.top).offset(48)
+        
+        iconImageView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(40)
             make.centerX.equalToSuperview()
+            make.size.equalTo(120)
         }
-
-    }
-    
-    func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-            let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .groupPaging
-            return section
+        
+        contentLabel.snp.makeConstraints { make in
+            make.top.equalTo(iconImageView.snp.bottom).offset(40)
+            make.left.right.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().offset(-40)
         }
-        return layout
     }
 
 }
+
