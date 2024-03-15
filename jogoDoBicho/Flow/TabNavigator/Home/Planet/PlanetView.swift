@@ -7,6 +7,11 @@ import UIKit
 
 class PlanetView: UIView {
     
+    private lazy var bgImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .bgPlanet
+        return imageView
+    }()
     
     
     override init(frame: CGRect) {
@@ -22,11 +27,12 @@ class PlanetView: UIView {
     
     
     private func setupUI() {
-        backgroundColor = .red
+        [bgImage ] .forEach(addSubview(_:))
     }
     
     private func setupConstraints() {
-        
+        bgImage.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
     }
-    
 }

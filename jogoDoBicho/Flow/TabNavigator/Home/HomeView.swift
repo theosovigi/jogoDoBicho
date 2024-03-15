@@ -3,10 +3,47 @@ import SnapKit
 
 class HomeView: UIView {
     
-    private lazy var bgImage: UIImageView = {
+    private lazy var bgView: GradientBackgroundView = {
+        let view = GradientBackgroundView()
+        return view
+    }()
+
+    private lazy var cloudOneImg: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .bgCanada
+        imageView.image = .one
+        imageView.contentMode = .scaleAspectFit
         return imageView
+    }()
+    
+    private lazy var cloudTwoImg: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .two
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private lazy var cloudThreeImg: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .three
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private lazy var cloudFourImg: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .four
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private(set) lazy var welcomeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 36)
+        let attrString = CustomTextStyle.labelAttrString.attributedString(with: "Welcome\nto Africa Planet")
+        label.attributedText = attrString
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
     }()
 
     private(set) lazy var starsConteiner: UIView = {
@@ -39,6 +76,28 @@ class HomeView: UIView {
         button.setImage(.infoBtn, for: .normal)
         return button
     }()
+    
+    private(set) lazy var leftBtn: UIButton = {
+        let button = UIButton()
+        button.setImage(.leftBtn, for: .normal)
+        button.setImage(.leftTappedBtn, for: .highlighted)
+        return button
+    }()
+    
+    private(set) lazy var enterBtn: UIButton = {
+        let button = UIButton()
+        button.setImage(.enterBtn, for: .normal)
+        button.setImage(.enterTappedBtn, for: .highlighted)
+        return button
+    }()
+
+    
+    private(set) lazy var rightBtn: UIButton = {
+        let button = UIButton()
+        button.setImage(.rightBtn, for: .normal)
+        button.setImage(.rightTapped, for: .highlighted)
+        return button
+    }()
 
     private(set) lazy var collectionView: UICollectionView = {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -59,16 +118,45 @@ class HomeView: UIView {
     }
     
     private func setupUI() {
-        [bgImage,infoBtn,starsConteiner,collectionView] .forEach(addSubview(_:))
+        [bgView,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,infoBtn,starsConteiner,collectionView,enterBtn,leftBtn,rightBtn,welcomeLabel] .forEach(addSubview(_:))
         starsConteiner.addSubview(starsImg)
         starsConteiner.addSubview(starsScore)
     }
     
     private func setupConstraints() {
         
-        bgImage.snp.makeConstraints { make in
+        bgView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+
+        cloudOneImg.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(68)
+            make.left.equalToSuperview().offset(36)
+            make.height.equalTo(26)
+            make.width.equalTo(75)
+        }
+        
+        cloudTwoImg.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(56)
+            make.right.equalToSuperview().offset(46)
+            make.height.equalTo(40)
+            make.width.equalTo(188)
+        }
+
+        cloudThreeImg.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(188)
+            make.left.equalToSuperview().offset(-41)
+            make.height.equalTo(46)
+            make.width.equalTo(147)
+        }
+        
+        cloudFourImg.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(229)
+            make.right.equalToSuperview().offset(50)
+            make.height.equalTo(46)
+            make.width.equalTo(173)
+        }
+
 
         starsConteiner.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
@@ -98,6 +186,27 @@ class HomeView: UIView {
              make.height.equalTo(400)
              make.width.equalToSuperview()
          }
+        
+        enterBtn.snp.makeConstraints { make in
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-64)
+            make.centerX.equalToSuperview()
+        }
+
+        leftBtn.snp.makeConstraints { make in
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-60)
+            make.right.equalTo(enterBtn.snp.left).offset(-24)
+        }
+
+        rightBtn.snp.makeConstraints { make in
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-60)
+            make.left.equalTo(enterBtn.snp.right).offset(24)
+        }
+
+        welcomeLabel.snp.makeConstraints { make in
+            make.top.equalTo(infoBtn.snp.top).offset(48)
+            make.centerX.equalToSuperview()
+        }
+
     }
     
     func createLayout() -> UICollectionViewLayout {

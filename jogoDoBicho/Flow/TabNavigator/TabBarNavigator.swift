@@ -9,7 +9,7 @@ class TabBarNavigator: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UITabBar.appearance().backgroundColor = .clear
+        UITabBar.appearance().backgroundColor = .white.withAlphaComponent(0.7)
         
         let leadVC = LeadVC()
         buildConfig(leadVC, imageName: "leadBtn", selectedImageName: "tappedLeadBtn")
@@ -34,8 +34,23 @@ class TabBarNavigator: UITabBarController {
 
     }
     
+//    private func buildConfig(_ vc: UIViewController, imageName: String, selectedImageName: String) {
+//        vc.tabBarItem.image = UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal)
+//        vc.tabBarItem.selectedImage = UIImage(named: selectedImageName)?.withRenderingMode(.alwaysOriginal)
+//    }
+    
     private func buildConfig(_ vc: UIViewController, imageName: String, selectedImageName: String) {
-        vc.tabBarItem.image = UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal)
-        vc.tabBarItem.selectedImage = UIImage(named: selectedImageName)?.withRenderingMode(.alwaysOriginal)
+        let originalImage = UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal)
+        let selectedImage = UIImage(named: selectedImageName)?.withRenderingMode(.alwaysOriginal)
+        
+        // Установка отступов изображения
+        let imageInset = UIEdgeInsets(top: -30, left: 0, bottom: 0, right: 0)
+        originalImage?.imageFlippedForRightToLeftLayoutDirection()
+        selectedImage?.imageFlippedForRightToLeftLayoutDirection()
+        vc.tabBarItem.imageInsets = imageInset
+        
+        vc.tabBarItem.image = originalImage
+        vc.tabBarItem.selectedImage = selectedImage
     }
+
 }

@@ -6,10 +6,9 @@ import UIKit
 import SnapKit
 
 class HomeVC: UIViewController {
-
-//    private var collectionView: UICollectionView!
-
+    
     let images: [UIImage] = [UIImage.africaImg, UIImage.eathImg, UIImage.canadaImg]
+    private var currentCenterIndex: IndexPath?
 
     var contentView: HomeView {
         view as? HomeView ?? HomeView()
@@ -18,44 +17,93 @@ class HomeVC: UIViewController {
     override func loadView() {
         view = HomeView()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = .cyan
-//        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-//        collectionView.backgroundColor = .clear
-            contentView.collectionView.dataSource = self
-        contentView.collectionView.delegate = self
-//
-//        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-//
-//        view.addSubview(collectionView)
-//        collectionView.snp.makeConstraints { make in
-//            make.centerY.equalToSuperview()
-//            make.centerX.equalToSuperview()
-//            make.height.equalTo(400)
-//            make.width.equalToSuperview()
-//        }
-
+        configureCollection()
+        tappedButtons()
     }
 
-//    func createLayout() -> UICollectionViewLayout {
-//        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
-//            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)) // Изменение высоты на .fractionalHeight(1.0)
-//            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) // Убираем отступы
-//            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)) // Изменение высоты на .fractionalHeight(1.0)
-//            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-//
-//            let section = NSCollectionLayoutSection(group: group)
-//            section.orthogonalScrollingBehavior = .groupPaging
-//            return section
-//        }
-//        return layout
-//    }
+    private func configureCollection() {
+        contentView.collectionView.dataSource = self
+        contentView.collectionView.delegate = self
+    }
 
+
+    private func tappedButtons() {
+        contentView.rightBtn.addTarget(self, action: #selector(rightBtnTapped), for: .touchUpInside)
+        contentView.leftBtn.addTarget(self, action: #selector(leftBtnTapped), for: .touchUpInside)
+        contentView.enterBtn.addTarget(self, action: #selector(enterBtnTapped), for: .touchUpInside)
+
+    }
+    
+    @objc private func leftBtnTapped() {
+        guard let currentIndexPath = contentView.collectionView.indexPathsForVisibleItems.first else {
+            return
+        }
+        
+        let previousItem = currentIndexPath.item - 1
+        guard previousItem >= 0 else {
+            return
+        }
+        
+        let previousIndexPath = IndexPath(item: previousItem, section: currentIndexPath.section)
+        contentView.collectionView.scrollToItem(at: previousIndexPath, at: .centeredHorizontally, animated: true)
+        updateWelcomeLabel(for: previousIndexPath)
+    }
+
+    @objc private func rightBtnTapped() {
+        guard let currentIndexPath = contentView.collectionView.indexPathsForVisibleItems.first,
+              let nextIndexPath = contentView.collectionView.indexPathForItem(at: CGPoint(x: contentView.collectionView.contentOffset.x + contentView.collectionView.bounds.width, y: contentView.collectionView.contentOffset.y)),
+              nextIndexPath.item < contentView.collectionView.numberOfItems(inSection: 0) else {
+            return
+        }
+        
+        contentView.collectionView.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
+        updateWelcomeLabel(for: nextIndexPath)
+    }
+
+    private func updateWelcomeLabel(for indexPath: IndexPath) {
+        let selectedImage = images[indexPath.item]
+        
+        switch selectedImage {
+        case UIImage(named: "africaImg"):
+            let attrString = CustomTextStyle.labelAttrString.attributedString(with: "Welcome\nto Africa Planet")
+            contentView.welcomeLabel.attributedText = attrString
+            break
+        case UIImage(named: "eathImg"):
+            let attrString = CustomTextStyle.labelAttrString.attributedString(with: "Welcome\nto Farm Planet")
+            contentView.welcomeLabel.attributedText = attrString
+        case UIImage(named: "canadaImg"):
+            let attrString = CustomTextStyle.labelAttrString.attributedString(with: "Welcome\nto Canada Planet")
+            contentView.welcomeLabel.attributedText = attrString
+        default:
+            break
+        }
+    }
+
+    @objc private func enterBtnTapped() {
+            guard let selectedIndexPath = contentView.collectionView.indexPathsForVisibleItems.first else {
+                return
+            }
+            
+            let selectedImage = images[selectedIndexPath.item]
+            
+            switch selectedImage {
+            case UIImage(named: "africaImg"):
+                let image1VC = AfricaVC()
+                navigationController?.pushViewController(image1VC, animated: true)
+            case UIImage(named: "eathImg"):
+                let image2VC = PlanetVC()
+                navigationController?.pushViewController(image2VC, animated: true)
+            case UIImage(named: "canadaImg"):
+                let image3VC = CanadaVC()
+                navigationController?.pushViewController(image3VC, animated: true)
+            default:
+                break
+            }
+        }
 }
-
 
 extension HomeVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -84,15 +132,14 @@ extension HomeVC: UICollectionViewDelegate {
             let image1VC = AfricaVC()
             navigationController?.pushViewController(image1VC, animated: true)
         case UIImage(named: "eathImg"):
-            let image2VC = CanadaVC()
+            let image2VC = PlanetVC()
             navigationController?.pushViewController(image2VC, animated: true)
         case UIImage(named: "canadaImg"):
-            let image3VC = PlanetVC()
+            let image3VC = CanadaVC()
             navigationController?.pushViewController(image3VC, animated: true)
         default:
             break
         }
-        
     }
 }
 

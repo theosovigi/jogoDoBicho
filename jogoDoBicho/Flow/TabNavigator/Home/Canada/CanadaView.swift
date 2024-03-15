@@ -11,7 +11,12 @@ import UIKit
 
 class CanadaView: UIView {
     
-    
+    private lazy var bgImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .bgCanada
+        return imageView
+    }()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,11 +31,15 @@ class CanadaView: UIView {
     
     
     private func setupUI() {
-        backgroundColor = .purple
+        [bgImage ] .forEach(addSubview(_:))
+
     }
     
     private func setupConstraints() {
-        
+        bgImage.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+
     }
     
 }

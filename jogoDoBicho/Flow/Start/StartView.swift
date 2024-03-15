@@ -9,11 +9,9 @@ import SnapKit
 class StartView: UIView {
     
     
-    private lazy var backView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage.bgClassic
-        imageView.contentMode = .scaleAspectFill
-        return imageView
+    private lazy var backView: GradientBackgroundView = {
+        let view = GradientBackgroundView()
+        return view
     }()
     
     private lazy var welcomeLabel: UILabel = {
@@ -38,7 +36,7 @@ class StartView: UIView {
         let progressView = UIProgressView()
         progressView.progressViewStyle = .bar
         progressView.progress = 0.0
-        progressView.progressTintColor = .green
+        progressView.progressTintColor = .red
         return progressView
      }()
     
