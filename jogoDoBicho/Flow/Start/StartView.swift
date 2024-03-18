@@ -16,8 +16,9 @@ class StartView: UIView {
     
     private lazy var welcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Wellcome".uppercased()
-        label.font = .boldSystemFont(ofSize: 40)
+        label.font = .customFont(font: .baloo, style: .regular, size: 40)
+        let attrString = CustomTextStyle.labelAttrString.attributedString(with: "\(Settings.appTitle)".uppercased())
+        label.attributedText = attrString
         label.textColor = .white
         label.textAlignment = .center
         return label
@@ -32,8 +33,9 @@ class StartView: UIView {
 
     private lazy var loadLabel: UILabel = {
         let label = UILabel()
-        label.text = "Loading...".uppercased()
-        label.font = .boldSystemFont(ofSize: 36)
+        label.font = .customFont(font: .baloo, style: .regular, size: 40)
+        let attrString = CustomTextStyle.labelAttrString.attributedString(with: "Loading...".uppercased())
+        label.attributedText = attrString
         label.textColor = .white
         label.textAlignment = .center
         return label
@@ -43,7 +45,7 @@ class StartView: UIView {
         let progressView = UIProgressView()
         progressView.progressViewStyle = .bar
         progressView.progress = 0.0
-        progressView.progressTintColor = .red
+        progressView.progressTintColor = .customOrange
         return progressView
      }()
     

@@ -175,7 +175,7 @@ class HomeView: UIView {
          }
         
         enterBtn.snp.makeConstraints { make in
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-64)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-68)
             make.centerX.equalToSuperview()
         }
 

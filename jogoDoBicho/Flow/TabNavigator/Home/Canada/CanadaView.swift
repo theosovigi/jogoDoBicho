@@ -75,8 +75,8 @@ class CanadaView: UIView {
     
     private(set) lazy var didSelectButton: UIButton = {
         let button = UIButton()
-        button.setImage(.enterBtn, for: .normal)
-        button.setImage(.enterTappedBtn, for: .highlighted)
+        button.setImage(.paintBtn, for: .normal)
+        button.setImage(.tappedPaint, for: .highlighted)
         return button
     }()
 

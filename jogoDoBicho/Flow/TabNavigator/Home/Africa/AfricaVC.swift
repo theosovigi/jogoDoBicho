@@ -30,6 +30,7 @@ class AfricaVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     override func loadView() {
         view = AfricaView()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tappedButtons()
@@ -38,14 +39,15 @@ class AfricaVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
-
+        tabBarController?.tabBar.backgroundColor = UIColor.clear
     }
     
     private func tappedButtons() {
         contentView.closeBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         contentView.forwardButton.addTarget(self, action: #selector(nextImage), for: .touchUpInside)
         contentView.backwardButton.addTarget(self, action: #selector(previousImage), for: .touchUpInside)
-        
+        contentView.didSelectButton.addTarget(self, action: #selector(paintButtonTapped), for: .touchUpInside)
+
         images = [.ostrichPix, .crocodilePix, .lionPix, .monkeyPix, .peacockPix,.elephantPix,.camelPix]
         
         imageNames = [.ostrichPix, .crocodilePix, .lionPix, .monkeyPix, .peacockPix,.elephantPix,.camelPix]
@@ -54,11 +56,18 @@ class AfricaVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         contentView.pageControl.currentPage = currentIndex
         
-
         updateImage()
 
     }
     
+    @objc private func paintButtonTapped() {
+        // Передаем выбранное изображение и текст для imageLabel
+        let image = images[currentIndex]
+        let labelText = imageNames[currentIndex].rawValue
+        let paintVC = PaintVC(image: image, labelText: labelText)
+        navigationController?.pushViewController(paintVC, animated: true)
+    }
+
     @objc private func backTapped() {
         navigationController?.popViewController(animated: true)
        }

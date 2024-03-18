@@ -50,7 +50,8 @@ class PlanetVC: UIViewController {
         contentView.closeBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         contentView.forwardButton.addTarget(self, action: #selector(nextImage), for: .touchUpInside)
         contentView.backwardButton.addTarget(self, action: #selector(previousImage), for: .touchUpInside)
-        
+        contentView.didSelectButton.addTarget(self, action: #selector(paintButtonTapped), for: .touchUpInside)
+
         images = [.donkeyPix, .dogPix, .goatPix, .sheepPix, .rabbitPix, .horsePix,.roosterPix,.catPix,.pigPix,.bullPix,.cowPix,.turkeyPix]
         
         imageNames = [.donkeyPix, .dogPix, .goatPix, .sheepPix, .rabbitPix, .horsePix,.roosterPix,.catPix,.pigPix,.bullPix,.cowPix,.turkeyPix]
@@ -83,5 +84,13 @@ class PlanetVC: UIViewController {
            contentView.imageLabel.text = imageNames[currentIndex].rawValue
            contentView.pageControl.currentPage = currentIndex
        }
+    
+    @objc private func paintButtonTapped() {
+        let image = images[currentIndex]
+        let labelText = imageNames[currentIndex].rawValue
+        let paintVC = PaintVC(image: image, labelText: labelText)
+        navigationController?.pushViewController(paintVC, animated: true)
+    }
+
 
 }

@@ -45,7 +45,8 @@ class CanadaVC: UIViewController {
         contentView.closeBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         contentView.forwardButton.addTarget(self, action: #selector(nextImage), for: .touchUpInside)
         contentView.backwardButton.addTarget(self, action: #selector(previousImage), for: .touchUpInside)
-        
+        contentView.didSelectButton.addTarget(self, action: #selector(paintButtonTapped), for: .touchUpInside)
+
         images = [.tigerPix, .bearPix, .dearPix, .eaglePix, .snakePix, .butterflyPix]
         imageNames = [.tigerPix, .bearPix, .dearPix, .eaglePix, .snakePix, .butterflyPix]
         
@@ -78,4 +79,10 @@ class CanadaVC: UIViewController {
            contentView.pageControl.currentPage = currentIndex
        }
 
+    @objc private func paintButtonTapped() {
+        let image = images[currentIndex]
+        let labelText = imageNames[currentIndex].rawValue
+        let paintVC = PaintVC(image: image, labelText: labelText)
+        navigationController?.pushViewController(paintVC, animated: true)
+    }
 }
