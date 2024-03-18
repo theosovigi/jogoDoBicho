@@ -106,6 +106,13 @@ class InfoView: UIView {
         return view
     }()
 
+    private lazy var iconImg: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "AppIcon")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     private(set) lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.font = .customFont(font: .baloo, style: .regular, size: 16)
@@ -135,6 +142,7 @@ class InfoView: UIView {
         infoContainer.addSubview(titleLabel)
         infoContainer.addSubview(iconImageView)
         infoContainer.addSubview(contentLabel)
+        iconImageView.addSubview(iconImg)
 
 
     }
@@ -212,11 +220,15 @@ class InfoView: UIView {
         }
         
         iconImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(40)
+            make.top.equalTo(titleLabel.snp.bottom)
             make.centerX.equalToSuperview()
             make.size.equalTo(120)
         }
         
+        iconImg.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
         contentLabel.snp.makeConstraints { make in
             make.top.equalTo(iconImageView.snp.bottom).offset(40)
             make.left.right.equalToSuperview().inset(20)

@@ -164,8 +164,8 @@
 				18DBDA6F2BA42B1200746C2D /* GradientView.swift */,
 				18DBDA672BA3298E00746C2D /* CustomPixelArt */,
 				18D5B6D52BA08E3D00699F3D /* Africa */,
-				18DBDA592BA2217D00746C2D /* Canada */,
 				18DBDA5A2BA2218F00746C2D /* Planet */,
+				18DBDA592BA2217D00746C2D /* Canada */,
 			);
 			path = Home;
 			sourceTree = "<group>";

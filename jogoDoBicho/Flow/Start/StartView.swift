@@ -23,6 +23,13 @@ class StartView: UIView {
         return label
     }()
 
+    private lazy var eagleImg: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .eagleImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     private lazy var loadLabel: UILabel = {
         let label = UILabel()
         label.text = "Loading...".uppercased()
@@ -51,7 +58,7 @@ class StartView: UIView {
     }
     
     private func setupUI() {
-        [backView,welcomeLabel,loadLabel,loadView] .forEach(addSubview(_:))
+        [backView,welcomeLabel,eagleImg,loadLabel,loadView] .forEach(addSubview(_:))
     }
             
     private func setUpConstraints(){
@@ -65,6 +72,12 @@ class StartView: UIView {
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(80)
             make.centerX.equalToSuperview()
         }
+        
+        eagleImg.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.size.equalTo(280)
+        }
+
 
         loadLabel.snp.makeConstraints { (make) in
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-100)
