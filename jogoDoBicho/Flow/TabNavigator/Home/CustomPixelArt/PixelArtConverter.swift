@@ -29,7 +29,7 @@ class PixelArtConverter {
         return resizedImage!
     }
     
-    private func convertToGrayscale(image: UIImage) -> UIImage {
+     func convertToGrayscale(image: UIImage) -> UIImage {
         let context = CIContext(options: nil)
         let currentFilter = CIFilter(name: "CIPhotoEffectNoir")
         let beginImage = CIImage(image: image)

@@ -77,8 +77,16 @@ class PaintView: UIView {
         return button
     }()
     
+    private(set) lazy var blackWhiteImgView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .white
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
     private(set) lazy var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.isHidden = true
         imageView.backgroundColor = .white
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -126,6 +134,7 @@ class PaintView: UIView {
         [bgImage,fillView,closeBtn,timerContainer,imageContainerView,imageView,imageLabel,zoomBtn,eraserBtn,visionBtn,fillColorsView] .forEach(addSubview(_:))
         timerContainer.addSubview(timeImg)
         timerContainer.addSubview(timeLabel)
+        imageContainerView.addSubview(blackWhiteImgView)
         imageContainerView.addSubview(imageView)
         imageContainerView.addSubview(imageLabel)
         fillColorsView.addSubview(brushImg)
@@ -177,6 +186,12 @@ class PaintView: UIView {
             make.centerX.equalToSuperview()
         }
 
+        blackWhiteImgView.snp.makeConstraints { (make) in
+            make.top.equalTo(imageLabel.snp.bottom).offset(20)
+            make.left.right.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().offset(-24)
+        }
+        
         imageView.snp.makeConstraints { (make) in
             make.top.equalTo(imageLabel.snp.bottom).offset(20)
             make.left.right.equalToSuperview().inset(16)

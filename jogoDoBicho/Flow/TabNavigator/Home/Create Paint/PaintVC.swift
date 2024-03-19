@@ -14,6 +14,9 @@ class PaintVC: UIViewController {
     private let imageLabelText: String? 
     private var timer: Timer?
     private var elapsedTimeInSeconds = 0
+    private let pixelArtConverter = PixelArtConverter()
+
+    private var isImageFilled = false
 
     var contentView: PaintView {
         view as? PaintView ?? PaintView()
@@ -27,6 +30,8 @@ class PaintVC: UIViewController {
         self.imageView = UIImageView(image: image)
         self.imageLabelText = labelText
         super.init(nibName: nil, bundle: nil)
+        let blackAndWhiteImage = pixelArtConverter.convertToGrayscale(image: image)
+        contentView.blackWhiteImgView.image = blackAndWhiteImage
     }
     
     required init?(coder: NSCoder) {
@@ -60,6 +65,8 @@ class PaintVC: UIViewController {
     
     private func tappedButtons() {
         contentView.closeBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
+        contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchDown), for: .touchDown)
+        contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchUpInside), for: .touchUpInside)
 
     }
     
@@ -83,5 +90,12 @@ class PaintVC: UIViewController {
     @objc private func backTapped() {
         navigationController?.popViewController(animated: true)
        }
+    
+    @objc private func visionButtonTouchDown() {
+        contentView.imageView.isHidden = false
+    }
 
+    @objc private func visionButtonTouchUpInside() {
+        contentView.imageView.isHidden = true
+    }
 }
