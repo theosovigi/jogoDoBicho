@@ -9,226 +9,105 @@ import SnapKit
 
 class PaintView: UIView {
     
+    var tapHandler: ((CGPoint) -> Void)?
+    private var pixelArtImage: UIImage!
+    var colorMatrix: [[UIColor]] = []
+     var changedCells: [(Int, Int)] = [] // Дополнительный массив для хранения измененных ячеек
+    
     private lazy var bgImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .bgAfrica
         return imageView
     }()
-
-    private(set) lazy var fillView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black.withAlphaComponent(0.6)
-        return view
-    }()
-
-    private(set) lazy var timerContainer: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 20
-        view.backgroundColor = .customBlue
-        view.layer.borderColor = UIColor.customYellow.cgColor
-        view.layer.borderWidth = 2
-        return view
-    }()
-
-    private lazy var timeImg: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = .timeImg
-        return imageView
-    }()
     
-    private(set) var timeLabel: UILabel = {
-        let label = UILabel()
-        label.font = .customFont(font: .baloo, style: .regular, size: 16)
-        label.textColor = .white
-        return label
-    }()
-    
-    private(set) var closeBtn: UIButton = {
-        let button = UIButton()
-        button.setImage(.closeBtn, for: .normal)
-        return button
-    }()
-
-    
-    private(set) lazy var imageContainerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .gray
-        return view
-    }()
-
-    private(set) lazy var zoomBtn: UIButton = {
-        let button = UIButton()
-        button.setImage(.zoomBtn, for: .normal)
-        button.setImage(.tappedZoom, for: .highlighted)
-        return button
-    }()
-    
-    private(set) lazy var eraserBtn: UIButton = {
-        let button = UIButton()
-        button.setImage(.eraserBtn, for: .normal)
-        button.setImage(.tappedEraser, for: .highlighted)
-        return button
-    }()
-
-    private(set) lazy var visionBtn: UIButton = {
-        let button = UIButton()
-        button.setImage(.visionBtn, for: .normal)
-        button.setImage(.tappedVision, for: .highlighted)
-        return button
-    }()
-    
-    private(set) lazy var blackWhiteImgView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .white
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
-    private(set) lazy var imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.isHidden = true
-        imageView.backgroundColor = .white
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-
-    private(set) lazy var imageLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = .customFont(font: .baloo, style: .regular, size: 28)
-        label.textColor = .white
-        return label
-    }()
-
-    private(set) lazy var fillColorsView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black.withAlphaComponent(0.4)
-        return view
-    }()
-
-    private(set) lazy var brushImg: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = .brushImg
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-
-    private let colorCollectionView: ColorCollectionView = {
-         let collectionView = ColorCollectionView()
-         return collectionView
-     }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
-        setupConstraints()
-        
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func setup(image: UIImage) {
+        pixelArtImage = image
+        setupColorMatrix()
+        setupStackView()
     }
     
     
-    private func setupUI() {
-        [bgImage,fillView,closeBtn,timerContainer,imageContainerView,imageView,imageLabel,zoomBtn,eraserBtn,visionBtn,fillColorsView] .forEach(addSubview(_:))
-        timerContainer.addSubview(timeImg)
-        timerContainer.addSubview(timeLabel)
-        imageContainerView.addSubview(blackWhiteImgView)
-        imageContainerView.addSubview(imageView)
-        imageContainerView.addSubview(imageLabel)
-        fillColorsView.addSubview(brushImg)
-        fillColorsView.addSubview(colorCollectionView)
-
+    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: self)
+        tapHandler?(location)
+        setupStackView() // Обновление представления после нажатия
     }
     
-    private func setupConstraints() {
-        bgImage.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
+    private func setupColorMatrix() {
+        guard let cgImage = pixelArtImage.cgImage else { return }
+        let width = cgImage.width
+        let height = cgImage.height
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bytesPerPixel = 4
+        let bytesPerRow = bytesPerPixel * width
+        let bitsPerComponent = 8
+        var pixelData = [UInt8](repeating: 0, count: width * height * bytesPerPixel)
+        let context = CGContext(data: &pixelData,
+                                width: width,
+                                height: height,
+                                bitsPerComponent: bitsPerComponent,
+                                bytesPerRow: bytesPerRow,
+                                space: colorSpace,
+                                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+        context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
         
-        fillView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
-
-        timerContainer.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(4)
-            make.right.equalToSuperview().offset(-16)
-            make.height.equalTo(40)
-            make.width.equalTo(100)
-        }
-        
-        timeImg.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(12)
-            make.centerY.equalToSuperview()
-            make.size.equalTo(16)
-        }
-        
-        timeLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(timeImg.snp.right).offset(12)
-            make.centerY.equalToSuperview()
-        }
-
-        closeBtn.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top)
-            make.left.equalToSuperview().offset(16)
-            make.size.equalTo(48)
-        }
-
-        imageContainerView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.height.equalTo(420)
-            make.left.right.equalToSuperview().inset(16)
-        }
-        
-        imageLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(24)
-            make.centerX.equalToSuperview()
-        }
-
-        blackWhiteImgView.snp.makeConstraints { (make) in
-            make.top.equalTo(imageLabel.snp.bottom).offset(20)
-            make.left.right.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().offset(-24)
-        }
-        
-        imageView.snp.makeConstraints { (make) in
-            make.top.equalTo(imageLabel.snp.bottom).offset(20)
-            make.left.right.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().offset(-24)
-        }
-
-        eraserBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(imageContainerView.snp.bottom).offset(60)
-            make.centerX.equalToSuperview()
-        }
-
-        visionBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(imageContainerView.snp.bottom).offset(60)
-            make.right.equalTo(eraserBtn.snp.left).offset(-24)
-        }
-
-        zoomBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(imageContainerView.snp.bottom).offset(60)
-            make.left.equalTo(eraserBtn.snp.right).offset(24)
-        }
-        
-        fillColorsView.snp.makeConstraints { (make) in
-            make.top.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-80)
-            make.bottom.equalToSuperview()
-            make.left.right.equalToSuperview()
-        }
-        
-        brushImg.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(16)
-            make.size.equalTo(20)
-        }
-        
-        colorCollectionView.snp.makeConstraints { (make) in
-            make.top.bottom.equalToSuperview().inset(20)
-            make.left.equalTo(brushImg.snp.right).offset(20)
-            make.right.equalToSuperview().offset(-20)
+        for y in 0..<height {
+            var rowColors: [UIColor] = []
+            for x in 0..<width {
+                let offset = ((width * y) + x) * bytesPerPixel
+                let alpha = CGFloat(pixelData[offset + 3]) / 255.0
+                let red = CGFloat(pixelData[offset]) / 255.0
+                let green = CGFloat(pixelData[offset + 1]) / 255.0
+                let blue = CGFloat(pixelData[offset + 2]) / 255.0
+                let color = UIColor(red: red, green: green, blue: blue, alpha: alpha)
+                rowColors.append(color)
+            }
+            colorMatrix.append(rowColors)
         }
     }
+    
+     func setupStackView() {
+        // Создаем стековое представление только если оно еще не создано
+        if subviews.isEmpty {
+            let verticalStackView = UIStackView()
+            verticalStackView.axis = .vertical
+            verticalStackView.distribution = .fillEqually
+            verticalStackView.alignment = .fill
+            verticalStackView.spacing = 1
+            verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+            
+            for y in 0..<50 {
+                let horizontalStackView = UIStackView()
+                horizontalStackView.axis = .horizontal
+                horizontalStackView.distribution = .fillEqually
+                horizontalStackView.alignment = .fill
+                horizontalStackView.spacing = 1
+                
+                for x in 0..<50 {
+                    let squareView = UIView()
+                    squareView.backgroundColor = colorMatrix[y][x]
+                    horizontalStackView.addArrangedSubview(squareView)
+                }
+                verticalStackView.addArrangedSubview(horizontalStackView)
+            }
+            
+            self.addSubview(verticalStackView)
+            
+            verticalStackView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        } else {
+            // Обновляем только измененные ячейки
+            for (row, column) in changedCells {
+                if row < 50 && column < 50 {
+                    if let verticalStackView = subviews.first as? UIStackView, // Получаем вертикальное стековое представление
+                       let horizontalStackView = verticalStackView.arrangedSubviews[row] as? UIStackView, // Получаем горизонтальное стековое представление
+                       let squareView = horizontalStackView.arrangedSubviews[column] as? UIView { // Получаем квадратное представление (ячейку)
+                        squareView.backgroundColor = colorMatrix[row][column] // Обновляем цвет ячейки
+                    }
+                }
+            }
+        }
+    }
+    
 }

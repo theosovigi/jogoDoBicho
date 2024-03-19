@@ -23,6 +23,8 @@
 		18706F532B9F3BE1008FFB19 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706F522B9F3BE1008FFB19 /* HomeView.swift */; };
 		18706F552B9F3E36008FFB19 /* TabBarNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706F542B9F3E36008FFB19 /* TabBarNavigator.swift */; };
 		18706F582B9F41DF008FFB19 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 18706F572B9F41DF008FFB19 /* SnapKit */; };
+		18B9A0B72BA9C3F000F15F85 /* PixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9A0B62BA9C3F000F15F85 /* PixView.swift */; };
+		18B9A0B92BA9CB3100F15F85 /* ColorCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9A0B82BA9CB3100F15F85 /* ColorCollectionCell.swift */; };
 		18D5B6BF2BA0589000699F3D /* LeadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6BE2BA0589000699F3D /* LeadVC.swift */; };
 		18D5B6C12BA058C300699F3D /* LeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6C02BA058C300699F3D /* LeadView.swift */; };
 		18D5B6C32BA058CC00699F3D /* MyFotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6C22BA058CC00699F3D /* MyFotoVC.swift */; };
@@ -42,8 +44,6 @@
 		18DBDA622BA221B700746C2D /* CanadaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA612BA221B700746C2D /* CanadaView.swift */; };
 		18DBDA642BA221C100746C2D /* PlanetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA632BA221C100746C2D /* PlanetVC.swift */; };
 		18DBDA662BA221C900746C2D /* PlanetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA652BA221C900746C2D /* PlanetView.swift */; };
-		18DBDA692BA329BD00746C2D /* PixelArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA682BA329BD00746C2D /* PixelArtView.swift */; };
-		18DBDA6B2BA32A2000746C2D /* PixelArtConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA6A2BA32A2000746C2D /* PixelArtConverter.swift */; };
 		18DBDA6E2BA3756D00746C2D /* Baloo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18DBDA6D2BA3756D00746C2D /* Baloo-Regular.ttf */; };
 		18DBDA702BA42B1200746C2D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA6F2BA42B1200746C2D /* GradientView.swift */; };
 /* End PBXBuildFile section */
@@ -66,6 +66,8 @@
 		18706F502B9F3BDD008FFB19 /* CustomLayaoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayaoutVC.swift; sourceTree = "<group>"; };
 		18706F522B9F3BE1008FFB19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		18706F542B9F3E36008FFB19 /* TabBarNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarNavigator.swift; sourceTree = "<group>"; };
+		18B9A0B62BA9C3F000F15F85 /* PixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixView.swift; sourceTree = "<group>"; };
+		18B9A0B82BA9CB3100F15F85 /* ColorCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionCell.swift; sourceTree = "<group>"; };
 		18D5B6BE2BA0589000699F3D /* LeadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadVC.swift; sourceTree = "<group>"; };
 		18D5B6C02BA058C300699F3D /* LeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadView.swift; sourceTree = "<group>"; };
 		18D5B6C22BA058CC00699F3D /* MyFotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFotoVC.swift; sourceTree = "<group>"; };
@@ -85,8 +87,6 @@
 		18DBDA612BA221B700746C2D /* CanadaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanadaView.swift; sourceTree = "<group>"; };
 		18DBDA632BA221C100746C2D /* PlanetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetVC.swift; sourceTree = "<group>"; };
 		18DBDA652BA221C900746C2D /* PlanetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetView.swift; sourceTree = "<group>"; };
-		18DBDA682BA329BD00746C2D /* PixelArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelArtView.swift; sourceTree = "<group>"; };
-		18DBDA6A2BA32A2000746C2D /* PixelArtConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelArtConverter.swift; sourceTree = "<group>"; };
 		18DBDA6D2BA3756D00746C2D /* Baloo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Baloo-Regular.ttf"; sourceTree = "<group>"; };
 		18DBDA6F2BA42B1200746C2D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,9 +115,12 @@
 		181BF1172BA88B97002936AB /* Create Paint */ = {
 			isa = PBXGroup;
 			children = (
+				18DBDA672BA3298E00746C2D /* CustomPixelArt */,
 				181BF1182BA88BAC002936AB /* PaintVC.swift */,
+				18B9A0B62BA9C3F000F15F85 /* PixView.swift */,
 				181BF11A2BA88CEE002936AB /* PaintView.swift */,
 				181BF11C2BA8A0C6002936AB /* ColorCollection.swift */,
+				18B9A0B82BA9CB3100F15F85 /* ColorCollectionCell.swift */,
 			);
 			path = "Create Paint";
 			sourceTree = "<group>";
@@ -179,7 +182,6 @@
 				18D5B6D82BA0917400699F3D /* HomeVC.swift */,
 				18706F522B9F3BE1008FFB19 /* HomeView.swift */,
 				18DBDA6F2BA42B1200746C2D /* GradientView.swift */,
-				18DBDA672BA3298E00746C2D /* CustomPixelArt */,
 				18D5B6D52BA08E3D00699F3D /* Africa */,
 				18DBDA5A2BA2218F00746C2D /* Planet */,
 				18DBDA592BA2217D00746C2D /* Canada */,
@@ -295,8 +297,6 @@
 		18DBDA672BA3298E00746C2D /* CustomPixelArt */ = {
 			isa = PBXGroup;
 			children = (
-				18DBDA682BA329BD00746C2D /* PixelArtView.swift */,
-				18DBDA6A2BA32A2000746C2D /* PixelArtConverter.swift */,
 			);
 			path = CustomPixelArt;
 			sourceTree = "<group>";
@@ -405,12 +405,12 @@
 				18DBDA662BA221C900746C2D /* PlanetView.swift in Sources */,
 				181BF1162BA49982002936AB /* InfoView.swift in Sources */,
 				18D5B6CD2BA058F200699F3D /* ProfileView.swift in Sources */,
-				18DBDA692BA329BD00746C2D /* PixelArtView.swift in Sources */,
 				181BF10B2BA44EF6002936AB /* CustomTextStyle.swift in Sources */,
+				18B9A0B72BA9C3F000F15F85 /* PixView.swift in Sources */,
 				18706F332B9F3948008FFB19 /* AppDelegate.swift in Sources */,
+				18B9A0B92BA9CB3100F15F85 /* ColorCollectionCell.swift in Sources */,
 				18DBDA622BA221B700746C2D /* CanadaView.swift in Sources */,
 				181BF11D2BA8A0C6002936AB /* ColorCollection.swift in Sources */,
-				18DBDA6B2BA32A2000746C2D /* PixelArtConverter.swift in Sources */,
 				18D5B6C52BA058D100699F3D /* MyFotoView.swift in Sources */,
 				18706F532B9F3BE1008FFB19 /* HomeView.swift in Sources */,
 				18706F352B9F3948008FFB19 /* SceneDelegate.swift in Sources */,
