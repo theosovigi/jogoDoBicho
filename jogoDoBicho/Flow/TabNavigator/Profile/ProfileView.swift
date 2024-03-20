@@ -146,6 +146,44 @@ class ProfileView: UIView,UITextFieldDelegate {
         return button
     }()
 
+    private lazy var paintImgContiner: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .totalPaintImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private(set) lazy var titlePaintLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 12)
+        label.text = "Total paintings"
+        label.textAlignment = .center
+        label.textColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var bestTimeImgContiner: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .bestTimeImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private lazy var scoreImgContiner: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .totalScoreImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private lazy var planetImgContiner: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .totalPlanetImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -166,6 +204,12 @@ class ProfileView: UIView,UITextFieldDelegate {
         profileContainer.addSubview(chosePhotoBtn)
         profileContainer.addSubview(profileTextField)
         profileContainer.addSubview(analizLabel)
+        profileContainer.addSubview(paintImgContiner)
+        paintImgContiner.addSubview(titlePaintLabel)
+
+        profileContainer.addSubview(bestTimeImgContiner)
+        profileContainer.addSubview(planetImgContiner)
+        profileContainer.addSubview(scoreImgContiner)
         profileContainer.addSubview(achievementsLabel)
 
     }
@@ -258,6 +302,31 @@ class ProfileView: UIView,UITextFieldDelegate {
         analizLabel.snp.makeConstraints { (make) in
             make.top.equalTo(profileTextField.snp.bottom).offset(40)
             make.centerX.equalToSuperview()
+        }
+
+        paintImgContiner.snp.makeConstraints { (make) in
+            make.top.equalTo(analizLabel.snp.bottom).offset(24)
+            make.right.equalToSuperview().offset(-24)
+        }
+        
+        titlePaintLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(12)
+            make.centerX.equalToSuperview()
+        }
+        
+        bestTimeImgContiner.snp.makeConstraints { (make) in
+            make.top.equalTo(analizLabel.snp.bottom).offset(24)
+            make.left.equalToSuperview().offset(24)
+        }
+
+        scoreImgContiner.snp.makeConstraints { (make) in
+            make.top.equalTo(paintImgContiner.snp.bottom).offset(12)
+            make.right.equalToSuperview().offset(-24)
+        }
+        
+        planetImgContiner.snp.makeConstraints { (make) in
+            make.top.equalTo(paintImgContiner.snp.bottom).offset(12)
+            make.left.equalToSuperview().offset(24)
         }
 
         achievementsLabel.snp.makeConstraints { (make) in

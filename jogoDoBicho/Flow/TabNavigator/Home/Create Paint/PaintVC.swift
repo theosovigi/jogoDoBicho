@@ -13,6 +13,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     var colorSelectionHandler: ((UIColor) -> Void)?
     private var totalPixels: Int = 0
     private var paintedPixels: Int = 0
+    private var clearColor : UIColor = .clear
     
     private var selectedColor: UIColor = .green // Используйте цвет по умолчанию или любой другой цвет по умолчанию, который вам нужен
 
@@ -114,10 +115,10 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                 if isGrayColor(color: currentColor) {
                     let previousColor = imageArt.colorMatrix[rowIndex][columnIndex]
                     imageArt.colorMatrix[rowIndex][columnIndex] = selectedColor
-                    imageArt.saveMatrix()
                     print("selectedColor -- \(selectedColor)")
                     imageArt.changedCells.append((rowIndex, columnIndex)) // Добавление координат измененной ячейки
                     print("Предыдущий цвет: \(previousColor)")
+                    clearColor = previousColor
                     
                     // Увеличиваем счетчик закрашенных пикселей
                     paintedPixels += 1
@@ -150,7 +151,6 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         } else {
             print("Ошибка: Нажатие находится вне рисунка.")
         }
-        
         imageArt.setupStackView() // Обновление представления после нажатия
     }
 
@@ -185,7 +185,9 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     private func configureView() {
         contentView.imageView.image = imageView.image
         contentView.imageLabel.text = imageLabelText
-        contentView.colorCollectionView.colorSelectionHandler = { [weak self] selectedColor in
+        guard let pic = imageLabelText else { return }
+        imageArt.namePic = pic
+                contentView.colorCollectionView.colorSelectionHandler = { [weak self] selectedColor in
             self?.handleColorSelection(selectedColor)
         }
 
@@ -239,8 +241,8 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             // Проверяем, была ли эта ячейка закрашена
             if isAlreadyPainted(atRow: row, column: column) {
                 // Возвращаем ячейку в начальное состояние (прозрачный цвет)
-                imageArt.colorMatrix[row][column] = .clear
-                
+                imageArt.colorMatrix[row][column] = clearColor
+                imageArt.saveMatrix()
                 // Обновляем отображение
                 imageArt.setupStackView()
                 

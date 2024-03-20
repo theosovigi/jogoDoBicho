@@ -10,6 +10,7 @@ extension UIFont {
     
     enum CustomFonts: String {
         case baloo = "Baloo"
+        case baloo2 = "Baloo2"
     }
     
     enum CustomFontStyle: String {

@@ -8,19 +8,19 @@ import UIKit
 import SnapKit
 import RealmSwift
 
-//class Matrix: Object {
-//    @Persisted var savedColorMatrix: [[UIColor]]
-//    @Persisted var name: String
-//}
 
-var savedColorMatrix: [[UIColor]] = []
+class Matrix: Object {
+    @Persisted var savedColors: List<Int> // Используем List<Int> для хранения числовых значений цветов
+    @Persisted var name: String
+}
 
 class PaintView: UIView {
     
+    var namePic = ""
     var tapHandler: ((CGPoint) -> Void)?
     private var pixelArtImage: UIImage!
     var colorMatrix: [[UIColor]] = []
-     var changedCells: [(Int, Int)] = [] // Дополнительный массив для хранения измененных ячеек
+    var changedCells: [(Int, Int)] = [] // Дополнительный массив для хранения измененных ячеек
     
     private lazy var bgImage: UIImageView = {
         let imageView = UIImageView()
@@ -30,55 +30,64 @@ class PaintView: UIView {
     
     func setup(image: UIImage) {
         pixelArtImage = image
-        restoreMatrix()
+        restoreMatrix(imageName: namePic)
+        print("MOunt -- \(namePic)")
         setupColorMatrix()
         setupStackView()
     }
     
-    
     @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: self)
         tapHandler?(location)
-        setupStackView() // Обновление представления после нажатия
+        setupStackView()
+        saveMatrix()
+// Обновление представления после нажатия
     }
     
     
-     func saveMatrix() {
-//         let matrix = Matrix()
-//         matrix.savedCo lorMatrix = colorMatrix
-        savedColorMatrix = colorMatrix
+    // Сохранение данных
+    func saveMatrix() {
+        let realm = try! Realm()
+        if let existingMatrix = realm.objects(Matrix.self).filter("name == %@", namePic).first {
+            // Обновляем существующий объект Matrix
+            try! realm.write {
+                existingMatrix.savedColors.removeAll() // Очищаем существующие цвета
+                let colorsAsInts = colorMatrix.flatMap { $0.map { $0.toInt() } }
+                existingMatrix.savedColors.append(objectsIn: colorsAsInts)
+            }
+        } else {
+            // Создаем новый объект Matrix
+            let matrix = Matrix()
+            matrix.savedColors.append(objectsIn: colorMatrix.flatMap { $0.map { $0.toInt() } })
+            matrix.name = namePic
+            try! realm.write {
+                realm.add(matrix)
+            }
+        }
+    }
+
+    // Восстановление данных
+    private func restoreMatrix(imageName: String) {
+        // Восстановление Matrix из Realm
+        let realm = try! Realm()
+        let matrix = realm.objects(Matrix.self).filter("name contains %@", imageName).first
         
-//         let realm = try! Realm()
-//         // Persist your data easily with a write transaction
-//         try! realm.write {
-//             realm.add(matrix)
-//         }
-    }
-    
-    
-    private func restoreMatrix() {
-//        var key = Data(count: 64)
-//        _ = key.withUnsafeMutableBytes { bytes in
-//            SecRandomCopyBytes(kSecRandomDefault, 64, bytes)
-//        }
-//
-//        // Add the encryption key to the config and open the realm
-//        let config = Realm.Configuration(encryptionKey: key)
-//        let realm = try Realm(configuration: config)
-//
-//        // Use the Realm as normal
-//        let matrix = realm.objects(Matrix.self).filter("name contains 'Fido'").first
-//        
-//        if !matrix.savedColorMatrix.isEmpty{
-//            colorMatrix = matrix.savedColorMatrix
-//        }
-//        
-        if !savedColorMatrix.isEmpty{
-            colorMatrix = savedColorMatrix
+        if let savedColors = matrix?.savedColors {
+            let width = 50 // Замените это на фактическую ширину вашей матрицы
+            let height = savedColors.count / width // Определение высоты на основе количества сохраненных цветов и ширины
+            var index = 0
+            for _ in 0..<height {
+                var rowColors: [UIColor] = []
+                for _ in 0..<width {
+                    rowColors.append(UIColor(fromInt: savedColors[index]))
+                    index += 1
+                }
+                colorMatrix.append(rowColors)
+            }
         }
     }
     
-    private func setup ColorMatrix() {
+    private func setupColorMatrix() {
         
         if !colorMatrix.isEmpty {
                 return
@@ -159,7 +168,6 @@ class PaintView: UIView {
             }
         }
     }
-    
 }
 
 extension UIColor {
