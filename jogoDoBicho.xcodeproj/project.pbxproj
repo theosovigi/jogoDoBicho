@@ -25,6 +25,8 @@
 		18706F582B9F41DF008FFB19 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 18706F572B9F41DF008FFB19 /* SnapKit */; };
 		18B9A0B72BA9C3F000F15F85 /* PixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9A0B62BA9C3F000F15F85 /* PixView.swift */; };
 		18B9A0B92BA9CB3100F15F85 /* ColorCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9A0B82BA9CB3100F15F85 /* ColorCollectionCell.swift */; };
+		18B9A0BC2BAAEEA800F15F85 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 18B9A0BB2BAAEEA800F15F85 /* Realm */; };
+		18B9A0BE2BAAEEA900F15F85 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 18B9A0BD2BAAEEA900F15F85 /* RealmSwift */; };
 		18D5B6BF2BA0589000699F3D /* LeadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6BE2BA0589000699F3D /* LeadVC.swift */; };
 		18D5B6C12BA058C300699F3D /* LeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6C02BA058C300699F3D /* LeadView.swift */; };
 		18D5B6C32BA058CC00699F3D /* MyFotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6C22BA058CC00699F3D /* MyFotoVC.swift */; };
@@ -96,6 +98,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18B9A0BE2BAAEEA900F15F85 /* RealmSwift in Frameworks */,
+				18B9A0BC2BAAEEA800F15F85 /* Realm in Frameworks */,
 				18706F582B9F41DF008FFB19 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,6 +331,8 @@
 			name = jogoDoBicho;
 			packageProductDependencies = (
 				18706F572B9F41DF008FFB19 /* SnapKit */,
+				18B9A0BB2BAAEEA800F15F85 /* Realm */,
+				18B9A0BD2BAAEEA900F15F85 /* RealmSwift */,
 			);
 			productName = jogoDoBicho;
 			productReference = 18706F2F2B9F3948008FFB19 /* jogoDoBicho.app */;
@@ -358,6 +364,7 @@
 			mainGroup = 18706F262B9F3948008FFB19;
 			packageReferences = (
 				18706F562B9F41DF008FFB19 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				18B9A0BA2BAAEEA800F15F85 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 18706F302B9F3948008FFB19 /* Products */;
 			projectDirPath = "";
@@ -647,6 +654,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		18B9A0BA2BAAEEA800F15F85 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -654,6 +669,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 18706F562B9F41DF008FFB19 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		18B9A0BB2BAAEEA800F15F85 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18B9A0BA2BAAEEA800F15F85 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		18B9A0BD2BAAEEA900F15F85 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18B9A0BA2BAAEEA800F15F85 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

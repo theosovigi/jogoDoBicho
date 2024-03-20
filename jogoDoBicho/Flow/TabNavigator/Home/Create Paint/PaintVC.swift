@@ -114,6 +114,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                 if isGrayColor(color: currentColor) {
                     let previousColor = imageArt.colorMatrix[rowIndex][columnIndex]
                     imageArt.colorMatrix[rowIndex][columnIndex] = selectedColor
+                    imageArt.saveMatrix()
                     print("selectedColor -- \(selectedColor)")
                     imageArt.changedCells.append((rowIndex, columnIndex)) // Добавление координат измененной ячейки
                     print("Предыдущий цвет: \(previousColor)")

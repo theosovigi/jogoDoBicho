@@ -6,17 +6,19 @@ import Foundation
 import UIKit
 import SnapKit
 
+enum ImageAfricaName: String {
+    case ostrichPix = "Ostrich"
+    case crocodilePix = "Crocodile"
+    case lionPix = "Lion"
+    case monkeyPix = "Monkey"
+    case peacockPix = "Peacock"
+    case elephantPix = "Elephant"
+    case camelPix = "Camel"
+}
+
+
 class AfricaVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    enum ImageAfricaName: String {
-        case ostrichPix = "Ostrich"
-        case crocodilePix = "Crocodile"
-        case lionPix = "Lion"
-        case monkeyPix = "Monkey"
-        case peacockPix = "Peacock"
-        case elephantPix = "Elephant"
-        case camelPix = "Camel"
-    }
 
     var images: [UIImage] = []
     var currentIndex: Int = 0
