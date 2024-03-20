@@ -177,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				181BF1172BA88B97002936AB /* Create Paint */,
-				181BF10C2BA49917002936AB /* Info */,
 				18D5B6DA2BA0A90900699F3D /* Layout */,
 				18D5B6D82BA0917400699F3D /* HomeVC.swift */,
 				18706F522B9F3BE1008FFB19 /* HomeView.swift */,
@@ -214,6 +213,7 @@
 		18D5B6BA2BA056A400699F3D /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				181BF10C2BA49917002936AB /* Info */,
 				18D5B6CA2BA058EE00699F3D /* ProfileVC.swift */,
 				18D5B6CC2BA058F200699F3D /* ProfileView.swift */,
 			);

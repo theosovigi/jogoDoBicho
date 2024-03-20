@@ -53,7 +53,9 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         configureImageArt()
         configureView()
         tappedButtons()
-        startTimer()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            self.startTimer()
+        }
         setupGestureRecognizer()
     }
         
@@ -65,13 +67,12 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             let converter = PixelArtConverter()
             let image = self.imageView.image!
             let convertedImage = converter.convertToPixelArt(image: image)
             self.imageArt.setup(image: convertedImage!)
             self.totalPixels = self.calculateTotalPixels()
-
         }
     }
     
@@ -111,7 +112,6 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             if !isTransparentColor(color: currentColor) {
                 // Обрабатываем случай, если цвет оттенка серого
                 if isGrayColor(color: currentColor) {
-                    // Преобразуем оттенок серого в выбранный цвет
                     let previousColor = imageArt.colorMatrix[rowIndex][columnIndex]
                     imageArt.colorMatrix[rowIndex][columnIndex] = selectedColor
                     print("selectedColor -- \(selectedColor)")
@@ -144,7 +144,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                     }
                 }
             } else {
-                print("Ошибка: Нажатие на прозрачную ячейку.")
+                print("Ошибка: Прозрачная ячейку.")
             }
         } else {
             print("Ошибка: Нажатие находится вне рисунка.")
@@ -203,9 +203,11 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         contentView.closeBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchDown), for: .touchDown)
         contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchUpInside), for: .touchUpInside)
-        
+        contentView.eraserBtn.addTarget(self, action: #selector(eraserButtonTapped), for: .touchUpInside)
+
     }
     
+
     private func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
@@ -223,6 +225,34 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         contentView.timeLabel.text = timeString
     }
     
+    @objc private func eraserButtonTapped() {
+        if let lastChangedCell = imageArt.changedCells.last {
+            let row = lastChangedCell.0
+            let column = lastChangedCell.1
+            
+            // Проверяем, не выходит ли ячейка за пределы массива
+            guard row < imageArt.colorMatrix.count && column < imageArt.colorMatrix[row].count else {
+                return
+            }
+            
+            // Проверяем, была ли эта ячейка закрашена
+            if isAlreadyPainted(atRow: row, column: column) {
+                // Возвращаем ячейку в начальное состояние (прозрачный цвет)
+                imageArt.colorMatrix[row][column] = .clear
+                
+                // Обновляем отображение
+                imageArt.setupStackView()
+                
+                // Уменьшаем счетчик закрашенных пикселей
+                paintedPixels -= 1
+                
+                // Обновляем отображение оставшегося количества закрасить пикселей
+                let remainingPixels = totalPixels - paintedPixels
+                print("Осталось закрасить пикселей: \(remainingPixels)")
+            }
+        }
+    }
+
     @objc private func backTapped() {
         navigationController?.popViewController(animated: true)
     }

@@ -120,9 +120,6 @@ class PixView: UIView {
         super.init(frame: frame)
         setupUI()
         setupConstraints()
-//        colorCollectionView.colorSelectionHandler = { [weak self] selectedColor in
-//            self?.handleColorSelection(selectedColor)
-//        }
 
     }
 
