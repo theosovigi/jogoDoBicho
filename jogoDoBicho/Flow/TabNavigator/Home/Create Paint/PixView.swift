@@ -189,17 +189,17 @@ class PixView: UIView {
         }
 
         eraserBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(imageContainerView.snp.bottom).offset(60)
+            make.top.equalTo(imageContainerView.snp.bottom).offset(40)
             make.centerX.equalToSuperview()
         }
 
         visionBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(imageContainerView.snp.bottom).offset(60)
+            make.top.equalTo(imageContainerView.snp.bottom).offset(40)
             make.right.equalTo(eraserBtn.snp.left).offset(-24)
         }
 
         zoomBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(imageContainerView.snp.bottom).offset(60)
+            make.top.equalTo(imageContainerView.snp.bottom).offset(40)
             make.left.equalTo(eraserBtn.snp.right).offset(24)
         }
 

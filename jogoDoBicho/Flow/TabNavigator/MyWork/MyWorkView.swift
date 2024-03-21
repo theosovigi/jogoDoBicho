@@ -65,21 +65,48 @@ class MyWorkView: UIView {
         return label
     }()
 
-    let infoContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.layer.cornerRadius = 4
-        return view
+    private(set) lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 36)
+        let attrString = CustomTextStyle.labelAttrString.attributedString(with: "My Arts")
+        label.attributedText = attrString
+        label.textColor = .white
+        return label
     }()
     
-    private lazy var containerImg: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = .containerImg
-        imageView.contentMode = .scaleAspectFit
-        return imageView
+    private(set) lazy var inProgressBtn: UIButton = {
+        let button = UIButton()
+        let attributes: [NSAttributedString.Key: Any] = [
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+                .font: UIFont.customFont(font: .baloo, style: .regular, size: 20),
+            .foregroundColor: UIColor.customBlue]
+        let attributedTitle = NSAttributedString(string: "In progress", attributes: attributes)
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        
+        button.backgroundColor = .clear
+        return button
     }()
 
-    
+    private(set) lazy var completedBtn: UIButton = {
+        let button = UIButton()
+        button.setTitle("Completed", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .customFont(font: .baloo, style: .regular, size: 20)
+        button.backgroundColor = .clear
+        return button
+    }()
+
+    lazy var inProgressCollection: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical // Вертикальная прокрутка
+        layout.minimumLineSpacing = 10 // Расстояние между строками
+        layout.minimumInteritemSpacing = 10 // Расстояние между элементами в строке
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -91,10 +118,9 @@ class MyWorkView: UIView {
     }
     
     private func setupUI() {
-        [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,infoContainer] .forEach(addSubview(_:))
+        [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,titleLabel,inProgressBtn,completedBtn,inProgressCollection] .forEach(addSubview(_:))
         starsConteiner.addSubview(starsImg)
         starsConteiner.addSubview(starsScore)
-        infoContainer.addSubview(containerImg)
     }
     
     private func setUpConstraints(){
@@ -148,14 +174,25 @@ class MyWorkView: UIView {
             make.centerY.equalToSuperview()
         }
 
-        infoContainer.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(56)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-32)
-            make.left.right.equalToSuperview().inset(16)
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(starsConteiner.snp.bottom).offset(24)
+            make.centerX.equalToSuperview()
         }
         
-        containerImg.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        inProgressBtn.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.left.equalToSuperview().offset(52)
+        }
+        
+        completedBtn.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.right.equalToSuperview().offset(-52)
+        }
+        
+        inProgressCollection.snp.makeConstraints { make in
+            make.top.equalTo(completedBtn.snp.bottom).offset(20)
+            make.left.right.equalToSuperview().inset(16)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
 

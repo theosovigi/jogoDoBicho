@@ -11,8 +11,9 @@ import UIKit
 
 class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var colorSelectionHandler: ((UIColor) -> Void)?
-    private var totalPixels: Int = 0
-    private var paintedPixels: Int = 0
+    var totalPixels = Matrix().progressScore
+    var paintedPixels: Int = 0
+    private var remainingPixels: Int = 0
     private var clearColor : UIColor = .clear
     
     private var selectedColor: UIColor = .green // Используйте цвет по умолчанию или любой другой цвет по умолчанию, который вам нужен
@@ -73,7 +74,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             let image = self.imageView.image!
             let convertedImage = converter.convertToPixelArt(image: image)
             self.imageArt.setup(image: convertedImage!)
-            self.totalPixels = self.calculateTotalPixels()
+//            self.totalPixels = self.calculateTotalPixels()
         }
     }
     
@@ -124,8 +125,9 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                     paintedPixels += 1
                     
                     // Обновляем отображение оставшегося количества только если пиксель не был закрашен ранее
-                    let remainingPixels = totalPixels - paintedPixels
-                    print("Осталось закрасить пикселей: \(remainingPixels)")
+                     remainingPixels = totalPixels - paintedPixels
+                     imageArt.progressScore = remainingPixels
+                    print("Осталось закрасить пикселей: \(imageArt.progressScore)")
                 } else {
                     // Просто закрашиваем выбранным цветом, если цвет не оттенок серого
                     if !isAlreadyPainted(atRow: rowIndex, column: columnIndex) {
@@ -139,8 +141,9 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                         paintedPixels += 1
                         
                         // Обновляем отображение оставшегося количества только если пиксель не был закрашен ранее
-                        let remainingPixels = totalPixels - paintedPixels
-                        print("Осталось закрасить пикселей: \(remainingPixels)")
+                         remainingPixels = totalPixels - paintedPixels
+                         imageArt.progressScore = remainingPixels
+                        print("Осталось закрасить пикселей: \(imageArt.progressScore)")
                     } else {
                         print("Пиксель уже закрашен.")
                     }
@@ -151,6 +154,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         } else {
             print("Ошибка: Нажатие находится вне рисунка.")
         }
+        
         imageArt.setupStackView() // Обновление представления после нажатия
     }
 

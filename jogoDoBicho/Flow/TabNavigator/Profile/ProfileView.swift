@@ -129,16 +129,6 @@ class ProfileView: UIView,UITextFieldDelegate {
         label.numberOfLines = 0
         return label
     }()
-
-    private(set) lazy var achievementsLabel: UILabel = {
-        let label = UILabel()
-        label.font = .customFont(font: .baloo, style: .regular, size: 20)
-        label.text = "achievements".uppercased()
-        label.textAlignment = .center
-        label.textColor = .customBlue
-        label.numberOfLines = 0
-        return label
-    }()
     
     private(set) lazy var infoBtn: UIButton = {
         let button = UIButton()
@@ -163,6 +153,16 @@ class ProfileView: UIView,UITextFieldDelegate {
         return label
     }()
     
+    private(set) lazy var scorePaintLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 24)
+        label.text = "0"
+        label.textAlignment = .center
+        label.textColor = .customOrange
+        label.numberOfLines = 0
+        return label
+    }()
+
     private lazy var bestTimeImgContiner: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .bestTimeImg
@@ -170,6 +170,26 @@ class ProfileView: UIView,UITextFieldDelegate {
         return imageView
     }()
     
+    private(set) lazy var titleTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 12)
+        label.text = "Best Time"
+        label.textAlignment = .center
+        label.textColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private(set) lazy var scoreTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 24)
+        label.text = "0:00"
+        label.textAlignment = .center
+        label.textColor = .customOrange
+        label.numberOfLines = 0
+        return label
+    }()
+
     private lazy var scoreImgContiner: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .totalScoreImg
@@ -177,9 +197,73 @@ class ProfileView: UIView,UITextFieldDelegate {
         return imageView
     }()
     
+    private(set) lazy var titleScoreLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 12)
+        label.text = "Total points"
+        label.textAlignment = .center
+        label.textColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private(set) lazy var scoreCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 24)
+        label.text = "300"
+        label.textAlignment = .center
+        label.textColor = .customOrange
+        label.numberOfLines = 0
+        return label
+    }()
+
     private lazy var planetImgContiner: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .totalPlanetImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private(set) lazy var titlePlanetLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 12)
+        label.text = "Planet passed"
+        label.textAlignment = .center
+        label.textColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private(set) lazy var scorePlanetLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 24)
+        label.text = "0"
+        label.textAlignment = .center
+        label.textColor = .customOrange
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private(set) lazy var achievementsLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 20)
+        label.text = "achievements".uppercased()
+        label.textAlignment = .center
+        label.textColor = .customBlue
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var achievementImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .achievementImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private lazy var achievementImageTwo: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .achievementImg
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -204,13 +288,28 @@ class ProfileView: UIView,UITextFieldDelegate {
         profileContainer.addSubview(chosePhotoBtn)
         profileContainer.addSubview(profileTextField)
         profileContainer.addSubview(analizLabel)
+        
         profileContainer.addSubview(paintImgContiner)
         paintImgContiner.addSubview(titlePaintLabel)
-
+        paintImgContiner.addSubview(scorePaintLabel)
+        
         profileContainer.addSubview(bestTimeImgContiner)
+        bestTimeImgContiner.addSubview(titleTimeLabel)
+        bestTimeImgContiner.addSubview(scoreTimeLabel)
+
         profileContainer.addSubview(planetImgContiner)
+        planetImgContiner.addSubview(titlePlanetLabel)
+        planetImgContiner.addSubview(scorePlanetLabel)
+
         profileContainer.addSubview(scoreImgContiner)
+        scoreImgContiner.addSubview(titleScoreLabel)
+        scoreImgContiner.addSubview(scoreCountLabel)
+
         profileContainer.addSubview(achievementsLabel)
+        profileContainer.addSubview(achievementImage)
+        profileContainer.addSubview(achievementImageTwo)
+
+
 
     }
     
@@ -287,15 +386,15 @@ class ProfileView: UIView,UITextFieldDelegate {
         }
 
         chosePhotoBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(profileLabel.snp.bottom).offset(52)
+            make.top.equalTo(profileLabel.snp.bottom).offset(24)
             make.left.equalToSuperview().offset(20)
             make.size.equalTo(60)
         }
         
         profileTextField.snp.makeConstraints { (make) in
-            make.left.equalTo(chosePhotoBtn.snp.right).offset(24)
+            make.left.equalTo(chosePhotoBtn.snp.right).offset(12)
+            make.right.equalToSuperview().offset(-20)
             make.centerY.equalTo(chosePhotoBtn)
-            make.width.equalTo(248)
             make.height.equalTo(40)
         }
         
@@ -310,13 +409,28 @@ class ProfileView: UIView,UITextFieldDelegate {
         }
         
         titlePaintLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(12)
-            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(8)
+            make.left.equalToSuperview().offset(48)
         }
         
+        scorePaintLabel.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(48)
+        }
+
         bestTimeImgContiner.snp.makeConstraints { (make) in
             make.top.equalTo(analizLabel.snp.bottom).offset(24)
             make.left.equalToSuperview().offset(24)
+        }
+        
+        titleTimeLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(8)
+            make.left.equalToSuperview().offset(48)
+        }
+
+        scoreTimeLabel.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(48)
         }
 
         scoreImgContiner.snp.makeConstraints { (make) in
@@ -324,15 +438,48 @@ class ProfileView: UIView,UITextFieldDelegate {
             make.right.equalToSuperview().offset(-24)
         }
         
+        titleScoreLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(8)
+            make.left.equalToSuperview().offset(48)
+        }
+
+        scoreCountLabel.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(48)
+        }
+
         planetImgContiner.snp.makeConstraints { (make) in
             make.top.equalTo(paintImgContiner.snp.bottom).offset(12)
             make.left.equalToSuperview().offset(24)
         }
 
+        titlePlanetLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(8)
+            make.left.equalToSuperview().offset(48)
+        }
+
+        scorePlanetLabel.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(48)
+        }
+
         achievementsLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(analizLabel.snp.bottom).offset(180)
+            make.top.equalTo(planetImgContiner.snp.bottom).offset(40)
             make.centerX.equalToSuperview()
         }
+        
+        achievementImage.snp.makeConstraints { (make) in
+            make.top.equalTo(achievementsLabel.snp.bottom).offset(12)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(75)
+        }
+
+        achievementImageTwo.snp.makeConstraints { (make) in
+            make.top.equalTo(achievementImage.snp.bottom).offset(12)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(75)
+        }
+
 
     }
     

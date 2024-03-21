@@ -12,16 +12,20 @@ import RealmSwift
 class Matrix: Object {
     @Persisted var savedColors: List<Int> // Используем List<Int> для хранения числовых значений цветов
     @Persisted var name: String
+    @Persisted var progressScore: Int = 0 // Новое свойство для хранения progressScore
+
 }
 
 class PaintView: UIView {
     
     var namePic = ""
+    var progressScore: Int = 0
     var tapHandler: ((CGPoint) -> Void)?
     private var pixelArtImage: UIImage!
     var colorMatrix: [[UIColor]] = []
     var changedCells: [(Int, Int)] = [] // Дополнительный массив для хранения измененных ячеек
-    
+    var onTotalPixelsUpdated: ((Int) -> Void)?
+
     private lazy var bgImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .bgAfrica
@@ -41,10 +45,9 @@ class PaintView: UIView {
         tapHandler?(location)
         setupStackView()
         saveMatrix()
-// Обновление представления после нажатия
+
     }
-    
-    
+
     // Сохранение данных
     func saveMatrix() {
         let realm = try! Realm()
@@ -54,12 +57,14 @@ class PaintView: UIView {
                 existingMatrix.savedColors.removeAll() // Очищаем существующие цвета
                 let colorsAsInts = colorMatrix.flatMap { $0.map { $0.toInt() } }
                 existingMatrix.savedColors.append(objectsIn: colorsAsInts)
+                existingMatrix.progressScore = progressScore // Обновляем progressScore
             }
         } else {
             // Создаем новый объект Matrix
             let matrix = Matrix()
             matrix.savedColors.append(objectsIn: colorMatrix.flatMap { $0.map { $0.toInt() } })
             matrix.name = namePic
+            matrix.progressScore = progressScore // Устанавливаем progressScore
             try! realm.write {
                 realm.add(matrix)
             }
@@ -69,22 +74,43 @@ class PaintView: UIView {
     // Восстановление данных
     private func restoreMatrix(imageName: String) {
         // Восстановление Matrix из Realm
-        let realm = try! Realm()
-        let matrix = realm.objects(Matrix.self).filter("name contains %@", imageName).first
-        
-        if let savedColors = matrix?.savedColors {
-            let width = 50 // Замените это на фактическую ширину вашей матрицы
-            let height = savedColors.count / width // Определение высоты на основе количества сохраненных цветов и ширины
-            var index = 0
-            for _ in 0..<height {
-                var rowColors: [UIColor] = []
-                for _ in 0..<width {
-                    rowColors.append(UIColor(fromInt: savedColors[index]))
-                    index += 1
+        let config = Realm.Configuration(
+            schemaVersion: 1, // Предполагаем, что предыдущая версия была 0
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                    // Для этой миграции не требуется выполнение кода,
+                    // так как добавление новых полей обрабатывается автоматически
                 }
-                colorMatrix.append(rowColors)
             }
-        }
+        )
+        Realm.Configuration.defaultConfiguration = config
+        
+        let realm = try! Realm()
+            if let matrix = realm.objects(Matrix.self).filter("name == %@", imageName).first {
+                // Восстановление progressScore
+                self.progressScore = matrix.progressScore
+
+                // Восстановление сохранённых цветов
+                let width = 50 // Задаем ширину вашей матрицы цветов, предположим, что она 50
+                let savedColors = matrix.savedColors.map { UIColor(fromInt: $0) } // Конвертируем сохраненные значения обратно в UIColor
+                var restoredColorMatrix: [[UIColor]] = []
+
+                // Перестраиваем матрицу цветов из сохраненных данных
+                for y in 0..<width { // Допустим, ваша матрица - квадрат 50x50
+                    var row: [UIColor] = []
+                    for x in 0..<width {
+                        let index = y * width + x
+                        if index < savedColors.count {
+                            row.append(savedColors[index])
+                        } else {
+                            row.append(.clear) // Используем прозрачный цвет для недостающих данных
+                        }
+                    }
+                    restoredColorMatrix.append(row)
+                }
+                
+                self.colorMatrix = restoredColorMatrix // Обновляем локальную матрицу цветов
+            }
     }
     
     private func setupColorMatrix() {

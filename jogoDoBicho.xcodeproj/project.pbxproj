@@ -49,6 +49,7 @@
 		18DBDA6E2BA3756D00746C2D /* Baloo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18DBDA6D2BA3756D00746C2D /* Baloo-Regular.ttf */; };
 		18DBDA702BA42B1200746C2D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA6F2BA42B1200746C2D /* GradientView.swift */; };
 		18DE8C082BAB219500E109D1 /* Baloo2-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18DE8C072BAB219500E109D1 /* Baloo2-Regular.ttf */; };
+		18FD0B2B2BAC721E0001A555 /* InProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD0B2A2BAC721E0001A555 /* InProgressCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		181BF1182BA88BAC002936AB /* PaintVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaintVC.swift; sourceTree = "<group>"; };
 		181BF11A2BA88CEE002936AB /* PaintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaintView.swift; sourceTree = "<group>"; };
 		181BF11C2BA8A0C6002936AB /* ColorCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollection.swift; sourceTree = "<group>"; };
+		1820F1962BAC3A0400F1E832 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		18706F2F2B9F3948008FFB19 /* jogoDoBicho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jogoDoBicho.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18706F322B9F3948008FFB19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18706F342B9F3948008FFB19 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 		18DBDA6D2BA3756D00746C2D /* Baloo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Baloo-Regular.ttf"; sourceTree = "<group>"; };
 		18DBDA6F2BA42B1200746C2D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		18DE8C072BAB219500E109D1 /* Baloo2-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Baloo2-Regular.ttf"; sourceTree = "<group>"; };
+		18FD0B2A2BAC721E0001A555 /* InProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InProgressCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +234,7 @@
 			children = (
 				18D5B6C62BA058E100699F3D /* MyWorkVC.swift */,
 				18D5B6C82BA058E800699F3D /* MyWorkView.swift */,
+				18FD0B2A2BAC721E0001A555 /* InProgressCell.swift */,
 			);
 			path = MyWork;
 			sourceTree = "<group>";
@@ -408,6 +412,7 @@
 				18D5B6D42BA0752300699F3D /* Font + Extension.swift in Sources */,
 				18D5B6DC2BA0A91800699F3D /* CustomLayout.swift in Sources */,
 				18706F512B9F3BDD008FFB19 /* CustomLayaoutVC.swift in Sources */,
+				18FD0B2B2BAC721E0001A555 /* InProgressCell.swift in Sources */,
 				181BF1192BA88BAC002936AB /* PaintVC.swift in Sources */,
 				18D5B6C72BA058E100699F3D /* MyWorkVC.swift in Sources */,
 				18D5B6C92BA058E800699F3D /* MyWorkView.swift in Sources */,
@@ -442,6 +447,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				18706F3E2B9F394B008FFB19 /* Base */,
+				1820F1962BAC3A0400F1E832 /* en */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

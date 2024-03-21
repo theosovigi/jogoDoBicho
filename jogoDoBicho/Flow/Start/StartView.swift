@@ -9,10 +9,13 @@ import SnapKit
 class StartView: UIView {
     
     
-    private lazy var backView: GradientBackgroundView = {
-        let view = GradientBackgroundView()
-        return view
+    private lazy var backImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .bgCloud
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
+
     
     private lazy var welcomeLabel: UILabel = {
         let label = UILabel()
@@ -60,12 +63,12 @@ class StartView: UIView {
     }
     
     private func setupUI() {
-        [backView,welcomeLabel,eagleImg,loadLabel,loadView] .forEach(addSubview(_:))
+        [backImage,welcomeLabel,eagleImg,loadLabel,loadView] .forEach(addSubview(_:))
     }
             
     private func setUpConstraints(){
         
-        backView.snp.makeConstraints { (make) in
+        backImage.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
         
@@ -77,7 +80,6 @@ class StartView: UIView {
         
         eagleImg.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.size.equalTo(280)
         }
 
 
