@@ -106,6 +106,17 @@ class MyWorkView: UIView {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
+    
+    lazy var completedCollection: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical // Вертикальная прокрутка
+        layout.minimumLineSpacing = 10 // Расстояние между строками
+        layout.minimumInteritemSpacing = 10 // Расстояние между элементами в строке
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -118,7 +129,7 @@ class MyWorkView: UIView {
     }
     
     private func setupUI() {
-        [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,titleLabel,inProgressBtn,completedBtn,inProgressCollection] .forEach(addSubview(_:))
+        [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,titleLabel,inProgressBtn,completedBtn,inProgressCollection,completedCollection] .forEach(addSubview(_:))
         starsConteiner.addSubview(starsImg)
         starsConteiner.addSubview(starsScore)
     }
@@ -194,6 +205,13 @@ class MyWorkView: UIView {
             make.left.right.equalToSuperview().inset(16)
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
+        
+        completedCollection.snp.makeConstraints { make in
+            make.top.equalTo(completedBtn.snp.bottom).offset(20)
+            make.left.right.equalToSuperview().inset(16)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+        }
+
     }
 
 }

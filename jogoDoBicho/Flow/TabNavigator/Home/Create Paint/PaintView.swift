@@ -12,7 +12,8 @@ import RealmSwift
 class Matrix: Object {
     @Persisted var savedColors: List<Int> // Используем List<Int> для хранения числовых значений цветов
     @Persisted var name: String
-    @Persisted var progressScore: Int = 0 // Новое свойство для хранения progressScore
+    @Persisted var totalCountPix: Int = 0 // Новое свойство для хранения progressScore
+    @Persisted var coloredCountPix: Int = 0 // Новое свойство для хранения progressScore
 
 }
 
@@ -20,6 +21,8 @@ class PaintView: UIView {
     
     var namePic = ""
     var progressScore: Int = 0
+    var colored: Int = 0
+    var totalCountPix: Int = 0
     var tapHandler: ((CGPoint) -> Void)?
     private var pixelArtImage: UIImage!
     var colorMatrix: [[UIColor]] = []
@@ -43,13 +46,14 @@ class PaintView: UIView {
     @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: self)
         tapHandler?(location)
+        print("ОТжали")
         setupStackView()
-        saveMatrix()
+        saveMatrix(total: nil, colored: colored)
 
     }
 
     // Сохранение данных
-    func saveMatrix() {
+    func saveMatrix(total: Int?, colored: Int?) {
         let realm = try! Realm()
         if let existingMatrix = realm.objects(Matrix.self).filter("name == %@", namePic).first {
             // Обновляем существующий объект Matrix
@@ -57,14 +61,25 @@ class PaintView: UIView {
                 existingMatrix.savedColors.removeAll() // Очищаем существующие цвета
                 let colorsAsInts = colorMatrix.flatMap { $0.map { $0.toInt() } }
                 existingMatrix.savedColors.append(objectsIn: colorsAsInts)
-                existingMatrix.progressScore = progressScore // Обновляем progressScore
+                if total  != nil {
+                    existingMatrix.totalCountPix = total ?? 0
+                }
+                if colored  != nil {
+                    existingMatrix.coloredCountPix = colored ?? 0
+                }
+
             }
         } else {
             // Создаем новый объект Matrix
             let matrix = Matrix()
             matrix.savedColors.append(objectsIn: colorMatrix.flatMap { $0.map { $0.toInt() } })
             matrix.name = namePic
-            matrix.progressScore = progressScore // Устанавливаем progressScore
+            if total  != nil {
+                matrix.totalCountPix = total ?? 0
+            }
+            if colored  != nil {
+                matrix.coloredCountPix = colored ?? 0
+            }
             try! realm.write {
                 realm.add(matrix)
             }
@@ -75,7 +90,7 @@ class PaintView: UIView {
     private func restoreMatrix(imageName: String) {
         // Восстановление Matrix из Realm
         let config = Realm.Configuration(
-            schemaVersion: 1, // Предполагаем, что предыдущая версия была 0
+            schemaVersion: 2, // Предполагаем, что предыдущая версия была 0
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
                     // Для этой миграции не требуется выполнение кода,
@@ -88,8 +103,9 @@ class PaintView: UIView {
         let realm = try! Realm()
             if let matrix = realm.objects(Matrix.self).filter("name == %@", imageName).first {
                 // Восстановление progressScore
-                self.progressScore = matrix.progressScore
-
+                self.progressScore = matrix.totalCountPix - matrix.coloredCountPix
+                self.colored = matrix.coloredCountPix
+                self.totalCountPix = matrix.totalCountPix
                 // Восстановление сохранённых цветов
                 let width = 50 // Задаем ширину вашей матрицы цветов, предположим, что она 50
                 let savedColors = matrix.savedColors.map { UIColor(fromInt: $0) } // Конвертируем сохраненные значения обратно в UIColor
@@ -135,6 +151,7 @@ class PaintView: UIView {
                                 space: colorSpace,
                                 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
         context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+        var count = 0
         
         for y in 0..<height {
             var rowColors: [UIColor] = []
@@ -146,9 +163,17 @@ class PaintView: UIView {
                 let blue = CGFloat(pixelData[offset + 2]) / 255.0
                 let color = UIColor(red: red, green: green, blue: blue, alpha: alpha)
                 rowColors.append(color)
+                
+                if alpha != 0 {
+                    count += 1
+                }
             }
             colorMatrix.append(rowColors)
         }
+        saveMatrix(total: count, colored: nil)
+        progressScore = count
+        totalCountPix = count
+        print("count-- \(count)")
     }
     
      func setupStackView() {

@@ -11,9 +11,6 @@ import UIKit
 
 class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var colorSelectionHandler: ((UIColor) -> Void)?
-    var totalPixels = Matrix().progressScore
-    var paintedPixels: Int = 0
-    private var remainingPixels: Int = 0
     private var clearColor : UIColor = .clear
     
     private var selectedColor: UIColor = .green // Используйте цвет по умолчанию или любой другой цвет по умолчанию, который вам нужен
@@ -74,7 +71,6 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             let image = self.imageView.image!
             let convertedImage = converter.convertToPixelArt(image: image)
             self.imageArt.setup(image: convertedImage!)
-//            self.totalPixels = self.calculateTotalPixels()
         }
     }
     
@@ -101,6 +97,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
 
     
     @objc private func handleTap(_ location: CGPoint) {
+        print("Нажали")
         let cellWidth = imageArt.frame.width / 50
         let cellHeight = imageArt.frame.height / 50
         
@@ -122,12 +119,12 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                     clearColor = previousColor
                     
                     // Увеличиваем счетчик закрашенных пикселей
-                    paintedPixels += 1
+                    imageArt.colored += 1
                     
                     // Обновляем отображение оставшегося количества только если пиксель не был закрашен ранее
-                     remainingPixels = totalPixels - paintedPixels
-                     imageArt.progressScore = remainingPixels
-                    print("Осталось закрасить пикселей: \(imageArt.progressScore)")
+                    imageArt.progressScore = imageArt.totalCountPix - imageArt.colored
+
+                   print("Осталось закрасить пикселей: \(imageArt.progressScore)")
                 } else {
                     // Просто закрашиваем выбранным цветом, если цвет не оттенок серого
                     if !isAlreadyPainted(atRow: rowIndex, column: columnIndex) {
@@ -138,11 +135,11 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                         print("Предыдущий цвет: \(previousColor)")
                         
                         // Увеличиваем счетчик закрашенных пикселей
-                        paintedPixels += 1
-                        
+                        imageArt.colored += 1
+
                         // Обновляем отображение оставшегося количества только если пиксель не был закрашен ранее
-                         remainingPixels = totalPixels - paintedPixels
-                         imageArt.progressScore = remainingPixels
+                         imageArt.progressScore = imageArt.totalCountPix - imageArt.colored
+
                         print("Осталось закрасить пикселей: \(imageArt.progressScore)")
                     } else {
                         print("Пиксель уже закрашен.")
@@ -233,31 +230,31 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     }
     
     @objc private func eraserButtonTapped() {
-        if let lastChangedCell = imageArt.changedCells.last {
-            let row = lastChangedCell.0
-            let column = lastChangedCell.1
-            
-            // Проверяем, не выходит ли ячейка за пределы массива
-            guard row < imageArt.colorMatrix.count && column < imageArt.colorMatrix[row].count else {
-                return
-            }
-            
-            // Проверяем, была ли эта ячейка закрашена
-            if isAlreadyPainted(atRow: row, column: column) {
-                // Возвращаем ячейку в начальное состояние (прозрачный цвет)
-                imageArt.colorMatrix[row][column] = clearColor
-                imageArt.saveMatrix()
-                // Обновляем отображение
-                imageArt.setupStackView()
-                
-                // Уменьшаем счетчик закрашенных пикселей
-                paintedPixels -= 1
-                
-                // Обновляем отображение оставшегося количества закрасить пикселей
-                let remainingPixels = totalPixels - paintedPixels
-                print("Осталось закрасить пикселей: \(remainingPixels)")
-            }
-        }
+//        if let lastChangedCell = imageArt.changedCells.last {
+//            let row = lastChangedCell.0
+//            let column = lastChangedCell.1
+//            
+//            // Проверяем, не выходит ли ячейка за пределы массива
+//            guard row < imageArt.colorMatrix.count && column < imageArt.colorMatrix[row].count else {
+//                return
+//            }
+//            
+//            // Проверяем, была ли эта ячейка закрашена
+//            if isAlreadyPainted(atRow: row, column: column) {
+//                // Возвращаем ячейку в начальное состояние (прозрачный цвет)
+//                imageArt.colorMatrix[row][column] = clearColor
+////                imageArt.saveMatrix()
+//                // Обновляем отображение
+//                imageArt.setupStackView()
+//                
+//                // Уменьшаем счетчик закрашенных пикселей
+//                paintedPixels -= 1
+//                
+//                // Обновляем отображение оставшегося количества закрасить пикселей
+//                let remainingPixels = totalPixels - paintedPixels
+//                print("Осталось закрасить пикселей: \(remainingPixels)")
+//            }
+//        }
     }
 
     @objc private func backTapped() {

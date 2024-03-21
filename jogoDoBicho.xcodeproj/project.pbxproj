@@ -50,6 +50,7 @@
 		18DBDA702BA42B1200746C2D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA6F2BA42B1200746C2D /* GradientView.swift */; };
 		18DE8C082BAB219500E109D1 /* Baloo2-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18DE8C072BAB219500E109D1 /* Baloo2-Regular.ttf */; };
 		18FD0B2B2BAC721E0001A555 /* InProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD0B2A2BAC721E0001A555 /* InProgressCell.swift */; };
+		18FD0B2D2BACB6CE0001A555 /* CompletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD0B2C2BACB6CE0001A555 /* CompletedCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +97,7 @@
 		18DBDA6F2BA42B1200746C2D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		18DE8C072BAB219500E109D1 /* Baloo2-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Baloo2-Regular.ttf"; sourceTree = "<group>"; };
 		18FD0B2A2BAC721E0001A555 /* InProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InProgressCell.swift; sourceTree = "<group>"; };
+		18FD0B2C2BACB6CE0001A555 /* CompletedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +237,7 @@
 				18D5B6C62BA058E100699F3D /* MyWorkVC.swift */,
 				18D5B6C82BA058E800699F3D /* MyWorkView.swift */,
 				18FD0B2A2BAC721E0001A555 /* InProgressCell.swift */,
+				18FD0B2C2BACB6CE0001A555 /* CompletedCell.swift */,
 			);
 			path = MyWork;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				18DBDA602BA221B100746C2D /* CanadaVC.swift in Sources */,
 				18DBDA642BA221C100746C2D /* PlanetVC.swift in Sources */,
 				18D5B6D42BA0752300699F3D /* Font + Extension.swift in Sources */,
+				18FD0B2D2BACB6CE0001A555 /* CompletedCell.swift in Sources */,
 				18D5B6DC2BA0A91800699F3D /* CustomLayout.swift in Sources */,
 				18706F512B9F3BDD008FFB19 /* CustomLayaoutVC.swift in Sources */,
 				18FD0B2B2BAC721E0001A555 /* InProgressCell.swift in Sources */,

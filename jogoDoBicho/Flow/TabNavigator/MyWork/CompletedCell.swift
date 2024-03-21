@@ -1,15 +1,16 @@
 //
-//  InProgressCell.swift
-//
+//  CompletedCell.swift
+
 
 import Foundation
 import UIKit
 import SnapKit
 
-class InProgressCell: UICollectionViewCell {
+class CompletedCell: UICollectionViewCell {
     
     var continueButtonAction: (() -> Void)?
 
+    
    private(set) var nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .customOrange
@@ -48,15 +49,15 @@ class InProgressCell: UICollectionViewCell {
         return ia
     }()
     
-    override func layoutSubviews() {
-         super.layoutSubviews()
-         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-             let converter = PixelArtConverter()
-             let image = self.imageAnimal.image!
-             let convertedImage = converter.convertToPixelArt(image: image)
-             self.imageArt.setup(image: convertedImage!)
-         }
-     }
+//    override func layoutSubviews() {
+//         super.layoutSubviews()
+//         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+//             let converter = PixelArtConverter()
+//             let image = self.imageAnimal.image!
+//             let convertedImage = converter.convertToPixelArt(image: image)
+//             self.imageArt.setup(image: convertedImage!)
+//         }
+//     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,9 +75,9 @@ class InProgressCell: UICollectionViewCell {
         self.layer.borderWidth = 2.0
         self.layer.cornerRadius = 8
         addSubview(progressLabel)
-//        addSubview(imageAnimal)
+        addSubview(imageAnimal)
         addSubview(continueBtn)
-        addSubview(imageArt)
+//        addSubview(imageArt)
         continueBtn.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }
     
@@ -91,7 +92,7 @@ class InProgressCell: UICollectionViewCell {
             make.left.equalToSuperview().offset(12)
         }
         
-        imageArt.snp.makeConstraints { (make) in
+        imageAnimal.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(20)
             make.left.right.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-60)
@@ -105,11 +106,11 @@ class InProgressCell: UICollectionViewCell {
 
     }
     
-    func configure(with matrix: Matrix) {
+    func configureCompleted(with matrix: Matrix) {
         var progressScore = matrix.totalCountPix - matrix.coloredCountPix
         imageAnimal.image = UIImage(named: "\(matrix.name)PixColor")
         progressLabel.text = "\(progressScore)"
-        imageArt.namePic = matrix.name
+//        imageArt.namePic = matrix.name
 
     }
 
