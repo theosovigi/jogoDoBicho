@@ -14,6 +14,7 @@ class Matrix: Object {
     @Persisted var name: String
     @Persisted var totalCountPix: Int = 0 // Новое свойство для хранения progressScore
     @Persisted var coloredCountPix: Int = 0 // Новое свойство для хранения progressScore
+    @Persisted var isCompleted: Bool = false // Новое свойство для хранения progressScore
 
 }
 
@@ -46,13 +47,11 @@ class PaintView: UIView {
     @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: self)
         tapHandler?(location)
-        print("ОТжали")
         setupStackView()
         saveMatrix(total: nil, colored: colored)
 
     }
 
-    // Сохранение данных
     func saveMatrix(total: Int?, colored: Int?) {
         let realm = try! Realm()
         if let existingMatrix = realm.objects(Matrix.self).filter("name == %@", namePic).first {
@@ -61,12 +60,19 @@ class PaintView: UIView {
                 existingMatrix.savedColors.removeAll() // Очищаем существующие цвета
                 let colorsAsInts = colorMatrix.flatMap { $0.map { $0.toInt() } }
                 existingMatrix.savedColors.append(objectsIn: colorsAsInts)
-                if total  != nil {
-                    existingMatrix.totalCountPix = total ?? 0
+                if let total = total {
+                    existingMatrix.totalCountPix = total
                 }
-                if colored  != nil {
-                    existingMatrix.coloredCountPix = colored ?? 0
+                if let colored = colored {
+                    existingMatrix.coloredCountPix = colored
                 }
+                // Добавляем проверку и обновление isCompleted
+                if existingMatrix.totalCountPix == existingMatrix.coloredCountPix {
+                    existingMatrix.isCompleted = true
+                } else {
+                    existingMatrix.isCompleted = false
+                }
+                print("isCompleted -- \(existingMatrix.isCompleted)")
 
             }
         } else {
@@ -74,12 +80,19 @@ class PaintView: UIView {
             let matrix = Matrix()
             matrix.savedColors.append(objectsIn: colorMatrix.flatMap { $0.map { $0.toInt() } })
             matrix.name = namePic
-            if total  != nil {
-                matrix.totalCountPix = total ?? 0
+            if let total = total {
+                matrix.totalCountPix = total
             }
-            if colored  != nil {
-                matrix.coloredCountPix = colored ?? 0
+            if let colored = colored {
+                matrix.coloredCountPix = colored
             }
+            // Добавляем проверку и установку isCompleted
+            if matrix.totalCountPix == matrix.coloredCountPix {
+                matrix.isCompleted = true
+            } else {
+                matrix.isCompleted = false
+            }
+            print("isCompleted -- \(matrix.isCompleted)")
             try! realm.write {
                 realm.add(matrix)
             }

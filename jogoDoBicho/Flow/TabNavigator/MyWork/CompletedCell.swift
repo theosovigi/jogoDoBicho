@@ -36,9 +36,9 @@ class CompletedCell: UICollectionViewCell {
     }()
 
     
-    private(set) lazy var continueBtn: UIButton = {
+    private(set) lazy var repaintBtn: UIButton = {
         let button = UIButton()
-        button.setImage(.continueBtn, for: .normal)
+        button.setImage(.repaintBtn, for: .normal)
         return button
     }()
     
@@ -76,9 +76,9 @@ class CompletedCell: UICollectionViewCell {
         self.layer.cornerRadius = 8
         addSubview(progressLabel)
         addSubview(imageAnimal)
-        addSubview(continueBtn)
+        addSubview(repaintBtn)
 //        addSubview(imageArt)
-        continueBtn.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
+        repaintBtn.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }
     
     @objc private func continueButtonTapped() {
@@ -98,7 +98,7 @@ class CompletedCell: UICollectionViewCell {
             make.bottom.equalToSuperview().offset(-60)
         }
         
-        continueBtn.snp.makeConstraints { (make) in
+        repaintBtn.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().inset(12)
             make.bottom.equalToSuperview().offset(-20)
         }

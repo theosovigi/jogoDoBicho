@@ -74,9 +74,9 @@ class InProgressCell: UICollectionViewCell {
         self.layer.borderWidth = 2.0
         self.layer.cornerRadius = 8
         addSubview(progressLabel)
-//        addSubview(imageAnimal)
+        addSubview(imageAnimal)
         addSubview(continueBtn)
-        addSubview(imageArt)
+//        addSubview(imageArt)
         continueBtn.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }
     
@@ -91,7 +91,7 @@ class InProgressCell: UICollectionViewCell {
             make.left.equalToSuperview().offset(12)
         }
         
-        imageArt.snp.makeConstraints { (make) in
+        imageAnimal.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(20)
             make.left.right.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-60)
@@ -101,16 +101,17 @@ class InProgressCell: UICollectionViewCell {
             make.left.right.equalToSuperview().inset(12)
             make.bottom.equalToSuperview().offset(-20)
         }
-
-
     }
     
     func configure(with matrix: Matrix) {
-        var progressScore = matrix.totalCountPix - matrix.coloredCountPix
+        let totalCountPix = matrix.totalCountPix
+        let coloredCountPix = matrix.coloredCountPix
+        
+        let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
+        
         imageAnimal.image = UIImage(named: "\(matrix.name)PixColor")
-        progressLabel.text = "\(progressScore)"
+        progressLabel.text = "\(percentProgress)%"
         imageArt.namePic = matrix.name
-
     }
 
 }

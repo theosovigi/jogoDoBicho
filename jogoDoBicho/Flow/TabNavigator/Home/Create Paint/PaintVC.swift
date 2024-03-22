@@ -151,8 +151,11 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         } else {
             print("Ошибка: Нажатие находится вне рисунка.")
         }
-        
         imageArt.setupStackView() // Обновление представления после нажатия
+    }
+
+    @objc private func eraserButtonTapped() {
+
     }
 
     private func isAlreadyPainted(atRow row: Int, column: Int) -> Bool {
@@ -229,34 +232,6 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         contentView.timeLabel.text = timeString
     }
     
-    @objc private func eraserButtonTapped() {
-//        if let lastChangedCell = imageArt.changedCells.last {
-//            let row = lastChangedCell.0
-//            let column = lastChangedCell.1
-//            
-//            // Проверяем, не выходит ли ячейка за пределы массива
-//            guard row < imageArt.colorMatrix.count && column < imageArt.colorMatrix[row].count else {
-//                return
-//            }
-//            
-//            // Проверяем, была ли эта ячейка закрашена
-//            if isAlreadyPainted(atRow: row, column: column) {
-//                // Возвращаем ячейку в начальное состояние (прозрачный цвет)
-//                imageArt.colorMatrix[row][column] = clearColor
-////                imageArt.saveMatrix()
-//                // Обновляем отображение
-//                imageArt.setupStackView()
-//                
-//                // Уменьшаем счетчик закрашенных пикселей
-//                paintedPixels -= 1
-//                
-//                // Обновляем отображение оставшегося количества закрасить пикселей
-//                let remainingPixels = totalPixels - paintedPixels
-//                print("Осталось закрасить пикселей: \(remainingPixels)")
-//            }
-//        }
-    }
-
     @objc private func backTapped() {
         navigationController?.popViewController(animated: true)
     }
