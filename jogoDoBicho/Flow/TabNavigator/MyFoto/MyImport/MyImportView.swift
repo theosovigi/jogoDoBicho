@@ -1,12 +1,12 @@
 //
-//  MyFotoView.swift
+//  MyImportView.swift
 
 
 import Foundation
 import UIKit
 import SnapKit
 
-class MyFotoView: UIView {
+class MyImportView: UIView {
     
     private lazy var bgImage: GradientBackgroundView = {
         let view = GradientBackgroundView()
@@ -64,32 +64,46 @@ class MyFotoView: UIView {
         label.textColor = .orange
         return label
     }()
-    
-    private(set) lazy var imageContainerView: UIView = {
+
+    private(set) lazy var closeBtn: UIButton = {
+        let button = UIButton()
+        button.setImage(.closeBtn, for: .normal)
+        return button
+    }()
+
+    let infoContainer: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 20
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
+        view.layer.cornerRadius = 4
         return view
     }()
     
-    private(set) lazy var imageFaceView: UIImageView = {
+    private lazy var containerImg: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .containerImg
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+
+    private lazy var imageYouView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .phaceImg
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
-    private(set) lazy var galleryBtn: UIButton = {
+    private(set) lazy var visionBtn: UIButton = {
         let button = UIButton()
-        button.setImage(.galleryBtn, for: .normal)
+        button.setImage(.visionBtn, for: .normal)
         return button
     }()
 
-    private(set) lazy var photoBtn: UIButton = {
+    private(set) lazy var paintBtn: UIButton = {
         let button = UIButton()
-        button.setImage(.photoBtn, for: .normal)
+        button.setImage(.paintBtn, for: .normal)
         return button
     }()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -102,10 +116,15 @@ class MyFotoView: UIView {
     }
     
     private func setupUI() {
-        [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,imageContainerView,galleryBtn,photoBtn,] .forEach(addSubview(_:))
+        [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,closeBtn,infoContainer] .forEach(addSubview(_:))
         starsConteiner.addSubview(starsImg)
         starsConteiner.addSubview(starsScore)
-        imageContainerView.addSubview(imageFaceView)
+        
+        infoContainer.addSubview(containerImg)
+        infoContainer.addSubview(imageYouView)
+        infoContainer.addSubview(visionBtn)
+        infoContainer.addSubview(paintBtn)
+
 
     }
     
@@ -143,6 +162,12 @@ class MyFotoView: UIView {
             make.width.equalTo(173)
         }
 
+        closeBtn.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.right.equalToSuperview().offset(-16)
+            make.size.equalTo(46)
+        }
+
         starsConteiner.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.left.equalToSuperview().offset(16)
@@ -160,28 +185,30 @@ class MyFotoView: UIView {
             make.centerY.equalToSuperview()
         }
         
-        imageContainerView.snp.makeConstraints { make in
-            make.top.equalTo(starsConteiner.snp.bottom).offset(40)
-            make.left.right.equalToSuperview().inset(40)
-            make.height.equalTo(400)
+        infoContainer.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+//            make.left.right.equalToSuperview().inset(16)
+            make.height.equalTo(500)
+            make.width.equalTo(infoContainer.snp.height).multipliedBy(0.67)
         }
         
-        imageFaceView.snp.makeConstraints { make in
+        containerImg.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        imageYouView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview().inset(20)
         }
 
-        galleryBtn.snp.makeConstraints { make in
-            make.top.equalTo(imageContainerView.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(46)
-            make.size.equalTo(140)
-        }
-        
-        photoBtn.snp.makeConstraints { make in
-            make.top.equalTo(imageContainerView.snp.bottom).offset(20)
-            make.right.equalToSuperview().offset(-46)
-            make.size.equalTo(140)
+        visionBtn.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(28)
+            make.top.equalTo(imageYouView.snp.bottom).offset(28)
         }
 
+        paintBtn.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-28)
+            make.top.equalTo(imageYouView.snp.bottom).offset(28)
+        }
     }
 
 }

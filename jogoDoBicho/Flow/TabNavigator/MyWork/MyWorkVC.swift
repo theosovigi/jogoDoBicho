@@ -147,7 +147,7 @@ extension MyWorkVC: UICollectionViewDelegate,UICollectionViewDataSource {
             cell.configure(with: matrix)
             cell.continueButtonAction = {
                 
-            let paintVC = PaintVC(image: UIImage(named: "\(matrix.name)PixColor")!, labelText: matrix.name)
+                let paintVC = PaintVC(image: UIImage(named: "\(matrix.name.lowercased())PixColor")!, labelText: matrix.name)
             self.navigationController?.pushViewController(paintVC, animated: true)
                 
             }

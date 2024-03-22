@@ -13,6 +13,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     var colorSelectionHandler: ((UIColor) -> Void)?
     private var clearColor : UIColor = .clear
     private var lastColor: [CGPoint] = []
+    var previousColors: [[UIColor?]] = []
 
     private var selectedColor: UIColor = .green // Используйте цвет по умолчанию или любой другой цвет по умолчанию, который вам нужен
 

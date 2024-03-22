@@ -23,6 +23,8 @@
 		18706F532B9F3BE1008FFB19 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706F522B9F3BE1008FFB19 /* HomeView.swift */; };
 		18706F552B9F3E36008FFB19 /* TabBarNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706F542B9F3E36008FFB19 /* TabBarNavigator.swift */; };
 		18706F582B9F41DF008FFB19 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 18706F572B9F41DF008FFB19 /* SnapKit */; };
+		187F48E22BADAE1D0047E790 /* MyImportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F48E12BADAE1D0047E790 /* MyImportVC.swift */; };
+		187F48E42BADAE210047E790 /* MyImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F48E32BADAE210047E790 /* MyImportView.swift */; };
 		18B9A0B72BA9C3F000F15F85 /* PixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9A0B62BA9C3F000F15F85 /* PixView.swift */; };
 		18B9A0B92BA9CB3100F15F85 /* ColorCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9A0B82BA9CB3100F15F85 /* ColorCollectionCell.swift */; };
 		18B9A0BC2BAAEEA800F15F85 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 18B9A0BB2BAAEEA800F15F85 /* Realm */; };
@@ -72,6 +74,8 @@
 		18706F502B9F3BDD008FFB19 /* CustomLayaoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayaoutVC.swift; sourceTree = "<group>"; };
 		18706F522B9F3BE1008FFB19 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		18706F542B9F3E36008FFB19 /* TabBarNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarNavigator.swift; sourceTree = "<group>"; };
+		187F48E12BADAE1D0047E790 /* MyImportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImportVC.swift; sourceTree = "<group>"; };
+		187F48E32BADAE210047E790 /* MyImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImportView.swift; sourceTree = "<group>"; };
 		18B9A0B62BA9C3F000F15F85 /* PixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixView.swift; sourceTree = "<group>"; };
 		18B9A0B82BA9CB3100F15F85 /* ColorCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionCell.swift; sourceTree = "<group>"; };
 		18D5B6BE2BA0589000699F3D /* LeadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadVC.swift; sourceTree = "<group>"; };
@@ -208,6 +212,15 @@
 			path = Start;
 			sourceTree = "<group>";
 		};
+		187F48E02BADAE070047E790 /* MyImport */ = {
+			isa = PBXGroup;
+			children = (
+				187F48E12BADAE1D0047E790 /* MyImportVC.swift */,
+				187F48E32BADAE210047E790 /* MyImportView.swift */,
+			);
+			path = MyImport;
+			sourceTree = "<group>";
+		};
 		18D5B6B92BA0567B00699F3D /* TabNavigator */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +260,7 @@
 			children = (
 				18D5B6C22BA058CC00699F3D /* MyFotoVC.swift */,
 				18D5B6C42BA058D100699F3D /* MyFotoView.swift */,
+				187F48E02BADAE070047E790 /* MyImport */,
 			);
 			path = MyFoto;
 			sourceTree = "<group>";
@@ -407,6 +421,7 @@
 				18706F4D2B9F3B8A008FFB19 /* StartView.swift in Sources */,
 				18706F552B9F3E36008FFB19 /* TabBarNavigator.swift in Sources */,
 				18D5B6CB2BA058EE00699F3D /* ProfileVC.swift in Sources */,
+				187F48E22BADAE1D0047E790 /* MyImportVC.swift in Sources */,
 				18DBDA5E2BA221AA00746C2D /* AfricaView.swift in Sources */,
 				18D5B6D92BA0917400699F3D /* HomeVC.swift in Sources */,
 				18D5B6D22BA0750900699F3D /* Settings.swift in Sources */,
@@ -417,6 +432,7 @@
 				18D5B6DC2BA0A91800699F3D /* CustomLayout.swift in Sources */,
 				18706F512B9F3BDD008FFB19 /* CustomLayaoutVC.swift in Sources */,
 				18FD0B2B2BAC721E0001A555 /* InProgressCell.swift in Sources */,
+				187F48E42BADAE210047E790 /* MyImportView.swift in Sources */,
 				181BF1192BA88BAC002936AB /* PaintVC.swift in Sources */,
 				18D5B6C72BA058E100699F3D /* MyWorkVC.swift in Sources */,
 				18D5B6C92BA058E800699F3D /* MyWorkView.swift in Sources */,
@@ -585,6 +601,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A99UP8D8R8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = jogoDoBicho/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Do you camera?";
@@ -601,9 +618,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = tsarevichD.jogoDoBicho;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -614,6 +634,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A99UP8D8R8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = jogoDoBicho/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Do you camera?";
@@ -630,9 +651,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = tsarevichD.jogoDoBicho;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -105,7 +105,7 @@ class CompletedCell: UICollectionViewCell {
     }
     
     func configureCompleted(with matrix: Matrix) {
-        var progressScore = matrix.totalCountPix - matrix.coloredCountPix
+        let progressScore = matrix.totalCountPix - matrix.coloredCountPix
         imageAnimal.image = UIImage(named: "\(matrix.name.lowercased())PixColor")
         progressLabel.text = "\(progressScore)"
         imageArt.namePic = matrix.name
