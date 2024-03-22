@@ -74,9 +74,9 @@ class InProgressCell: UICollectionViewCell {
         self.layer.borderWidth = 2.0
         self.layer.cornerRadius = 8
         addSubview(progressLabel)
+//        addSubview(imageArt)
         addSubview(imageAnimal)
         addSubview(continueBtn)
-//        addSubview(imageArt)
         continueBtn.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }
     
@@ -108,10 +108,9 @@ class InProgressCell: UICollectionViewCell {
         let coloredCountPix = matrix.coloredCountPix
         
         let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
-        
+        imageArt.namePic = matrix.name
         imageAnimal.image = UIImage(named: "\(matrix.name)PixColor")
         progressLabel.text = "\(percentProgress)%"
-        imageArt.namePic = matrix.name
     }
 
 }
