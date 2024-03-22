@@ -49,15 +49,15 @@ class CompletedCell: UICollectionViewCell {
         return ia
     }()
     
-//    override func layoutSubviews() {
-//         super.layoutSubviews()
-//         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-//             let converter = PixelArtConverter()
-//             let image = self.imageAnimal.image!
-//             let convertedImage = converter.convertToPixelArt(image: image)
-//             self.imageArt.setup(image: convertedImage!)
-//         }
-//     }
+    override func layoutSubviews() {
+         super.layoutSubviews()
+         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+             let converter = PixelArtConverter()
+             let image = self.imageAnimal.image!
+             let convertedImage = converter.convertToPixelArt(image: image)
+             self.imageArt.setup(image: convertedImage!)
+         }
+     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -75,9 +75,9 @@ class CompletedCell: UICollectionViewCell {
         self.layer.borderWidth = 2.0
         self.layer.cornerRadius = 8
         addSubview(progressLabel)
-        addSubview(imageAnimal)
+//        addSubview(imageAnimal)
         addSubview(repaintBtn)
-//        addSubview(imageArt)
+        addSubview(imageArt)
         repaintBtn.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }
     
@@ -92,7 +92,7 @@ class CompletedCell: UICollectionViewCell {
             make.left.equalToSuperview().offset(12)
         }
         
-        imageAnimal.snp.makeConstraints { (make) in
+        imageArt.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(20)
             make.left.right.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-60)
@@ -102,15 +102,13 @@ class CompletedCell: UICollectionViewCell {
             make.left.right.equalToSuperview().inset(12)
             make.bottom.equalToSuperview().offset(-20)
         }
-
-
     }
     
     func configureCompleted(with matrix: Matrix) {
         var progressScore = matrix.totalCountPix - matrix.coloredCountPix
-        imageAnimal.image = UIImage(named: "\(matrix.name)PixColor")
+        imageAnimal.image = UIImage(named: "\(matrix.name.lowercased())PixColor")
         progressLabel.text = "\(progressScore)"
-//        imageArt.namePic = matrix.name
+        imageArt.namePic = matrix.name
 
     }
 
