@@ -22,12 +22,15 @@ class MyWorkVC: UIViewController {
         configureCollectionView()
         configureCompletedCollectionView()
         tappedButtons()
+
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         updateCollectionView()
     }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        updateCollectionView()
         checkObjects()
         
     }
@@ -61,7 +64,7 @@ class MyWorkVC: UIViewController {
     private func updateCollectionView() {
         
         let config = Realm.Configuration(
-            schemaVersion: 2, // Предполагаем, что предыдущая версия была 0
+            schemaVersion: 3, // Предполагаем, что предыдущая версия была 0
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
                 }

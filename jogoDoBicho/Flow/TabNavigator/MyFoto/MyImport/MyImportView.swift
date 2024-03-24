@@ -85,10 +85,10 @@ class MyImportView: UIView {
         return imageView
     }()
 
-    private lazy var imageYouView: UIImageView = {
+    private(set) lazy var imageYouView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .phaceImg
-        imageView.contentMode = .scaleAspectFit
+//        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
@@ -126,6 +126,10 @@ class MyImportView: UIView {
         infoContainer.addSubview(paintBtn)
 
 
+    }
+    
+    func setImage(_ image: UIImage?) {
+        imageYouView.image = image
     }
     
     private func setUpConstraints(){
@@ -198,6 +202,7 @@ class MyImportView: UIView {
         
         imageYouView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().offset(-120)
         }
 
         visionBtn.snp.makeConstraints { make in

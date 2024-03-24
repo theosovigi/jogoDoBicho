@@ -399,6 +399,11 @@ class PixelArtConverter {
         return grayscaleImage
     }
     
+    func convertToPixelArtColor(image: UIImage) -> UIImage? {
+        let resizedImage = resizeImage(image: image, targetSize: CGSize(width: 50, height: 50))
+    
+        return resizedImage
+    }
     private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let rect = CGRect(origin: .zero, size: targetSize)
         UIGraphicsBeginImageContextWithOptions(targetSize, false, 1.0)

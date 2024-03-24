@@ -41,22 +41,22 @@ class InProgressCell: UICollectionViewCell {
         return button
     }()
     
-    private lazy var imageArt: PaintView = {
+    private(set) lazy var imageArt: PaintView = {
         let ia = PaintView()
         ia.backgroundColor = .clear
         ia.contentMode = .scaleAspectFit
         return ia
     }()
     
-    override func layoutSubviews() {
-         super.layoutSubviews()
-         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-             let converter = PixelArtConverter()
-             let image = self.imageAnimal.image!
-             let convertedImage = converter.convertToPixelArt(image: image)
-             self.imageArt.setup(image: convertedImage!)
-         }
-     }
+//    override func layoutSubviews() {
+//         super.layoutSubviews()
+//         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+//             let converter = PixelArtConverter()
+//             let image = self.imageAnimal.image!
+//             let convertedImage = converter.convertToPixelArt(image: image)
+//             self.imageArt.setup(image: convertedImage!)
+//         }
+//     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -108,9 +108,11 @@ class InProgressCell: UICollectionViewCell {
         let coloredCountPix = matrix.coloredCountPix
         
         let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
-        imageArt.namePic = matrix.name
+//        imageArt.namePic = matrix.name
         imageAnimal.image = UIImage(named: "\(matrix.name.lowercased())PixColor")
         progressLabel.text = "\(percentProgress)%"
     }
+    
+
 
 }

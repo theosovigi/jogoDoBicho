@@ -12,9 +12,9 @@ import RealmSwift
 class Matrix: Object {
     @Persisted var savedColors: List<Int> // Используем List<Int> для хранения числовых значений цветов
     @Persisted var name: String
-    @Persisted var totalCountPix: Int = 0 // Новое свойство для хранения progressScore
-    @Persisted var coloredCountPix: Int = 0 // Новое свойство для хранения progressScore
-    @Persisted var isCompleted: Bool = false // Новое свойство для хранения progressScore
+    @Persisted var totalCountPix: Int = 0
+    @Persisted var coloredCountPix: Int = 0
+    @Persisted var isCompleted: Bool = false
 
 }
 
@@ -25,10 +25,10 @@ class PaintView: UIView {
     var colored: Int = 0
     var totalCountPix: Int = 0
     var tapHandler: ((CGPoint) -> Void)?
-    private var pixelArtImage: UIImage!
     var colorMatrix: [[UIColor]] = []
-    var changedCells: [(Int, Int)] = [] // Дополнительный массив для хранения измененных ячеек
+    var changedCells: [(Int, Int)] = []
     var onTotalPixelsUpdated: ((Int) -> Void)?
+    private var pixelArtImage: UIImage!
 
     private lazy var bgImage: UIImageView = {
         let imageView = UIImageView()
@@ -103,9 +103,9 @@ class PaintView: UIView {
     private func restoreMatrix(imageName: String) {
         // Восстановление Matrix из Realm
         let config = Realm.Configuration(
-            schemaVersion: 2, // Предполагаем, что предыдущая версия была 0
+            schemaVersion: 3, // Предполагаем, что предыдущая версия была 0
             migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
+                if oldSchemaVersion < 3 {
                     // Для этой миграции не требуется выполнение кода,
                     // так как добавление новых полей обрабатывается автоматически
                 }

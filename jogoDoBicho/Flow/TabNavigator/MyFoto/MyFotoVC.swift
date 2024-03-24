@@ -7,7 +7,7 @@ import UIKit
 
 class MyFotoVC: UIViewController {
     
-    private var savedImage: UIImage?
+    private var savedImageImport: UIImage?
     private let uD = UD.shared
     private let imagePicker = UIImagePickerController()
 
@@ -42,9 +42,9 @@ class MyFotoVC: UIViewController {
         navigationController?.pushViewController(infoVC, animated: true)
     }
     
-    private func checkFotoLoad() {
+private func checkFotoLoad() {
         if let savedImage = getImageFromLocal() {
-            self.savedImage = savedImage
+            self.savedImageImport = savedImage
             contentView.imageFaceView.image = savedImage
         }
     }
@@ -73,9 +73,11 @@ class MyFotoVC: UIViewController {
 
 extension MyFotoVC: UIImagePickerControllerDelegate {
     
-    func saveImageToLocal(image: UIImage) {
+    func saveImageToLocalImport(image: UIImage) {
         if let data = image.jpegData(compressionQuality: 1.0),
             let id  = uD.userID {
+            let timeStamp = Date().timeIntervalSince1970 // Получаем текущую временную метку
+            let fileName = "\(id)_\(timeStamp).png" // Создаем уникальное имя файла
             let fileURL = getDocumentsDirectory().appendingPathComponent("\(id).png")
             try? data.write(to: fileURL)
         }
@@ -100,10 +102,11 @@ extension MyFotoVC: UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
           if let image = info[.originalImage] as? UIImage {
-              saveImageToLocal(image: image)
-              savedImage = image // Сохраняем изображение в свойство savedImage
+              saveImageToLocalImport(image: image)
+              savedImageImport = image // Сохраняем изображение в свойство savedImage
               let importVC = MyImportVC()
               importVC.importedImage = image // Передаем изображение на MyImportVC
+              importVC.imageName = "\(uD.userID ?? 0)_\(Int(Date().timeIntervalSince1970)).png" // Уникальное имя файла
               navigationController?.pushViewController(importVC, animated: true)
           }
         
