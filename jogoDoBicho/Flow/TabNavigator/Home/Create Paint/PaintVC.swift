@@ -10,12 +10,14 @@ import SnapKit
 import UIKit
 
 class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    
     var colorSelectionHandler: ((UIColor) -> Void)?
-    private var clearColor : UIColor = .clear
-    private var lastColor: [CGPoint] = []
     var previousColors: [[UIColor?]] = []
 
-    private var selectedColor: UIColor = .green // Используйте цвет по умолчанию или любой другой цвет по умолчанию, который вам нужен
+    private var selectedColor: UIColor = .green
+    private var clearColor : UIColor = .clear
+    private var lastColor: [CGPoint] = []
 
     private let imageView: UIImageView
     private let imageLabelText: String?
@@ -28,6 +30,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     var contentView: PixView {
         view as? PixView ?? PixView()
     }
+    
     override func loadView() {
         view = PixView()
     }
@@ -58,6 +61,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             self.startTimer()
         }
         setupGestureRecognizer()
+        ifCompletedWin()
     }
         
     override func viewWillAppear(_ animated: Bool) {
@@ -81,11 +85,6 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         tabBarController?.tabBar.isHidden = false
         stopTimer()
     }
-    
-    private func calculateTotalPixels() -> Int {
-        let pixelsCount = 50 * 50
-        return pixelsCount
-    }
 
     private func setupGestureRecognizer() {
         let tapGesture = UITapGestureRecognizer(target: imageArt, action: #selector(handleTap(_:)))
@@ -98,7 +97,13 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     }
 
     
-
+    private func ifCompletedWin() {
+        imageArt.tapCongratilation = {
+                 let vc = CongratilationVC()
+                 self.navigationController?.pushViewController(vc, animated: true)
+             }
+    }
+    
     @objc private func eraserButtonTapped() {
         guard let lastPoint = lastColor.last else {
             return
@@ -166,95 +171,9 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         } else {
             print("Ошибка: Нажатие находится вне рисунка.")
         }
-        imageArt.setupStackView()
-    }
-
-//    @objc private func handleTap(_ location: CGPoint) {
-//        print("Нажали")
-//        let cellWidth = imageArt.frame.width / 50
-//        let cellHeight = imageArt.frame.height / 50
-//        
-//        let columnIndex = Int(location.x / cellWidth)
-//        let rowIndex = Int(location.y / cellHeight)
-//        
-//        if rowIndex < imageArt.colorMatrix.count && columnIndex < imageArt.colorMatrix[rowIndex].count {
-//            let currentColor = imageArt.colorMatrix[rowIndex][columnIndex]
-//            
-//            // Проверяем, является ли цвет не прозрачным
-//            if !isTransparentColor(color: currentColor) {
-//                // Обрабатываем случай, если цвет оттенка серого
-//                if isGrayColor(color: currentColor) {
-//                    let previousColor = imageArt.colorMatrix[rowIndex][columnIndex]
-//                    imageArt.colorMatrix[rowIndex][columnIndex] = selectedColor
-//                    print("selectedColor -- \(selectedColor)")
-//                    imageArt.changedCells.append((rowIndex, columnIndex)) // Добавление координат измененной ячейки
-//                    print("Предыдущий цвет: \(previousColor)")
-//                    clearColor = previousColor
-//                    lastColor.append(clearColor)
-//                    print("lastColor --: \(lastColor)")
-//
-//                    // Увеличиваем счетчик закрашенных пикселей
-//                    imageArt.colored += 1
-//                    
-//                    // Обновляем отображение оставшегося количества только если пиксель не был закрашен ранее
-//                    imageArt.progressScore = imageArt.totalCountPix - imageArt.colored
-//
-//                   print("Осталось закрасить пикселей: \(imageArt.progressScore)")
-//                } else {
-//                    // Просто закрашиваем выбранным цветом, если цвет не оттенок серого
-//                    if !isAlreadyPainted(atRow: rowIndex, column: columnIndex) {
-//                        let previousColor = imageArt.colorMatrix[rowIndex][columnIndex]
-//                        imageArt.colorMatrix[rowIndex][columnIndex] = selectedColor // Используйте выбранный цвет
-//                        print("selectedColor -- \(selectedColor)")
-//                        imageArt.changedCells.append((rowIndex, columnIndex)) // Добавление координат измененной ячейки
-//                        print("Предыдущий цвет: \(previousColor)")
-//                        clearColor = previousColor
-//                        lastColor.append(clearColor)
-//                        print("lastColor --: \(lastColor)")
-//                        // Увеличиваем счетчик закрашенных пикселей
-//                        imageArt.colored += 1
-//
-//                        // Обновляем отображение оставшегося количества только если пиксель не был закрашен ранее
-//                         imageArt.progressScore = imageArt.totalCountPix - imageArt.colored
-//
-//                        print("Осталось закрасить пикселей: \(imageArt.progressScore)")
-//                    } else {
-//                        print("Пиксель уже закрашен.")
-//                    }
-//                }
-//            } else {
-//                print("Ошибка: Прозрачная ячейку.")
-//            }
-//        } else {
-//            print("Ошибка: Нажатие находится вне рисунка.")
-//        }
-//        imageArt.setupStackView() // Обновление представления после нажатия
-//    }
-//
-//    @objc private func eraserButtonTapped() {
-//        guard let lastColor = lastColor.last else {
-//            // Если массив lastColor пуст, нет цветов для стирания
-//            return
-//        }
-//
-//        // Проходим по всем сохраненным координатам и закрашиваем их последним цветом
-//        for (row, column) in imageArt.changedCells {
-//            imageArt.colorMatrix[row][column] = lastColor
-//        }
-//
-//        // Удаляем последний цвет из массива lastColor
-//        if !lastColor.isEmpty {
-//            lastColor.removeLast()
-//        }
-//
-//        // Удаляем последние координаты из массива changedCells
-//        if !imageArt.changedCells.isEmpty {
-//            imageArt.changedCells.removeLast()
-//        }
-//
-//        // Перерисовываем imageArt
+        
 //        imageArt.setupStackView()
-//    }
+    }
 
     private func isAlreadyPainted(atRow row: Int, column: Int) -> Bool {
            let currentColor = imageArt.colorMatrix[row][column]
@@ -266,7 +185,6 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         return red == green && green == blue // Проверяем, равны ли каналы красного, зеленого и синего
     }
-
 
     // Проверка, является ли цвет прозрачным
     private func isTransparentColor(color: UIColor) -> Bool {

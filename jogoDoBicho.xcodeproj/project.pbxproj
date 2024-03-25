@@ -43,6 +43,9 @@
 		18D5B6D42BA0752300699F3D /* Font + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6D32BA0752300699F3D /* Font + Extension.swift */; };
 		18D5B6D92BA0917400699F3D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6D82BA0917400699F3D /* HomeVC.swift */; };
 		18D5B6DC2BA0A91800699F3D /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6DB2BA0A91800699F3D /* CustomLayout.swift */; };
+		18D5D2EB2BB1D0A8009099B7 /* DataBaseRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2EA2BB1D0A8009099B7 /* DataBaseRealm.swift */; };
+		18D5D2ED2BB1D3AB009099B7 /* CongratilationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2EC2BB1D3AB009099B7 /* CongratilationVC.swift */; };
+		18D5D2EF2BB1D3AF009099B7 /* CongratilationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2EE2BB1D3AF009099B7 /* CongratilationView.swift */; };
 		18DBDA5C2BA221A300746C2D /* AfricaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA5B2BA221A300746C2D /* AfricaVC.swift */; };
 		18DBDA5E2BA221AA00746C2D /* AfricaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA5D2BA221A900746C2D /* AfricaView.swift */; };
 		18DBDA602BA221B100746C2D /* CanadaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA5F2BA221B100746C2D /* CanadaVC.swift */; };
@@ -93,6 +96,9 @@
 		18D5B6D32BA0752300699F3D /* Font + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font + Extension.swift"; sourceTree = "<group>"; };
 		18D5B6D82BA0917400699F3D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		18D5B6DB2BA0A91800699F3D /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
+		18D5D2EA2BB1D0A8009099B7 /* DataBaseRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseRealm.swift; sourceTree = "<group>"; };
+		18D5D2EC2BB1D3AB009099B7 /* CongratilationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratilationVC.swift; sourceTree = "<group>"; };
+		18D5D2EE2BB1D3AF009099B7 /* CongratilationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratilationView.swift; sourceTree = "<group>"; };
 		18DBDA5B2BA221A300746C2D /* AfricaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfricaVC.swift; sourceTree = "<group>"; };
 		18DBDA5D2BA221A900746C2D /* AfricaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfricaView.swift; sourceTree = "<group>"; };
 		18DBDA5F2BA221B100746C2D /* CanadaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanadaVC.swift; sourceTree = "<group>"; };
@@ -132,10 +138,10 @@
 		181BF1172BA88B97002936AB /* Create Paint */ = {
 			isa = PBXGroup;
 			children = (
-				18DBDA672BA3298E00746C2D /* CustomPixelArt */,
+				18DBDA672BA3298E00746C2D /* Congratilation */,
 				181BF1182BA88BAC002936AB /* PaintVC.swift */,
-				18B9A0B62BA9C3F000F15F85 /* PixView.swift */,
 				181BF11A2BA88CEE002936AB /* PaintView.swift */,
+				18B9A0B62BA9C3F000F15F85 /* PixView.swift */,
 				181BF11C2BA8A0C6002936AB /* ColorCollection.swift */,
 				18B9A0B82BA9CB3100F15F85 /* ColorCollectionCell.swift */,
 			);
@@ -284,6 +290,7 @@
 				18D5B6D12BA0750900699F3D /* Settings.swift */,
 				18D5B6D32BA0752300699F3D /* Font + Extension.swift */,
 				181BF10A2BA44EF6002936AB /* CustomTextStyle.swift */,
+				18D5D2EA2BB1D0A8009099B7 /* DataBaseRealm.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -324,11 +331,13 @@
 			path = Planet;
 			sourceTree = "<group>";
 		};
-		18DBDA672BA3298E00746C2D /* CustomPixelArt */ = {
+		18DBDA672BA3298E00746C2D /* Congratilation */ = {
 			isa = PBXGroup;
 			children = (
+				18D5D2EC2BB1D3AB009099B7 /* CongratilationVC.swift */,
+				18D5D2EE2BB1D3AF009099B7 /* CongratilationView.swift */,
 			);
-			path = CustomPixelArt;
+			path = Congratilation;
 			sourceTree = "<group>";
 		};
 		18DBDA6C2BA3755900746C2D /* UIFont */ = {
@@ -426,6 +435,7 @@
 				18D5B6CB2BA058EE00699F3D /* ProfileVC.swift in Sources */,
 				187F48E22BADAE1D0047E790 /* MyImportVC.swift in Sources */,
 				18DBDA5E2BA221AA00746C2D /* AfricaView.swift in Sources */,
+				18D5D2EB2BB1D0A8009099B7 /* DataBaseRealm.swift in Sources */,
 				18D5B6D92BA0917400699F3D /* HomeVC.swift in Sources */,
 				18D5B6D22BA0750900699F3D /* Settings.swift in Sources */,
 				18DBDA602BA221B100746C2D /* CanadaVC.swift in Sources */,
@@ -452,9 +462,11 @@
 				18DBDA622BA221B700746C2D /* CanadaView.swift in Sources */,
 				181BF11D2BA8A0C6002936AB /* ColorCollection.swift in Sources */,
 				18D5B6C52BA058D100699F3D /* MyFotoView.swift in Sources */,
+				18D5D2ED2BB1D3AB009099B7 /* CongratilationVC.swift in Sources */,
 				18706F532B9F3BE1008FFB19 /* HomeView.swift in Sources */,
 				18706F352B9F3948008FFB19 /* SceneDelegate.swift in Sources */,
 				181BF11B2BA88CEE002936AB /* PaintView.swift in Sources */,
+				18D5D2EF2BB1D3AF009099B7 /* CongratilationView.swift in Sources */,
 				18D5B6D02BA0750400699F3D /* UD.swift in Sources */,
 				18706F4B2B9F3B85008FFB19 /* StartVC.swift in Sources */,
 				18D5B6C32BA058CC00699F3D /* MyFotoVC.swift in Sources */,

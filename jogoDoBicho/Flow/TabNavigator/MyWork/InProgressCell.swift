@@ -12,22 +12,21 @@ class InProgressCell: UICollectionViewCell {
 
    private(set) var nameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .customOrange
+        label.textColor = .black
         label.textAlignment = .center
-        label.font = .customFont(font: .baloo, style: .regular, size: 16)
+        label.font = .customFont(font: .baloo, style: .regular, size: 10)
         return label
     }()
 
     private(set) var progressLabel: UILabel = {
          let label = UILabel()
-         label.textColor = .white
+         label.textColor = .red
          label.text = "3%"
          label.textAlignment = .center
-         label.font = .customFont(font: .baloo, style: .regular, size: 20)
+         label.font = .customFont(font: .baloo, style: .regular, size: 10)
          return label
      }()
 
-    
     private(set) lazy var imageAnimal: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -69,10 +68,10 @@ class InProgressCell: UICollectionViewCell {
     }
     
     private func setupViews() {
-        self.backgroundColor = .black.withAlphaComponent(0.6)
-        self.layer.borderColor = UIColor.customOrange.cgColor
-        self.layer.borderWidth = 2.0
-        self.layer.cornerRadius = 8
+        self.backgroundColor = .customGreen
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 1.0
+        addSubview(nameLabel)
         addSubview(progressLabel)
 //        addSubview(imageArt)
         addSubview(imageAnimal)
@@ -86,20 +85,25 @@ class InProgressCell: UICollectionViewCell {
 
 
     private func setupConstraints() {
+        
+        nameLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(12)
+            make.left.equalToSuperview().offset(4)
+        }
+
         progressLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(12)
-            make.left.equalToSuperview().offset(12)
+            make.right.equalToSuperview().offset(-4)
         }
         
         imageAnimal.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(20)
-            make.left.right.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().offset(-60)
+            make.center.equalToSuperview()
+            make.size.equalTo(52)
         }
         
         continueBtn.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview().inset(12)
-            make.bottom.equalToSuperview().offset(-20)
+            make.left.right.equalToSuperview().inset(4)
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -109,6 +113,7 @@ class InProgressCell: UICollectionViewCell {
         
         let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
 //        imageArt.namePic = matrix.name
+        nameLabel.text = matrix.name
         imageAnimal.image = UIImage(named: "\(matrix.name.lowercased())PixColor")
         progressLabel.text = "\(percentProgress)%"
     }

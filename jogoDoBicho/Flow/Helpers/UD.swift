@@ -17,12 +17,12 @@ class UD {
         }
     }
     
-    var scoreLevel: Int {
+    var scorePaint: Int {
         get {
-            return defaults.integer(forKey: "scoreLevel", defaultValue: 1)
+            return defaults.integer(forKey: "scorePaint", defaultValue: 0)
         }
         set {
-            defaults.set(newValue, forKey: "scoreLevel")
+            defaults.set(newValue, forKey: "scorePaint")
         }
     }
     

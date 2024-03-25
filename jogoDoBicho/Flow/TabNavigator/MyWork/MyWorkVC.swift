@@ -149,11 +149,15 @@ extension MyWorkVC: UICollectionViewDelegate,UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InProgressCell", for: indexPath) as! InProgressCell
             cell.configure(with: matrix)
             cell.continueButtonAction = {
-                
-                let paintVC = PaintVC(image: UIImage(named: "\(matrix.name.lowercased())PixColor")!, labelText: matrix.name)
-            self.navigationController?.pushViewController(paintVC, animated: true)
-                
-            }
+                if let image = UIImage(named: "\(matrix.name.lowercased())PixColor") {
+                           let paintVC = PaintVC(image: image, labelText: matrix.name)
+                           self.navigationController?.pushViewController(paintVC, animated: true)
+                       } else {
+                           // В случае, если изображение не найдено, можем выполнить какое-то действие или вывести сообщение об ошибке
+                           print("Изображение \(matrix.name.lowercased())PixColor не найдено")
+                       }
+                   }
+            
             return cell
         } else if collectionView == contentView.completedCollection {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompletedCell", for: indexPath) as! CompletedCell
@@ -161,6 +165,7 @@ extension MyWorkVC: UICollectionViewDelegate,UICollectionViewDataSource {
             // Дополнительная конфигурация cell
             return cell
         }
+        
         return UICollectionViewCell()
     }
 }
@@ -186,12 +191,19 @@ extension MyWorkVC: UICollectionViewDelegate,UICollectionViewDataSource {
 //        return UICollectionViewCell()
 //    }
 //
-
 extension MyWorkVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let padding: CGFloat = 10
-        let collectionViewSize = collectionView.frame.size.width - padding
-        return CGSize(width: collectionViewSize/2, height: collectionViewSize/2) // Размер для 2 ячеек в ряд
+        let collectionViewWidth = collectionView.frame.width
+        let numberOfItemsPerRow: CGFloat = 5
+        let cellWidth = collectionViewWidth / numberOfItemsPerRow
+        return CGSize(width: cellWidth, height: 100) // Ширина ячейки будет равна ширине коллекции, деленной на количество ячеек в строке
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0 // Устанавливаем отступы между ячейками по горизонтали
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0 // Устанавливаем отступы между ячейками по вертикали
     }
 }
-

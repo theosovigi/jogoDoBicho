@@ -99,8 +99,8 @@ class MyWorkView: UIView {
     lazy var inProgressCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical // Вертикальная прокрутка
-        layout.minimumLineSpacing = 10 // Расстояние между строками
-        layout.minimumInteritemSpacing = 10 // Расстояние между элементами в строке
+//        layout.minimumLineSpacing = 10 // Расстояние между строками
+//        layout.minimumInteritemSpacing = 10 // Расстояние между элементами в строке
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
@@ -110,8 +110,8 @@ class MyWorkView: UIView {
     lazy var completedCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical // Вертикальная прокрутка
-        layout.minimumLineSpacing = 10 // Расстояние между строками
-        layout.minimumInteritemSpacing = 10 // Расстояние между элементами в строке
+//        layout.minimumLineSpacing = 10 // Расстояние между строками
+//        layout.minimumInteritemSpacing = 5 // Расстояние между элементами в строке
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
