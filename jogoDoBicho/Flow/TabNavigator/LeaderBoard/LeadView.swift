@@ -66,12 +66,6 @@ class LeadView: UIView {
         return label
     }()
 
-    private(set) lazy var closeBtn: UIButton = {
-        let button = UIButton()
-        button.setImage(.closeBtn, for: .normal)
-        return button
-    }()
-
     let infoContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
@@ -101,6 +95,16 @@ class LeadView: UIView {
         label.numberOfLines = 0
         return label
     }()
+    
+    private(set) lazy var leaderBoardTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.backgroundColor = .clear
+        tableView.showsVerticalScrollIndicator = false
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        tableView.register(LeadCell.self, forCellReuseIdentifier: LeadCell.reuseId)
+        tableView.separatorStyle = .none
+        return tableView
+    }()
 
     
     override init(frame: CGRect) {
@@ -114,12 +118,14 @@ class LeadView: UIView {
     }
     
     private func setupUI() {
-        [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,closeBtn,infoContainer] .forEach(addSubview(_:))
+        [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,infoContainer] .forEach(addSubview(_:))
         starsConteiner.addSubview(starsImg)
         starsConteiner.addSubview(starsScore)
         infoContainer.addSubview(containerImg)
         infoContainer.addSubview(leaderImg)
         infoContainer.addSubview(leadLabel)
+        infoContainer.addSubview(leaderBoardTableView)
+
 
     }
     
@@ -155,12 +161,6 @@ class LeadView: UIView {
             make.right.equalToSuperview().offset(50)
             make.height.equalTo(46)
             make.width.equalTo(173)
-        }
-
-        closeBtn.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top)
-            make.right.equalToSuperview().offset(-16)
-            make.size.equalTo(46)
         }
 
         starsConteiner.snp.makeConstraints { make in
@@ -199,6 +199,13 @@ class LeadView: UIView {
             make.top.equalToSuperview().offset(80)
             make.centerX.equalToSuperview()
         }
+        
+        leaderBoardTableView.snp.makeConstraints { make in
+            make.top.equalTo(leadLabel.snp.bottom).offset(24)
+            make.left.right.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().offset(-20)
+        }
+
     }
 }
 

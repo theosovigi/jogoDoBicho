@@ -46,6 +46,12 @@
 		18D5D2EB2BB1D0A8009099B7 /* DataBaseRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2EA2BB1D0A8009099B7 /* DataBaseRealm.swift */; };
 		18D5D2ED2BB1D3AB009099B7 /* CongratilationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2EC2BB1D3AB009099B7 /* CongratilationVC.swift */; };
 		18D5D2EF2BB1D3AF009099B7 /* CongratilationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2EE2BB1D3AF009099B7 /* CongratilationView.swift */; };
+		18D5D2F62BB1F680009099B7 /* GetServiceBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2F52BB1F680009099B7 /* GetServiceBack.swift */; };
+		18D5D2F82BB1F688009099B7 /* PostServiceBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2F72BB1F688009099B7 /* PostServiceBack.swift */; };
+		18D5D2FA2BB1F695009099B7 /* AuthServiceBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2F92BB1F695009099B7 /* AuthServiceBack.swift */; };
+		18D5D2FC2BB1F6A7009099B7 /* PayloadBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2FB2BB1F6A7009099B7 /* PayloadBack.swift */; };
+		18D5D2FE2BB2039A009099B7 /* LeadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2FD2BB2039A009099B7 /* LeadModel.swift */; };
+		18D5D3002BB2042D009099B7 /* LeadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5D2FF2BB2042D009099B7 /* LeadCell.swift */; };
 		18DBDA5C2BA221A300746C2D /* AfricaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA5B2BA221A300746C2D /* AfricaVC.swift */; };
 		18DBDA5E2BA221AA00746C2D /* AfricaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA5D2BA221A900746C2D /* AfricaView.swift */; };
 		18DBDA602BA221B100746C2D /* CanadaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DBDA5F2BA221B100746C2D /* CanadaVC.swift */; };
@@ -99,6 +105,12 @@
 		18D5D2EA2BB1D0A8009099B7 /* DataBaseRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseRealm.swift; sourceTree = "<group>"; };
 		18D5D2EC2BB1D3AB009099B7 /* CongratilationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratilationVC.swift; sourceTree = "<group>"; };
 		18D5D2EE2BB1D3AF009099B7 /* CongratilationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratilationView.swift; sourceTree = "<group>"; };
+		18D5D2F52BB1F680009099B7 /* GetServiceBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetServiceBack.swift; sourceTree = "<group>"; };
+		18D5D2F72BB1F688009099B7 /* PostServiceBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceBack.swift; sourceTree = "<group>"; };
+		18D5D2F92BB1F695009099B7 /* AuthServiceBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceBack.swift; sourceTree = "<group>"; };
+		18D5D2FB2BB1F6A7009099B7 /* PayloadBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadBack.swift; sourceTree = "<group>"; };
+		18D5D2FD2BB2039A009099B7 /* LeadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadModel.swift; sourceTree = "<group>"; };
+		18D5D2FF2BB2042D009099B7 /* LeadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadCell.swift; sourceTree = "<group>"; };
 		18DBDA5B2BA221A300746C2D /* AfricaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfricaVC.swift; sourceTree = "<group>"; };
 		18DBDA5D2BA221A900746C2D /* AfricaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfricaView.swift; sourceTree = "<group>"; };
 		18DBDA5F2BA221B100746C2D /* CanadaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanadaVC.swift; sourceTree = "<group>"; };
@@ -277,8 +289,11 @@
 		18D5B6BD2BA0588400699F3D /* LeaderBoard */ = {
 			isa = PBXGroup;
 			children = (
+				18D5D2F02BB1F61B009099B7 /* ServiceBack */,
 				18D5B6BE2BA0589000699F3D /* LeadVC.swift */,
 				18D5B6C02BA058C300699F3D /* LeadView.swift */,
+				18D5D2FD2BB2039A009099B7 /* LeadModel.swift */,
+				18D5D2FF2BB2042D009099B7 /* LeadCell.swift */,
 			);
 			path = LeaderBoard;
 			sourceTree = "<group>";
@@ -311,6 +326,17 @@
 				18D5B6DB2BA0A91800699F3D /* CustomLayout.swift */,
 			);
 			path = Layout;
+			sourceTree = "<group>";
+		};
+		18D5D2F02BB1F61B009099B7 /* ServiceBack */ = {
+			isa = PBXGroup;
+			children = (
+				18D5D2F52BB1F680009099B7 /* GetServiceBack.swift */,
+				18D5D2F72BB1F688009099B7 /* PostServiceBack.swift */,
+				18D5D2F92BB1F695009099B7 /* AuthServiceBack.swift */,
+				18D5D2FB2BB1F6A7009099B7 /* PayloadBack.swift */,
+			);
+			path = ServiceBack;
 			sourceTree = "<group>";
 		};
 		18DBDA592BA2217D00746C2D /* Canada */ = {
@@ -431,6 +457,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18706F4D2B9F3B8A008FFB19 /* StartView.swift in Sources */,
+				18D5D2FE2BB2039A009099B7 /* LeadModel.swift in Sources */,
 				18706F552B9F3E36008FFB19 /* TabBarNavigator.swift in Sources */,
 				18D5B6CB2BA058EE00699F3D /* ProfileVC.swift in Sources */,
 				187F48E22BADAE1D0047E790 /* MyImportVC.swift in Sources */,
@@ -443,10 +470,12 @@
 				18D5B6D42BA0752300699F3D /* Font + Extension.swift in Sources */,
 				18FD0B2D2BACB6CE0001A555 /* CompletedCell.swift in Sources */,
 				18D5B6DC2BA0A91800699F3D /* CustomLayout.swift in Sources */,
+				18D5D2F62BB1F680009099B7 /* GetServiceBack.swift in Sources */,
 				18706F512B9F3BDD008FFB19 /* CustomLayaoutVC.swift in Sources */,
 				18FD0B2B2BAC721E0001A555 /* InProgressCell.swift in Sources */,
 				187F48E42BADAE210047E790 /* MyImportView.swift in Sources */,
 				181BF1192BA88BAC002936AB /* PaintVC.swift in Sources */,
+				18D5D2FC2BB1F6A7009099B7 /* PayloadBack.swift in Sources */,
 				18D5B6C72BA058E100699F3D /* MyWorkVC.swift in Sources */,
 				18D5B6C92BA058E800699F3D /* MyWorkView.swift in Sources */,
 				18D5B6C12BA058C300699F3D /* LeadView.swift in Sources */,
@@ -469,9 +498,12 @@
 				18D5D2EF2BB1D3AF009099B7 /* CongratilationView.swift in Sources */,
 				18D5B6D02BA0750400699F3D /* UD.swift in Sources */,
 				18706F4B2B9F3B85008FFB19 /* StartVC.swift in Sources */,
+				18D5D3002BB2042D009099B7 /* LeadCell.swift in Sources */,
 				18D5B6C32BA058CC00699F3D /* MyFotoVC.swift in Sources */,
+				18D5D2F82BB1F688009099B7 /* PostServiceBack.swift in Sources */,
 				18DBDA702BA42B1200746C2D /* GradientView.swift in Sources */,
 				18DBDA5C2BA221A300746C2D /* AfricaVC.swift in Sources */,
+				18D5D2FA2BB1F695009099B7 /* AuthServiceBack.swift in Sources */,
 				18D5B6BF2BA0589000699F3D /* LeadVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

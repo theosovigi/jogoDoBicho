@@ -156,7 +156,7 @@ class ProfileView: UIView,UITextFieldDelegate {
     private(set) lazy var scorePaintLabel: UILabel = {
         let label = UILabel()
         label.font = .customFont(font: .baloo, style: .regular, size: 24)
-        label.text = "\(UD.shared.scorePaint)"
+        label.text = "\(uD.scorePaint)"
         label.textAlignment = .center
         label.textColor = .customOrange
         label.numberOfLines = 0
@@ -210,7 +210,7 @@ class ProfileView: UIView,UITextFieldDelegate {
     private(set) lazy var scoreCountLabel: UILabel = {
         let label = UILabel()
         label.font = .customFont(font: .baloo, style: .regular, size: 24)
-        label.text = "300"
+        label.text = "\(uD.scoreCoints)"
         label.textAlignment = .center
         label.textColor = .customOrange
         label.numberOfLines = 0
