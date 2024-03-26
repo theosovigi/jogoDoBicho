@@ -183,7 +183,7 @@ class ProfileView: UIView,UITextFieldDelegate {
     private(set) lazy var scoreTimeLabel: UILabel = {
         let label = UILabel()
         label.font = .customFont(font: .baloo, style: .regular, size: 24)
-        label.text = "0:00"
+        label.text = formatTime(minutes: 0, seconds: 0)
         label.textAlignment = .center
         label.textColor = .customOrange
         label.numberOfLines = 0
@@ -254,20 +254,114 @@ class ProfileView: UIView,UITextFieldDelegate {
         return label
     }()
     
-    private lazy var achievementImage: UIImageView = {
+    private(set) lazy var achievementImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .achievementImg
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
-    private lazy var achievementImageTwo: UIImageView = {
+    private lazy var achievementOneLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 10)
+        label.text = "Beginner:\nColor your first picture"
+        label.textAlignment = .center
+        label.textColor = .customOrange
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private(set) lazy var achievementImageTwo: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .achievementImg
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
+    private lazy var achievementTwoLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 10)
+        label.text = "Quick Start:\nColor picture in the 5 minutes of the game"
+        label.textAlignment = .center
+        label.textColor = .customOrange
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private(set) lazy var achievementImageThree: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .achievementImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private lazy var achievementThreeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 10)
+        label.text = "Amateur Artist:\nPaint 10 pictures"
+        label.textAlignment = .center
+        label.textColor = .customOrange
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private(set) lazy var achievementImageFour: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .achievementImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private lazy var achievementFourLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 10)
+        label.text = "Brush Master:\nPaint 20 pictures."
+        label.textAlignment = .center
+        label.textColor = .customOrange
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private(set) lazy var achievementImageFive: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .achievementImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private lazy var achievementFiveLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 10)
+        label.text = "Collector:\nBuild a collection of 15 pictures."
+        label.textAlignment = .center
+        label.textColor = .customOrange
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private(set) lazy var achievementImageSix: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .achievementImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private(set) lazy var achievementSixLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(font: .baloo, style: .regular, size: 10)
+        label.text = "Explorer:\nDiscover 3 islands"
+        label.textAlignment = .center
+        label.textColor = .customOrange
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -308,7 +402,17 @@ class ProfileView: UIView,UITextFieldDelegate {
         profileContainer.addSubview(achievementsLabel)
         profileContainer.addSubview(achievementImage)
         profileContainer.addSubview(achievementImageTwo)
-
+        profileContainer.addSubview(achievementImageThree)
+        profileContainer.addSubview(achievementImageFour)
+        profileContainer.addSubview(achievementImageFive)
+        profileContainer.addSubview(achievementImageSix)
+        
+        achievementImage.addSubview(achievementOneLabel)
+        achievementImageTwo.addSubview(achievementTwoLabel)
+        achievementImageThree.addSubview(achievementThreeLabel)
+        achievementImageFour.addSubview(achievementFourLabel)
+        achievementImageFive.addSubview(achievementFiveLabel)
+        achievementImageSix.addSubview(achievementSixLabel)
 
 
     }
@@ -381,7 +485,7 @@ class ProfileView: UIView,UITextFieldDelegate {
         }
 
         profileLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(40)
+            make.top.equalToSuperview().offset(12)
             make.centerX.equalToSuperview()
         }
 
@@ -469,18 +573,81 @@ class ProfileView: UIView,UITextFieldDelegate {
         }
         
         achievementImage.snp.makeConstraints { (make) in
-            make.top.equalTo(achievementsLabel.snp.bottom).offset(12)
+            make.top.equalTo(achievementsLabel.snp.bottom).offset(6)
             make.centerX.equalToSuperview()
-            make.size.equalTo(75)
+            make.size.equalTo(90)
+        }
+
+        achievementOneLabel.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview().offset(18)
+            make.bottom.equalToSuperview().offset(-4)
+            make.left.right.equalToSuperview().inset(8)
         }
 
         achievementImageTwo.snp.makeConstraints { (make) in
-            make.top.equalTo(achievementImage.snp.bottom).offset(12)
-            make.centerX.equalToSuperview()
-            make.size.equalTo(75)
+            make.top.equalTo(achievementsLabel.snp.bottom).offset(6)
+            make.left.equalTo(achievementImage.snp.right).offset(14)
+            make.size.equalTo(90)
+        }
+        
+        achievementTwoLabel.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview().offset(18)
+            make.bottom.equalToSuperview().offset(-4)
+            make.left.right.equalToSuperview().inset(8)
         }
 
+        achievementImageThree.snp.makeConstraints { (make) in
+            make.top.equalTo(achievementsLabel.snp.bottom).offset(6)
+            make.right.equalTo(achievementImage.snp.left).offset(-14)
+            make.size.equalTo(90)
+        }
+        
+        achievementThreeLabel.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview().offset(18)
+            make.bottom.equalToSuperview().offset(-4)
+            make.left.right.equalToSuperview().inset(8)
+        }
 
+        achievementImageFour.snp.makeConstraints { (make) in
+            make.top.equalTo(achievementImage.snp.bottom).offset(12)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(90)
+        }
+        
+        achievementFourLabel.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview().offset(18)
+            make.bottom.equalToSuperview().offset(-4)
+            make.left.right.equalToSuperview().inset(8)
+        }
+
+        achievementImageFive.snp.makeConstraints { (make) in
+            make.top.equalTo(achievementImage.snp.bottom).offset(12)
+            make.left.equalTo(achievementImageFour.snp.right).offset(14)
+            make.size.equalTo(90)
+        }
+
+        achievementFiveLabel.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview().offset(18)
+            make.bottom.equalToSuperview().offset(-4)
+            make.left.right.equalToSuperview().inset(8)
+        }
+
+        achievementImageSix.snp.makeConstraints { (make) in
+            make.top.equalTo(achievementImage.snp.bottom).offset(12)
+            make.right.equalTo(achievementImageFour.snp.left).offset(-14)
+            make.size.equalTo(90)
+        }
+        
+        achievementSixLabel.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview().offset(18)
+            make.bottom.equalToSuperview().offset(-4)
+            make.left.right.equalToSuperview().inset(8)
+        }
+
+    }
+    
+    func formatTime(minutes: Int, seconds: Int) -> String {
+        return String(format: "%d:%02d", minutes, seconds)
     }
     
     private func saveName() {

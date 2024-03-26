@@ -68,18 +68,11 @@ class LeadView: UIView {
 
     let infoContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = .white.withAlphaComponent(0.4)
         view.layer.cornerRadius = 4
         return view
     }()
-    
-    private lazy var containerImg: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = .containerImg
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
+
     private lazy var leaderImg: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .leadImg
@@ -121,7 +114,6 @@ class LeadView: UIView {
         [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,infoContainer] .forEach(addSubview(_:))
         starsConteiner.addSubview(starsImg)
         starsConteiner.addSubview(starsScore)
-        infoContainer.addSubview(containerImg)
         infoContainer.addSubview(leaderImg)
         infoContainer.addSubview(leadLabel)
         infoContainer.addSubview(leaderBoardTableView)
@@ -181,15 +173,11 @@ class LeadView: UIView {
         }
 
         infoContainer.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(56)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-32)
+            make.top.equalTo(starsConteiner.snp.bottom).offset(24)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-60)
             make.left.right.equalToSuperview().inset(16)
         }
-        
-        containerImg.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
+
         leaderImg.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.centerX.equalToSuperview()
@@ -201,8 +189,8 @@ class LeadView: UIView {
         }
         
         leaderBoardTableView.snp.makeConstraints { make in
-            make.top.equalTo(leadLabel.snp.bottom).offset(24)
-            make.left.right.equalToSuperview().inset(20)
+            make.top.equalTo(leadLabel.snp.bottom)
+            make.left.right.equalTo(infoContainer).inset(20)
             make.bottom.equalToSuperview().offset(-20)
         }
 

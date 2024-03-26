@@ -113,7 +113,7 @@ class InProgressCell: UICollectionViewCell {
         
         let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
 //        imageArt.namePic = matrix.name
-        nameLabel.text = matrix.name
+        nameLabel.text = matrix.name.uppercased()
         imageAnimal.image = UIImage(named: "\(matrix.name.lowercased())PixColor")
         progressLabel.text = "\(percentProgress)%"
     }

@@ -12,7 +12,7 @@ class StartView: UIView {
     private lazy var backImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .bgCloud
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
 

@@ -26,9 +26,25 @@ final class ProfileVC: UIViewController {
         checkFotoLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkUpdateAchiev()
+    }
+    
     private func pickerDelegate() {
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
+    }
+    
+    private func checkUpdateAchiev() {
+        let minutes = uD.elapsedTimeInSeconds / 60
+        let seconds = uD.elapsedTimeInSeconds % 60
+        contentView.scoreTimeLabel.text = contentView.formatTime(minutes: minutes, seconds: seconds)
+        contentView.achievementImage.image = uD.scorePaint > 1 ? .achievementDoneImg : .achievementImg
+        contentView.achievementImageTwo.image = minutes > 5 ? .achievementDoneImg : .achievementImg
+        contentView.achievementImageThree.image = uD.scorePaint > 9 ? .achievementDoneImg : .achievementImg
+        contentView.achievementImageFour.image = uD.scorePaint > 19 ? .achievementDoneImg : .achievementImg
+        contentView.achievementImageFive.image = uD.scorePaint > 14 ? .achievementDoneImg : .achievementImg
     }
     
     private func tappedButtons() {

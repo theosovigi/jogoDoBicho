@@ -73,16 +73,9 @@ class MyImportView: UIView {
 
     let infoContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = .white.withAlphaComponent(0.4)
         view.layer.cornerRadius = 4
         return view
-    }()
-    
-    private lazy var containerImg: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = .containerImg
-        imageView.contentMode = .scaleAspectFill
-        return imageView
     }()
 
     private(set) lazy var imageYouView: UIImageView = {
@@ -120,7 +113,6 @@ class MyImportView: UIView {
         starsConteiner.addSubview(starsImg)
         starsConteiner.addSubview(starsScore)
         
-        infoContainer.addSubview(containerImg)
         infoContainer.addSubview(imageYouView)
         infoContainer.addSubview(visionBtn)
         infoContainer.addSubview(paintBtn)
@@ -194,10 +186,6 @@ class MyImportView: UIView {
 //            make.left.right.equalToSuperview().inset(16)
             make.height.equalTo(500)
             make.width.equalTo(infoContainer.snp.height).multipliedBy(0.67)
-        }
-        
-        containerImg.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
         }
         
         imageYouView.snp.makeConstraints { make in

@@ -78,7 +78,6 @@ class LeadCell: UITableViewCell {
             make.top.equalToSuperview().offset(20)
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(48)
-            make.width.equalTo(345)
         }
 
         profleImage.snp.makeConstraints { (make) in

@@ -14,11 +14,11 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     var colorSelectionHandler: ((UIColor) -> Void)?
     var previousColors: [[UIColor?]] = []
-
+    
     private var selectedColor: UIColor = .green
     private var clearColor : UIColor = .clear
     private var lastColor: [CGPoint] = []
-
+    
     private let imageView: UIImageView
     private let imageLabelText: String?
     private var timer: Timer?
@@ -63,7 +63,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         setupGestureRecognizer()
         ifCompletedWin()
     }
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
@@ -85,23 +85,27 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         tabBarController?.tabBar.isHidden = false
         stopTimer()
     }
-
+    
     private func setupGestureRecognizer() {
         let tapGesture = UITapGestureRecognizer(target: imageArt, action: #selector(handleTap(_:)))
         imageArt.addGestureRecognizer(tapGesture)
         imageArt.isUserInteractionEnabled = true
-
+        
         imageArt.tapHandler = { [weak self] location in
-                    self?.handleTap(location)
+            self?.handleTap(location)
         }
     }
-
+    
     
     private func ifCompletedWin() {
         imageArt.tapCongratilation = {
-                 let vc = CongratilationVC()
-                 self.navigationController?.pushViewController(vc, animated: true)
+            let vc = CongratilationVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            if self.elapsedTimeInSeconds < UD.shared.elapsedTimeInSeconds {
+                 UserDefaults.standard.set(self.elapsedTimeInSeconds, forKey: "elapsedTimeInSeconds")
+                 print("time -- \(UD.shared.elapsedTimeInSeconds)")
              }
+        }
     }
     
     @objc private func eraserButtonTapped() {
@@ -117,7 +121,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         imageArt.colored -= 1
         imageArt.setupStackView()
     }
-
+    
     @objc private func handleTap(_ location: CGPoint) {
         print("Нажали")
         let cellWidth = imageArt.frame.width / 50
@@ -141,10 +145,10 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                     clearColor = previousColor
                     lastColor.append(CGPoint(x: rowIndex, y: columnIndex))
                     print("lastColor --: \(lastColor)")
-                    imageArt.colored += 1                    
+                    imageArt.colored += 1
                     imageArt.progressScore = imageArt.totalCountPix - imageArt.colored
-
-                   print("Осталось закрасить пикселей: \(imageArt.progressScore)")
+                    
+                    print("Осталось закрасить пикселей: \(imageArt.progressScore)")
                 } else {
                     // Просто закрашиваем выбранным цветом, если цвет не оттенок серого
                     if !isAlreadyPainted(atRow: rowIndex, column: columnIndex) {
@@ -159,7 +163,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                         // Увеличиваем счетчик закрашенных пикселей
                         imageArt.colored += 1
                         imageArt.progressScore = imageArt.totalCountPix - imageArt.colored
-
+                        
                         print("Осталось закрасить пикселей: \(imageArt.progressScore)")
                     } else {
                         print("Пиксель уже закрашен.")
@@ -172,27 +176,27 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             print("Ошибка: Нажатие находится вне рисунка.")
         }
         
-//        imageArt.setupStackView()
+        //        imageArt.setupStackView()
     }
-
+    
     private func isAlreadyPainted(atRow row: Int, column: Int) -> Bool {
-           let currentColor = imageArt.colorMatrix[row][column]
-           return !isTransparentColor(color: currentColor)
-       }
+        let currentColor = imageArt.colorMatrix[row][column]
+        return !isTransparentColor(color: currentColor)
+    }
     // Функция для проверки, является ли цвет оттенком серого
     private func isGrayColor(color: UIColor) -> Bool {
         var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         return red == green && green == blue // Проверяем, равны ли каналы красного, зеленого и синего
     }
-
+    
     // Проверка, является ли цвет прозрачным
     private func isTransparentColor(color: UIColor) -> Bool {
         var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         return alpha == 0 // Проверка на прозрачный цвет
     }
-
+    
     private func configureImageArt() {
         contentView.imageContainerView.addSubview(imageArt)
         imageArt.snp.makeConstraints { (make) in
@@ -201,36 +205,36 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             make.bottom.equalToSuperview().offset(-24)
         }
     }
-
+    
     private func configureView() {
         contentView.imageView.image = imageView.image
         contentView.imageLabel.text = imageLabelText
         guard let pic = imageLabelText else { return }
         imageArt.namePic = pic
-                contentView.colorCollectionView.colorSelectionHandler = { [weak self] selectedColor in
+        contentView.colorCollectionView.colorSelectionHandler = { [weak self] selectedColor in
             self?.handleColorSelection(selectedColor)
         }
-
+        
     }
     
     private func handleColorSelection(_ color: UIColor) {
-           // brushImg в выбранный цвет
+        // brushImg в выбранный цвет
         selectedColor = color
         contentView.brushImg.backgroundColor = color
         print("Selected color: \(selectedColor)") // Добавьте это для отладки
-
-       }
-
+        
+    }
+    
     
     private func tappedButtons() {
         contentView.closeBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchDown), for: .touchDown)
         contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchUpInside), for: .touchUpInside)
         contentView.eraserBtn.addTarget(self, action: #selector(eraserButtonTapped), for: .touchUpInside)
-
+        
     }
     
-
+    
     private func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
@@ -319,7 +323,7 @@ class PixelArtConverter {
     
     func convertToPixelArtColor(image: UIImage) -> UIImage? {
         let resizedImage = resizeImage(image: image, targetSize: CGSize(width: 50, height: 50))
-    
+        
         return resizedImage
     }
     private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {

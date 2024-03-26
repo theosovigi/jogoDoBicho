@@ -71,10 +71,29 @@ class UD {
         }
     }
     
+    var elapsedTimeInSeconds: Int {
+        get {
+            return defaults.integer(forKey: "elapsedTimeInSeconds", defaultValue: 0)
+        }
+        set {
+            defaults.set(newValue, forKey: "elapsedTimeInSeconds")
+        }
+    }
+
+    
 }
 
 extension UserDefaults {
     func integer(forKey key: String, defaultValue: Int) -> Int {
         return self.object(forKey: key) as? Int ?? defaultValue
     }
+    
+    func setTimerElapsedTime(_ time: Int, forKey key: String) {
+        self.set(time, forKey: key)
+    }
+    
+    func timerElapsedTime(forKey key: String) -> Int {
+        return self.integer(forKey: key, defaultValue: 0)
+    }
 }
+

@@ -73,6 +73,8 @@ class StartVC: UIViewController {
         guard let token = authBack.token else {
             return
         }
+        print("token -- \(token)")
+
     }
 
     
