@@ -107,17 +107,33 @@ class InProgressCell: UICollectionViewCell {
         }
     }
     
-    func configure(with matrix: Matrix) {
+//    func configure(with matrix: Matrix) {
+//        let totalCountPix = matrix.totalCountPix
+//        let coloredCountPix = matrix.coloredCountPix
+//        
+//        let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
+////        imageArt.namePic = matrix.name
+//        nameLabel.text = matrix.name.uppercased()
+//        if let image = UIImage(named: "\(matrix.name.lowercased())PixColor") {
+//              imageAnimal.image = image
+//          } else {
+//              imageAnimal.image =  nil
+//          }
+//        progressLabel.text = "\(percentProgress)%"
+//    }
+    func configure(with matrix: Matrix, userImage: UIImage?) {
         let totalCountPix = matrix.totalCountPix
         let coloredCountPix = matrix.coloredCountPix
         
         let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
-//        imageArt.namePic = matrix.name
+        imageArt.namePic = matrix.name
         nameLabel.text = matrix.name.uppercased()
-        imageAnimal.image = UIImage(named: "\(matrix.name.lowercased())PixColor")
-        progressLabel.text = "\(percentProgress)%"
+        if let defaultImage = UIImage(named: "\(matrix.name.lowercased())PixColor") {
+            imageAnimal.image = defaultImage
+        } else if let image = userImage { // Затем пытаемся использовать пользовательское изображение
+            imageAnimal.image = image
+        } else {
+            imageAnimal.image = nil // Нет изображений доступно
+        }
     }
-    
-
-
 }

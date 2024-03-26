@@ -99,6 +99,13 @@ class ProfileView: UIView,UITextFieldDelegate {
         return button
     }()
     
+    private(set) lazy var editBtn: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(.editBtn, for: .normal)
+        return button
+    }()
+
+    
     private lazy var profileTextField: UITextField = {
         let textField = UITextField()
         let placeholderText = NSAttributedString(string: "user#\(uD.userID ?? 1)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.customBlue.withAlphaComponent(0.5)])
@@ -381,6 +388,7 @@ class ProfileView: UIView,UITextFieldDelegate {
         profileContainer.addSubview(profileLabel)
         profileContainer.addSubview(chosePhotoBtn)
         profileContainer.addSubview(profileTextField)
+        profileTextField.addSubview(editBtn)
         profileContainer.addSubview(analizLabel)
         
         profileContainer.addSubview(paintImgContiner)
@@ -502,6 +510,12 @@ class ProfileView: UIView,UITextFieldDelegate {
             make.height.equalTo(40)
         }
         
+        editBtn.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().offset(-12)
+            make.size.equalTo(24)
+        }
+
         analizLabel.snp.makeConstraints { (make) in
             make.top.equalTo(profileTextField.snp.bottom).offset(40)
             make.centerX.equalToSuperview()

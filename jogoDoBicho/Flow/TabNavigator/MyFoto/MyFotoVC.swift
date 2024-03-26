@@ -33,8 +33,8 @@ class MyFotoVC: UIViewController {
     
     private func tappedButtons() {
         contentView.galleryBtn.addTarget(self, action: #selector(goTakePhoto), for: .touchUpInside)
-        contentView.photoBtn.addTarget(self, action: #selector(goTakePhoto), for: .touchUpInside)
-    
+        contentView.photoBtn.addTarget(self, action: #selector(goTakeCamera), for: .touchUpInside)
+        
     }
     
     @objc func tappedInfo() {
@@ -51,24 +51,40 @@ private func checkFotoLoad() {
 
     
     @objc func goTakePhoto() {
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let alert = UIAlertController(title: "Pick Photo", message: nil, preferredStyle: .actionSheet)
-            let action1 = UIAlertAction(title: "Camera", style: .default) { _ in
-                self.imagePicker.sourceType = .camera
-            }
-            let action2 = UIAlertAction(title: "photo library", style: .default) { _ in
-                self.imagePicker.sourceType = .photoLibrary
-            }
-            let cancel = UIAlertAction(title: "cancel", style: .cancel)
-            present(imagePicker, animated: true, completion: nil)
-            alert.addAction(action1)
-            alert.addAction(action2)
-            alert.addAction(cancel)
-            present(alert, animated: true)
-        } else {
-            print("Камера недоступна")
+        let alert = UIAlertController(title: "Pick Library", message: nil, preferredStyle: .actionSheet)
+       
+        let actionLibrary = UIAlertAction(title: "Photo Library", style: .default) { _ in
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
         }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(actionLibrary)
+        alert.addAction(cancel)
+        
+        present(alert, animated: true)
     }
+    
+    @objc func goTakeCamera() {
+        let alert = UIAlertController(title: "Pick Photo", message: nil, preferredStyle: .actionSheet)
+        
+        let actionCamera = UIAlertAction(title: "Camera", style: .default) { _ in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                self.imagePicker.sourceType = .camera
+                self.present(self.imagePicker, animated: true, completion: nil)
+            } else {
+                print("Camera not available")
+            }
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(actionCamera)
+        alert.addAction(cancel)
+        
+        present(alert, animated: true)
+    }
+
 }
 
 extension MyFotoVC: UIImagePickerControllerDelegate {

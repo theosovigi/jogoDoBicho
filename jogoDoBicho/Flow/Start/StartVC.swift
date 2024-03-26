@@ -59,7 +59,7 @@ class StartVC: UIViewController {
     
     private func createUserIfNeeded() {
         if ud.userID == nil {
-            let payload = CreateRequestPayload(name: nil, score: 0)
+            let payload = CreateRequestPayload(name: nil, score: 300)
             postBack.createUser(payload: payload) { [weak self] createResponse in
                 guard let self = self else { return }
                 ud.userID = createResponse.id

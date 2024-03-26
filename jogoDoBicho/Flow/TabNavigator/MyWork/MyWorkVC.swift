@@ -61,6 +61,22 @@ class MyWorkVC: UIViewController {
         
     }
     
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    func getImageForUserID(_ userID: String) -> UIImage? {
+        let fileURL = getDocumentsDirectory().appendingPathComponent("\(userID).png")
+        do {
+            let data = try Data(contentsOf: fileURL)
+            return UIImage(data: data)
+        } catch {
+            print("Error loading image from local storage")
+            return nil
+        }
+    }
+
     private func updateCollectionView() {
         
         let config = Realm.Configuration(
@@ -147,16 +163,27 @@ extension MyWorkVC: UICollectionViewDelegate,UICollectionViewDataSource {
 
         if collectionView == contentView.inProgressCollection {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InProgressCell", for: indexPath) as! InProgressCell
-            cell.configure(with: matrix)
+            let userImage = getImageForUserID("\(UD.shared.userID ?? 0)")
+            cell.configure(with: matrix, userImage: userImage)
+//            cell.configure(with: matrix)
             cell.continueButtonAction = {
+                // Попытка загрузить изображение по имени из ресурсов проекта
                 if let image = UIImage(named: "\(matrix.name.lowercased())PixColor") {
-                           let paintVC = PaintVC(image: image, labelText: matrix.name)
-                           self.navigationController?.pushViewController(paintVC, animated: true)
-                       } else {
-                           // В случае, если изображение не найдено, можем выполнить какое-то действие или вывести сообщение об ошибке
-                           print("Изображение \(matrix.name.lowercased())PixColor не найдено")
-                       }
-                   }
+                    let paintVC = PaintVC(image: image, labelText: matrix.name)
+                    self.navigationController?.pushViewController(paintVC, animated: true)
+                } else {
+                    // Попытка загрузить пользовательское изображение из локального хранилища
+                    if let userImage = self.getImageForUserID("\(UD.shared.userID ?? 0)") {
+                        // Создаем PaintVC с пользовательским изображением
+                        let paintVC = PaintVC(image: userImage, labelText: matrix.name)
+                        self.navigationController?.pushViewController(paintVC, animated: true)
+                    } else {
+                        // Если изображение не найдено, выводим сообщение об ошибке
+                        print("Изображение \(matrix.name.lowercased())PixColor или пользовательское изображение не найдено")
+                    }
+                }
+            }
+
             
             return cell
         } else if collectionView == contentView.completedCollection {

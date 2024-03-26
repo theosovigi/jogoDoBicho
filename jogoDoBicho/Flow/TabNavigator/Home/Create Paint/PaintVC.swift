@@ -11,7 +11,6 @@ import UIKit
 
 class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    
     var colorSelectionHandler: ((UIColor) -> Void)?
     var previousColors: [[UIColor?]] = []
     
@@ -23,10 +22,12 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     private let imageLabelText: String?
     private var timer: Timer?
     private var elapsedTimeInSeconds = 0
-    
+    private var isZoomed: Bool = false
+
     let imagePicker = UIImagePickerController()
     var pixelArtImage: UIImage?
-    
+    let scrollView = UIScrollView()
+
     var contentView: PixView {
         view as? PixView ?? PixView()
     }
@@ -54,7 +55,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureImageArt()
+        setupScrollView()
         configureView()
         tappedButtons()
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
@@ -86,13 +87,56 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         stopTimer()
     }
     
+    
+    private func setupScrollView() {
+        scrollView.delegate = self
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 4.0
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+
+        scrollView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.size.equalTo(300)
+        }
+        configureImageArt()
+
+    }
+    
+    private func configureImageArt() {
+        scrollView.addSubview(imageArt)
+//        contentView.imageContainerView.addSubview(imageArt)
+//        imageArt.snp.makeConstraints { (make) in
+//            make.top.equalTo(contentView.imageLabel.snp.bottom).offset(20)
+//            make.left.right.equalToSuperview().inset(32)
+//            make.bottom.equalToSuperview().offset(-24)
+//        }
+        imageArt.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+
+    }
+    
+    private func configureView() {
+        contentView.imageView.image = imageView.image
+        contentView.imageLabel.text = imageLabelText
+        guard let pic = imageLabelText else { return }
+        imageArt.namePic = pic
+        contentView.colorCollectionView.colorSelectionHandler = { [weak self] selectedColor in
+            self?.handleColorSelection(selectedColor)
+        }
+        
+    }
+    
     private func setupGestureRecognizer() {
         let tapGesture = UITapGestureRecognizer(target: imageArt, action: #selector(handleTap(_:)))
         imageArt.addGestureRecognizer(tapGesture)
         imageArt.isUserInteractionEnabled = true
         
-        imageArt.tapHandler = { [weak self] location in
-            self?.handleTap(location)
+        imageArt.tapHandler = { [weak self] gestureRecognizer in
+            self?.handleTap(gestureRecognizer)
         }
     }
     
@@ -122,14 +166,26 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         imageArt.setupStackView()
     }
     
-    @objc private func handleTap(_ location: CGPoint) {
-        print("Нажали")
-        let cellWidth = imageArt.frame.width / 50
-        let cellHeight = imageArt.frame.height / 50
+//    @objc private func handleTap(_ location: CGPoint) {
+//        print("Нажали")
+//        let cellWidth = imageArt.frame.width / 50
+//        let cellHeight = imageArt.frame.height / 50
         
-        let columnIndex = Int(location.x / cellWidth)
-        let rowIndex = Int(location.y / cellHeight)
+//        let columnIndex = Int(location.x / cellWidth)
+//        let rowIndex = Int(location.y / cellHeight)
+    @objc private func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        let locationInView = gestureRecognizer.location(in: gestureRecognizer.view)
         
+        // Преобразование точки касания из `scrollView` в `imageArt`, учитывая масштаб.
+        let locationInImageArt = scrollView.convert(locationInView, to: imageArt)
+        
+        // Учитываем масштабирование при определении размера ячейки.
+        let scale = scrollView.zoomScale
+        let cellWidth = (imageArt.frame.width / CGFloat(imageArt.colorMatrix[0].count)) / scale
+        let cellHeight = (imageArt.frame.height / CGFloat(imageArt.colorMatrix.count)) / scale
+        
+        let columnIndex = Int(locationInImageArt.x / cellWidth)
+        let rowIndex = Int(locationInImageArt.y / cellHeight)
         if rowIndex < imageArt.colorMatrix.count && columnIndex < imageArt.colorMatrix[rowIndex].count {
             let currentColor = imageArt.colorMatrix[rowIndex][columnIndex]
             
@@ -197,28 +253,8 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         return alpha == 0 // Проверка на прозрачный цвет
     }
     
-    private func configureImageArt() {
-        contentView.imageContainerView.addSubview(imageArt)
-        imageArt.snp.makeConstraints { (make) in
-            make.top.equalTo(contentView.imageLabel.snp.bottom).offset(20)
-            make.left.right.equalToSuperview().inset(32)
-            make.bottom.equalToSuperview().offset(-24)
-        }
-    }
-    
-    private func configureView() {
-        contentView.imageView.image = imageView.image
-        contentView.imageLabel.text = imageLabelText
-        guard let pic = imageLabelText else { return }
-        imageArt.namePic = pic
-        contentView.colorCollectionView.colorSelectionHandler = { [weak self] selectedColor in
-            self?.handleColorSelection(selectedColor)
-        }
-        
-    }
     
     private func handleColorSelection(_ color: UIColor) {
-        // brushImg в выбранный цвет
         selectedColor = color
         contentView.brushImg.backgroundColor = color
         print("Selected color: \(selectedColor)") // Добавьте это для отладки
@@ -229,9 +265,10 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     private func tappedButtons() {
         contentView.closeBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchDown), for: .touchDown)
-        contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchUpInside), for: .touchUpInside)
+        contentView.zoomBtn.addTarget(self, action: #selector(visionButtonTouchUpInside), for: .touchUpInside)
         contentView.eraserBtn.addTarget(self, action: #selector(eraserButtonTapped), for: .touchUpInside)
-        
+        contentView.zoomBtn.addTarget(self, action: #selector(toggleZoom), for: .touchUpInside)
+
     }
     
     
@@ -243,6 +280,18 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         timer?.invalidate()
     }
     
+    @objc private func toggleZoom() {
+        if isZoomed {
+            // Если уже увеличено, то уменьшаем до исходного масштаба
+            scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
+        } else {
+            // Если содержимое в исходном масштабе, то увеличиваем
+            scrollView.setZoomScale(scrollView.maximumZoomScale, animated: true)
+        }
+        // Переключаем состояние
+        isZoomed.toggle()
+    }
+
     @objc private func updateTimer() {
         elapsedTimeInSeconds += 1
         let minutes = elapsedTimeInSeconds / 60
@@ -306,6 +355,14 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         }
         return nil
     }
+}
+
+extension PaintVC: UIScrollViewDelegate {
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageArt
+    }
+
 }
 
 import CoreGraphics

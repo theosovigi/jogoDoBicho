@@ -10,6 +10,7 @@ import AVFoundation
 final class ProfileVC: UIViewController {
     
     private let uD = UD.shared
+    private let post = PostServiceBack.shared
     private let imagePicker = UIImagePickerController()
     
     private var contentView: ProfileView {
@@ -31,11 +32,12 @@ final class ProfileVC: UIViewController {
         checkUpdateAchiev()
     }
     
+    
     private func pickerDelegate() {
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
     }
-    
+        
     private func checkUpdateAchiev() {
         let minutes = uD.elapsedTimeInSeconds / 60
         let seconds = uD.elapsedTimeInSeconds % 60
@@ -50,7 +52,8 @@ final class ProfileVC: UIViewController {
     private func tappedButtons() {
         contentView.chosePhotoBtn.addTarget(self, action: #selector(goTakePhoto), for: .touchUpInside)
         contentView.infoBtn.addTarget(self, action: #selector(tappedInfo), for: .touchUpInside)
-    
+        contentView.editBtn.addTarget(self, action: #selector(tappeUpdateName), for: .touchUpInside)
+
     }
     
     @objc func tappedInfo() {
@@ -58,6 +61,10 @@ final class ProfileVC: UIViewController {
         navigationController?.pushViewController(infoVC, animated: true)
     }
     
+    @objc func tappeUpdateName() {
+        updateName()
+    }
+
     private func checkFotoLoad() {
         if let savedImage = getImageFromLocal() {
             contentView.chosePhotoBtn.setImage(savedImage, for: .normal)
@@ -65,85 +72,47 @@ final class ProfileVC: UIViewController {
     }
 
     
-    @objc func goTakePhoto() {
-//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-//            let alert = UIAlertController(title: "Pick Photo", message: nil, preferredStyle: .actionSheet)
-//            let action1 = UIAlertAction(title: "Camera", style: .default) { _ in
-//                self.imagePicker.sourceType = .camera
-//            }
-//            let action2 = UIAlertAction(title: "photo library", style: .default) { _ in
-//                self.imagePicker.sourceType = .photoLibrary
-//            }
-//            let cancel = UIAlertAction(title: "cancel", style: .cancel)
-//            present(imagePicker, animated: true, completion: nil)
-//            alert.addAction(action1)
-//            alert.addAction(action2)
-//            alert.addAction(cancel)
-//            present(alert, animated: true)
-//        } else {
-//            print("Камера недоступна")
-//        }
-        
-        checkCameraAccess()
-
-    }
-    private func checkCameraAccess() {
-            switch AVCaptureDevice.authorizationStatus(for: .video) {
-                case .authorized:
-                    // Доступ уже предоставлен
-                    self.presentCameraOptions()
-                case .notDetermined:
-                    // Доступ еще не запрашивался, запрашиваем
-                    AVCaptureDevice.requestAccess(for: .video) { granted in
-                        DispatchQueue.main.async {
-                            if granted {
-                                self.presentCameraOptions()
-                            } else {
-                                self.showAccessDeniedAlert()
-                            }
-                        }
+    func updateName() {
+        if uD.userName != nil {
+            let payload = UpdatePayload(name: uD.userName, score: nil)
+            post.updateData(id: uD.userID!, payload: payload) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(_):
+                        print("Success")
+                    case .failure(let failure):
+                        print("Error - \(failure.localizedDescription)")
                     }
-                case .denied, .restricted:
-                    // Доступ отклонен или ограничен, оповещаем пользователя
-                    showAccessDeniedAlert()
-                @unknown default:
-                    // Непредвиденная ситуация, можно добавить обработку
-                    break
+                }
             }
         }
+    }
+    
+    @objc func goTakePhoto() {
+        let alert = UIAlertController(title: "Pick Library", message: nil, preferredStyle: .actionSheet)
         
-        private func presentCameraOptions() {
+        let actionLibrary = UIAlertAction(title: "Photo Library", style: .default) { _ in
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
+        
+        let actionCamera = UIAlertAction(title: "Camera", style: .default) { _ in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                let alert = UIAlertController(title: "Pick Photo", message: nil, preferredStyle: .actionSheet)
-                let action1 = UIAlertAction(title: "Camera", style: .default) { _ in
-                    self.imagePicker.sourceType = .camera
-                    self.present(self.imagePicker, animated: true, completion: nil)
-                }
-                let action2 = UIAlertAction(title: "Photo Library", style: .default) { _ in
-                    self.imagePicker.sourceType = .photoLibrary
-                    self.present(self.imagePicker, animated: true, completion: nil)
-                }
-                let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-                alert.addAction(action1)
-                alert.addAction(action2)
-                alert.addAction(cancel)
-                present(alert, animated: true)
+                self.imagePicker.sourceType = .camera
+                self.present(self.imagePicker, animated: true, completion: nil)
             } else {
-                print("Камера недоступна")
+                print("Camera not available")
             }
         }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
         
-        private func showAccessDeniedAlert() {
-            let alert = UIAlertController(title: "Доступ к камере отклонен", message: "Для съемки фото необходим доступ к камере. Пожалуйста, измените настройки доступа в настройках iOS.", preferredStyle: .alert)
-            let settingsAction = UIAlertAction(title: "Настройки", style: .default) { (_) in
-                guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
-                UIApplication.shared.open(settingsURL)
-            }
-            let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
-            alert.addAction(settingsAction)
-            alert.addAction(cancelAction)
-            present(alert, animated: true)
-        }
+        alert.addAction(actionCamera)
+        alert.addAction(actionLibrary)
+        alert.addAction(cancel)
+        
+        present(alert, animated: true)
+    }
+ 
 }
 
 extension ProfileVC: UIImagePickerControllerDelegate {

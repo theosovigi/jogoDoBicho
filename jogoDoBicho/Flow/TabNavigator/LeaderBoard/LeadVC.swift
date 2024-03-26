@@ -23,9 +23,13 @@ class LeadVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         loaderConfigure()
         loadUsers()
-        configureTableView()
+
     }
     
     private func configureTableView() {

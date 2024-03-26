@@ -24,7 +24,7 @@ class PaintView: UIView {
     var progressScore: Int = 0
     var colored: Int = 0
     var totalCountPix: Int = 0
-    var tapHandler: ((CGPoint) -> Void)?
+    var tapHandler: ((UITapGestureRecognizer) -> Void)?
     var colorMatrix: [[UIColor]] = []
     var changedCells: [(Int, Int)] = []
     var onTotalPixelsUpdated: ((Int) -> Void)?
@@ -47,7 +47,7 @@ class PaintView: UIView {
     
     @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: self)
-        tapHandler?(location)
+        tapHandler?(gesture) // Вызываем tapHandler с gestureRecognizer
         setupStackView()
         saveMatrix(total: nil, colored: colored)
 
@@ -190,6 +190,7 @@ class PaintView: UIView {
         totalCountPix = count
         print("count-- \(count)")
     }
+    
     
      func setupStackView() {
         // Создаем стековое представление только если оно еще не создано
