@@ -12,6 +12,7 @@ class MyImportVC: UIViewController {
     var importedImage: UIImage? // Переменная для хранения переданного изображения
     var imageName: String?
 
+    private var colors: [UIColor] = [.yellow,.red,.green,.blue,.brown,.black,.cyan,.purple,.systemPink]
     var contentView: MyImportView {
         view as? MyImportView ?? MyImportView()
     }
@@ -95,8 +96,8 @@ class MyImportVC: UIViewController {
 
     @objc private func goPaint() {
         if let image = importedImage {
-//            let paintVC = PaintVC(image: image, labelText: imageName)
-//            navigationController?.pushViewController(paintVC, animated: true)
+            let paintVC = PaintVC(image: image, labelText: imageName, colors: colors)
+            navigationController?.pushViewController(paintVC, animated: true)
         } else {
             // Обработка случая, когда importedImage равен nil
             print("importedImage равен nil")

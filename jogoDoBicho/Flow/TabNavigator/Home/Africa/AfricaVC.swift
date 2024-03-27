@@ -29,14 +29,12 @@ enum ImageAfricaName: String {
             return [.d1,.d2,.d3,.d4,.d5,.d6,.d7,.d8,.d9]
 
         case .peacockPix:
-            return [.customOrange,.blue,.customBlue]
-
+            return [.e1,.e2,.e3,.e4,.e5,.e6,.e7,.e8,.e9,.e10]
         case .elephantPix:
-            return [.cyan,.blue,.customBlue]
+            return [.f1,.f2,.f3,.f4,.f5,.f6,.f7,.f8,]
 
         case .camelPix:
-            return [.black,.blue,.customBlue]
-
+            return [.g1,.g2,.g3,.g4,.g5,.g6,.g7,.g8]
         }
     }
 }
