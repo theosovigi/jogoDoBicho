@@ -88,8 +88,8 @@ class PlanetVC: UIViewController {
     @objc private func paintButtonTapped() {
         let image = images[currentIndex]
         let labelText = imageNames[currentIndex].rawValue
-        let paintVC = PaintVC(image: image, labelText: labelText)
-        navigationController?.pushViewController(paintVC, animated: true)
+//        let paintVC = PaintVC(image: image, labelText: labelText)
+//        navigationController?.pushViewController(paintVC, animated: true)
     }
 
 

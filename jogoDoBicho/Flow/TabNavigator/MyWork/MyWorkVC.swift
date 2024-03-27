@@ -79,14 +79,14 @@ class MyWorkVC: UIViewController {
 
     private func updateCollectionView() {
         
-        let config = Realm.Configuration(
-            schemaVersion: 3, // Предполагаем, что предыдущая версия была 0
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                }
-            }
-        )
-        Realm.Configuration.defaultConfiguration = config
+//        let config = Realm.Configuration(
+//            schemaVersion: 3, // Предполагаем, что предыдущая версия была 0
+//            migrationBlock: { migration, oldSchemaVersion in
+//                if oldSchemaVersion < 1 {
+//                }
+//            }
+//        )
+//        Realm.Configuration.defaultConfiguration = config
         let realm = try! Realm()
         let objectsCount = realm.objects(Matrix.self).count
         
@@ -169,14 +169,14 @@ extension MyWorkVC: UICollectionViewDelegate,UICollectionViewDataSource {
             cell.continueButtonAction = {
                 // Попытка загрузить изображение по имени из ресурсов проекта
                 if let image = UIImage(named: "\(matrix.name.lowercased())PixColor") {
-                    let paintVC = PaintVC(image: image, labelText: matrix.name)
-                    self.navigationController?.pushViewController(paintVC, animated: true)
+//                    let paintVC = PaintVC(image: image, labelText: matrix.name)
+//                    self.navigationController?.pushViewController(paintVC, animated: true)
                 } else {
                     // Попытка загрузить пользовательское изображение из локального хранилища
                     if let userImage = self.getImageForUserID("\(UD.shared.userID ?? 0)") {
                         // Создаем PaintVC с пользовательским изображением
-                        let paintVC = PaintVC(image: userImage, labelText: matrix.name)
-                        self.navigationController?.pushViewController(paintVC, animated: true)
+//                        let paintVC = PaintVC(image: userImage, labelText: matrix.name)
+//                        self.navigationController?.pushViewController(paintVC, animated: true)
                     } else {
                         // Если изображение не найдено, выводим сообщение об ошибке
                         print("Изображение \(matrix.name.lowercased())PixColor или пользовательское изображение не найдено")

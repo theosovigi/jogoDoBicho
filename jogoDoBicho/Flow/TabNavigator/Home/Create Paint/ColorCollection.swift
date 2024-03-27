@@ -8,7 +8,7 @@ import UIKit
 class ColorCollectionView: UICollectionView {
     var colorSelectionHandler: ((UIColor) -> Void)?
 
-    private let colors: [UIColor] = [.red, .blue, .green, .yellow, .customBlue,.customYellow,.customOrange,.red,.blue,.green,.yellow,.customBlue,.customYellow,.customOrange,.purple] // Your array of colors
+    var colors: [UIColor] = []
     
     init() {
         let layout = UICollectionViewFlowLayout()

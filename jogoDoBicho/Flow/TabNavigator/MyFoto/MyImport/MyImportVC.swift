@@ -95,8 +95,8 @@ class MyImportVC: UIViewController {
 
     @objc private func goPaint() {
         if let image = importedImage {
-            let paintVC = PaintVC(image: image, labelText: imageName)
-            navigationController?.pushViewController(paintVC, animated: true)
+//            let paintVC = PaintVC(image: image, labelText: imageName)
+//            navigationController?.pushViewController(paintVC, animated: true)
         } else {
             // Обработка случая, когда importedImage равен nil
             print("importedImage равен nil")

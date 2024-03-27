@@ -104,17 +104,17 @@ class PaintView: UIView {
 
     // Восстановление данных
     private func restoreMatrix(imageName: String) {
-        // Восстановление Matrix из Realm
-        let config = Realm.Configuration(
-            schemaVersion: 3, // Предполагаем, что предыдущая версия была 0
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 3 {
-                    // Для этой миграции не требуется выполнение кода,
-                    // так как добавление новых полей обрабатывается автоматически
-                }
-            }
-        )
-        Realm.Configuration.defaultConfiguration = config
+//        // Восстановление Matrix из Realm
+//        let config = Realm.Configuration(
+//            schemaVersion: 3, // Предполагаем, что предыдущая версия была 0
+//            migrationBlock: { migration, oldSchemaVersion in
+//                if oldSchemaVersion < 3 {
+//                    // Для этой миграции не требуется выполнение кода,
+//                    // так как добавление новых полей обрабатывается автоматически
+//                }
+//            }
+//        )
+//        Realm.Configuration.defaultConfiguration = config
         
         let realm = try! Realm()
             if let matrix = realm.objects(Matrix.self).filter("name == %@", imageName).first {

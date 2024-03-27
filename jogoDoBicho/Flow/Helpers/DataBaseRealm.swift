@@ -26,6 +26,13 @@ func checkIfAllCompleted(_ matrices: Results<Matrix>) -> Bool {
     return true
 }
 
+
+ func checkGlobal() {
+     checkAfrica()
+     checkPlanet()
+     checkCanada()
+}
+
 func checkAfrica() {
     // Создание экземпляра Realm и запрос к базе данных
     let realm = try! Realm()
@@ -57,7 +64,7 @@ func checkAfrica() {
     if allCompleted {
         print("Победа")
     } else {
-        print("Не подходит")
+        print("Не подходит Африка")
     }
 }
 
@@ -72,12 +79,12 @@ func checkPlanet() {
         return
     }
     
-    let imageNames: [String] = ["Donkey", "Crocodile", "Lion", "Monkey", "Peacock", "Elephant", "Camel"]
+    let planetNames: [String] = ["Donkey", "Dog", "Goat", "Sheep", "Rabbit", "Horse", "Rooster","Cat","Pig","Bull","Cow","Turkey",]
     
     var allCompleted = true
     
     // Проверяем, присутствуют ли все значения из перечисления ImageAfricaName в базе данных
-    for imageName in imageNames {
+    for imageName in planetNames {
         if let matrix = realm.objects(Matrix.self).filter("name = '\(imageName)'").first {
             print("Объект с именем '\(imageName)' найден")
             if !matrix.isCompleted {
@@ -92,8 +99,41 @@ func checkPlanet() {
     if allCompleted {
         print("Победа")
     } else {
-        print("Не подходит")
+        print("Не подходит Планета")
     }
 }
 
-
+func checkCanada() {
+    // Создание экземпляра Realm и запрос к базе данных
+    let realm = try! Realm()
+    let allMatrices = realm.objects(Matrix.self)
+    
+    // Проверка, есть ли объекты в базе данных
+    if allMatrices.isEmpty {
+        print("Нет объектов в базе данных")
+        return
+    }
+    
+    let canadaNames: [String] = ["Tiger", "Bear", "Dear", "Eagle", "Snake", "Butterfly"]
+    
+    var allCompleted = true
+    
+    // Проверяем, присутствуют ли все значения из перечисления ImageAfricaName в базе данных
+    for imageName in canadaNames {
+        if let matrix = realm.objects(Matrix.self).filter("name = '\(imageName)'").first {
+            print("Объект с именем '\(imageName)' найден")
+            if !matrix.isCompleted {
+                allCompleted = false
+            }
+        } else {
+            print("Объект с именем '\(imageName)' не найден")
+            allCompleted = false
+        }
+    }
+    
+    if allCompleted {
+        print("Победа")
+    } else {
+        print("Не подходит Канада")
+    }
+}

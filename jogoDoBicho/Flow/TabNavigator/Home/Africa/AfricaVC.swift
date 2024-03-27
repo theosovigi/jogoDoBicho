@@ -14,6 +14,31 @@ enum ImageAfricaName: String {
     case peacockPix = "Peacock"
     case elephantPix = "Elephant"
     case camelPix = "Camel"
+    
+    var colors: [UIColor] {
+        switch self {
+        case .ostrichPix:
+            return [.c1,.c2,.c3,.c4,.c5,.c6,.c7,.c8,.c9,.c10]
+        case .crocodilePix:
+            return [.a1,.a2,.a3,.a4,.a5,.a6,.a7,.a8,.a9]
+
+        case .lionPix:
+            return [.b1,.b2,.b3,.b4,.b5,.b6,.b7,.b8,.b9]
+
+        case .monkeyPix:
+            return [.d1,.d2,.d3,.d4,.d5,.d6,.d7,.d8,.d9]
+
+        case .peacockPix:
+            return [.customOrange,.blue,.customBlue]
+
+        case .elephantPix:
+            return [.cyan,.blue,.customBlue]
+
+        case .camelPix:
+            return [.black,.blue,.customBlue]
+
+        }
+    }
 }
 
 
@@ -66,7 +91,8 @@ class AfricaVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         // Передаем выбранное изображение и текст для imageLabel
         let image = images[currentIndex]
         let labelText = imageNames[currentIndex].rawValue
-        let paintVC = PaintVC(image: image, labelText: labelText)
+        let colors = imageNames[currentIndex].colors // Извлекаем цвета согласно определению в enum
+        let paintVC = PaintVC(image: image, labelText: labelText, colors: colors)
         navigationController?.pushViewController(paintVC, animated: true)
     }
 

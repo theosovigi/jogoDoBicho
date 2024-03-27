@@ -14,6 +14,8 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     var colorSelectionHandler: ((UIColor) -> Void)?
     var previousColors: [[UIColor?]] = []
     
+    var colors: [UIColor]? // Добавьте это свойство
+
     private var selectedColor: UIColor = .green
     private var clearColor : UIColor = .clear
     private var lastColor: [CGPoint] = []
@@ -43,9 +45,10 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         return ia
     }()
     
-    init(image: UIImage,labelText: String?) {
+    init(image: UIImage,labelText: String?, colors: [UIColor]?) {
         self.imageView = UIImageView(image: image)
         self.imageLabelText = labelText
+        self.colors = colors
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -122,6 +125,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         contentView.imageLabel.text = imageLabelText
         guard let pic = imageLabelText else { return }
         imageArt.namePic = pic
+        contentView.colorCollectionView.colors = colors!
         contentView.colorCollectionView.colorSelectionHandler = { [weak self] selectedColor in
             self?.handleColorSelection(selectedColor)
         }
@@ -174,14 +178,13 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     @objc private func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         let locationInView = gestureRecognizer.location(in: gestureRecognizer.view)
         
-        // Преобразование точки касания из `scrollView` в `imageArt`, учитывая масштаб.
         let locationInImageArt = scrollView.convert(locationInView, to: imageArt)
         
-        // Учитываем масштабирование при определении размера ячейки.
         let scale = scrollView.zoomScale
-        let cellWidth = (imageArt.frame.width / CGFloat(imageArt.colorMatrix[0].count)) / scale
-        let cellHeight = (imageArt.frame.height / CGFloat(imageArt.colorMatrix.count)) / scale
-        
+
+        let cellWidth = (imageArt.bounds.width / CGFloat(imageArt.colorMatrix[0].count)) / scale
+        let cellHeight = (imageArt.bounds.height / CGFloat(imageArt.colorMatrix.count)) / scale
+
         let columnIndex = Int(locationInImageArt.x / cellWidth)
         let rowIndex = Int(locationInImageArt.y / cellHeight)
         if rowIndex < imageArt.colorMatrix.count && columnIndex < imageArt.colorMatrix[rowIndex].count {
@@ -229,8 +232,6 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         } else {
             print("Ошибка: Нажатие находится вне рисунка.")
         }
-        
-        //        imageArt.setupStackView()
     }
     
     private func isAlreadyPainted(atRow row: Int, column: Int) -> Bool {
