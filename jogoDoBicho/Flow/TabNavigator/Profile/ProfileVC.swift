@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import AVFoundation
-
+import RealmSwift
 
 final class ProfileVC: UIViewController {
     
@@ -30,6 +30,8 @@ final class ProfileVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         checkUpdateAchiev()
+        main()
+
     }
     
     
@@ -71,6 +73,14 @@ final class ProfileVC: UIViewController {
         }
     }
 
+//    private func checkPlanet() {
+//        
+//        if realm.objects(Matrix.self).filter("namePlanet == %@ && isCompleted == false", "Africa").isEmpty {
+//            
+//        }
+//    }
+    
+    
     
     func updateName() {
         if uD.userName != nil {

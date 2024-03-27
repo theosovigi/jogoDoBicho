@@ -73,12 +73,10 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             let converter = PixelArtConverter()
             let image = self.imageView.image!
             let convertedImage = converter.convertToPixelArt(image: image)
             self.imageArt.setup(image: convertedImage!)
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

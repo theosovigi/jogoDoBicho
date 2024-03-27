@@ -73,8 +73,8 @@ class InProgressCell: UICollectionViewCell {
         self.layer.borderWidth = 1.0
         addSubview(nameLabel)
         addSubview(progressLabel)
-//        addSubview(imageArt)
-        addSubview(imageAnimal)
+        addSubview(imageArt)
+//        addSubview(imageAnimal)
         addSubview(continueBtn)
         continueBtn.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }
@@ -96,7 +96,7 @@ class InProgressCell: UICollectionViewCell {
             make.right.equalToSuperview().offset(-4)
         }
         
-        imageAnimal.snp.makeConstraints { (make) in
+        imageArt.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.size.equalTo(52)
         }
@@ -122,18 +122,31 @@ class InProgressCell: UICollectionViewCell {
 //        progressLabel.text = "\(percentProgress)%"
 //    }
     func configure(with matrix: Matrix, userImage: UIImage?) {
-        let totalCountPix = matrix.totalCountPix
-        let coloredCountPix = matrix.coloredCountPix
-        
-        let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
-        imageArt.namePic = matrix.name
-        nameLabel.text = matrix.name.uppercased()
-        if let defaultImage = UIImage(named: "\(matrix.name.lowercased())PixColor") {
-            imageAnimal.image = defaultImage
-        } else if let image = userImage { // Затем пытаемся использовать пользовательское изображение
-            imageAnimal.image = image
-        } else {
-            imageAnimal.image = nil // Нет изображений доступно
+        DispatchQueue.main.async {
+            let converter = PixelArtConverter()
+
+            let totalCountPix = matrix.totalCountPix
+            let coloredCountPix = matrix.coloredCountPix
+            
+            let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
+            self.imageArt.namePic = matrix.name
+            self.nameLabel.text = matrix.name.uppercased()
+            if let defaultImage = UIImage(named: "\(matrix.name.lowercased())PixColor") {
+                self.imageAnimal.image = defaultImage
+                let convertedImage = converter.convertToPixelArt(image: defaultImage)
+                self.imageArt.setup(image: convertedImage!)
+
+            } else if let image = userImage { // Затем пытаемся использовать пользовательское изображение
+                self.imageAnimal.image = image
+                let convertedImage = converter.convertToPixelArt(image: image)
+                self.imageArt.setup(image: convertedImage!)
+
+                
+            } else {
+                self.imageAnimal.image = nil // Нет изображений доступно
+            }
+
         }
+
     }
 }
