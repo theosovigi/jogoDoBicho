@@ -1,9 +1,7 @@
 //
 //  DataBaseRealm.swift
-//  jogoDoBicho
-//
-//  Created by apple on 25.03.2024.
-//
+
+
 
 import Foundation
 import RealmSwift
@@ -28,26 +26,74 @@ func checkIfAllCompleted(_ matrices: Results<Matrix>) -> Bool {
     return true
 }
 
-func main() {
+func checkAfrica() {
     // Создание экземпляра Realm и запрос к базе данных
     let realm = try! Realm()
     let allMatrices = realm.objects(Matrix.self)
     
-    // Проверка, все ли элементы из перечисления ImageAfricaName имеют isCompleted = true
-    if checkIfAllCompleted(allMatrices) {
-        print("Все заполнено")
-    } else {
-        print("Неудача")
+    // Проверка, есть ли объекты в базе данных
+    if allMatrices.isEmpty {
+        print("Нет объектов в базе данных")
+        return
     }
-    if let matrixAfrica = realm.objects(Matrix.self).filter("name = 'Africa'").first {
-         // Проверяем, есть ли в этом объекте Matrix нужные значения из ImageAfricaName
-         if let africaImage = ImageAfricaName(rawValue: matrixAfrica.name) {
-             print("Matrix содержит информацию о \(africaImage.rawValue)")
-         } else {
-             print("Matrix не содержит информацию о ImageAfricaName")
-         }
-     } else {
-         print("Matrix с именем 'Africa' не найден")
-     }
+    
+    let africaNames: [String] = ["Ostrich", "Crocodile", "Lion", "Monkey", "Peacock", "Elephant", "Camel"]
+    
+    var allCompleted = true
+    
+    // Проверяем, присутствуют ли все значения из перечисления ImageAfricaName в базе данных
+    for africaName in africaNames {
+        if let matrix = realm.objects(Matrix.self).filter("name = '\(africaName)'").first {
+            print("Объект с именем '\(africaName)' найден")
+            if !matrix.isCompleted {
+                allCompleted = false
+            }
+        } else {
+            print("Объект с именем '\(africaName)' не найден")
+            allCompleted = false
+        }
+    }
+    
+    if allCompleted {
+        print("Победа")
+    } else {
+        print("Не подходит")
+    }
 }
+
+func checkPlanet() {
+    // Создание экземпляра Realm и запрос к базе данных
+    let realm = try! Realm()
+    let allMatrices = realm.objects(Matrix.self)
+    
+    // Проверка, есть ли объекты в базе данных
+    if allMatrices.isEmpty {
+        print("Нет объектов в базе данных")
+        return
+    }
+    
+    let imageNames: [String] = ["Donkey", "Crocodile", "Lion", "Monkey", "Peacock", "Elephant", "Camel"]
+    
+    var allCompleted = true
+    
+    // Проверяем, присутствуют ли все значения из перечисления ImageAfricaName в базе данных
+    for imageName in imageNames {
+        if let matrix = realm.objects(Matrix.self).filter("name = '\(imageName)'").first {
+            print("Объект с именем '\(imageName)' найден")
+            if !matrix.isCompleted {
+                allCompleted = false
+            }
+        } else {
+            print("Объект с именем '\(imageName)' не найден")
+            allCompleted = false
+        }
+    }
+    
+    if allCompleted {
+        print("Победа")
+    } else {
+        print("Не подходит")
+    }
+}
+
 
