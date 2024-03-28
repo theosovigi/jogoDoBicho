@@ -16,7 +16,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     var colors: [UIColor]? // Добавьте это свойство
 
-    private var selectedColor: UIColor = .green
+    private var selectedColor: UIColor = .gray
     private var clearColor : UIColor = .clear
     private var lastColor: [CGPoint] = []
     
@@ -125,6 +125,9 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     private func configureView() {
         contentView.imageView.image = imageView.image
         contentView.imageLabel.text = imageLabelText
+        if !isNameInEnums(name: self.contentView.imageLabel.text ?? "") {
+                self.contentView.imageLabel.text = "Custom"
+            }
         guard let pic = imageLabelText else { return }
         imageArt.namePic = pic
         contentView.colorCollectionView.colors = colors!
@@ -133,6 +136,14 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         }
     }
     
+    private func isNameInEnums(name: String) -> Bool {
+            let allNames = ImageAfricaName.allCases.map { $0.rawValue.uppercased() } +
+                           ImagePlanetName.allCases.map { $0.rawValue.uppercased() } +
+                           ImageCanadaName.allCases.map { $0.rawValue.uppercased() }
+            
+            return allNames.contains(name.uppercased())
+        }
+
     private func setupGestureRecognizer() {
         let tapGesture = UITapGestureRecognizer(target: imageArt, action: #selector(handleTap(_:)))
         imageArt.addGestureRecognizer(tapGesture)

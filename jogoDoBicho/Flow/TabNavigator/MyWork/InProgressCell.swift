@@ -100,6 +100,10 @@ class InProgressCell: UICollectionViewCell {
         
         let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
         self.nameLabel.text = "\(matrix.name.uppercased())"
+        if !isNameInEnums(name: self.nameLabel.text ?? "") {
+                self.nameLabel.text = "Custom"
+            }
+        
         self.numberLabel.text = "\(cellIndex + 1)"
         if let defaultImage = UIImage(named: "\(matrix.name.lowercased())PixColor") {
             self.imageAnimal.image = defaultImage
@@ -109,5 +113,13 @@ class InProgressCell: UICollectionViewCell {
         } else {
             self.imageAnimal.image = nil
         }
+    }
+    
+private func isNameInEnums(name: String) -> Bool {
+        let allNames = ImageAfricaName.allCases.map { $0.rawValue.uppercased() } +
+                       ImagePlanetName.allCases.map { $0.rawValue.uppercased() } +
+                       ImageCanadaName.allCases.map { $0.rawValue.uppercased() }
+        
+        return allNames.contains(name.uppercased())
     }
 }

@@ -118,10 +118,10 @@ class HomeView: UIView {
     
     private func setupConstraints() {
         
-        bgView.snp.makeConstraints { make in
+        bgView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-
+        
         cloudOneImg.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(68)
             make.left.equalToSuperview().offset(36)
@@ -166,7 +166,6 @@ class HomeView: UIView {
             make.right.equalToSuperview().offset(-12)
             make.centerY.equalToSuperview()
         }
-
         collectionView.snp.makeConstraints { make in
              make.centerY.equalToSuperview()
              make.centerX.equalToSuperview()

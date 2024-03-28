@@ -12,7 +12,8 @@ class TabBarNavigator: UITabBarController {
         UITabBar.appearance().backgroundColor = .white.withAlphaComponent(0.7)
         
         let leadVC = LeadVC()
-        buildConfig(leadVC, imageName: "leadBtn", selectedImageName: "tappedLeadBtn")
+        let leadNavigation = UINavigationController(rootViewController: leadVC)
+        buildConfig(leadNavigation, imageName: "leadBtn", selectedImageName: "tappedLeadBtn")
         
         let myFotoVC = MyFotoVC()
         let myFotoNavigation = UINavigationController(rootViewController: myFotoVC)
@@ -29,7 +30,7 @@ class TabBarNavigator: UITabBarController {
         buildConfig(myWork, imageName: "myArtBtn", selectedImageName: "tappedMyArtBtn")
         
         
-        viewControllers = [leadVC,myFotoNavigation,homeNavigator,profileVC,myWork]
+        viewControllers = [leadNavigation,myFotoNavigation,homeNavigator,profileVC,myWork]
         selectedViewController = homeNavigator
 
     }

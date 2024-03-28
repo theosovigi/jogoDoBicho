@@ -4,6 +4,7 @@
 import AVFoundation
 import Foundation
 import UIKit
+import RealmSwift
 
 class MyFotoVC: UIViewController {
     private var imageName: String?
@@ -51,38 +52,13 @@ private func checkFotoLoad() {
 
     
     @objc func goTakePhoto() {
-        let alert = UIAlertController(title: "Pick Library", message: nil, preferredStyle: .actionSheet)
-       
-        let actionLibrary = UIAlertAction(title: "Photo Library", style: .default) { _ in
             self.imagePicker.sourceType = .photoLibrary
             self.present(self.imagePicker, animated: true, completion: nil)
-        }
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alert.addAction(actionLibrary)
-        alert.addAction(cancel)
-        
-        present(alert, animated: true)
     }
     
     @objc func goTakeCamera() {
-        let alert = UIAlertController(title: "Pick Photo", message: nil, preferredStyle: .actionSheet)
-        
-        let actionCamera = UIAlertAction(title: "Camera", style: .default) { _ in
-            if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 self.imagePicker.sourceType = .camera
                 self.present(self.imagePicker, animated: true, completion: nil)
-            } else {
-                print("Camera not available")
-            }
-        }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alert.addAction(actionCamera)
-        alert.addAction(cancel)
-        
-        present(alert, animated: true)
     }
 
 }
@@ -91,26 +67,22 @@ extension MyFotoVC: UIImagePickerControllerDelegate {
     
     func saveImageToLocalImport(image: UIImage) {
         if let data = image.jpegData(compressionQuality: 1.0),
-            let id = uD.userID {
-            // Получаем текущий массив путей
-            var savedImages = uD.savedImagePaths ?? []
-            
-            // Определяем номер следующего изображения
-            let nextImageNumber = savedImages.count + 1
-            
-            // Создаем имя файла на основе порядкового номера изображения
-            let fileName = "image\(nextImageNumber)"
+           let id = uD.userID {
+            let fileName = UUID().uuidString  // Генерация уникального имени файла
             let fileURL = getDocumentsDirectory().appendingPathComponent(fileName)
-            
+            self.imageName = fileName
+
             do {
                 try data.write(to: fileURL)
                 
-                // Добавляем новый путь к массиву и сохраняем его в UserDefaults
-                savedImages.append(fileURL.path)
-                uD.savedImagePaths = savedImages
-                
-                // Сохраняем имя файла в переменной imageName
-                self.imageName = fileName
+                // Сохраняем идентификатор изображения в объект Matrix
+                let realm = try! Realm()
+                if let matrix = realm.objects(Matrix.self).filter("name == %@",fileName).first {
+                    try! realm.write {
+                        matrix.name = fileName
+                        matrix.imageIdentifier = fileName
+                    }
+                }
                 
             } catch {
                 print("Error saving image: \(error)")
@@ -139,9 +111,9 @@ extension MyFotoVC: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
           if let image = info[.originalImage] as? UIImage {
               saveImageToLocalImport(image: image)
-              savedImageImport = image // Сохраняем изображение в свойство savedImage
+              savedImageImport = image
               let importVC = MyImportVC()
-              importVC.importedImage = image // Передаем изображение на MyImportVC
+              importVC.importedImage = image
               importVC.imageName = self.imageName ?? "DefaultImageName"
               navigationController?.pushViewController(importVC, animated: true)
           }

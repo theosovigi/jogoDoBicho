@@ -9,14 +9,6 @@ import SnapKit
 import RealmSwift
 
 
-//class Matrix: Object {
-//    @Persisted var savedColors: List<Int> // Используем List<Int> для хранения числовых значений цветов
-//    @Persisted var name: String
-//    @Persisted var totalCountPix: Int = 0
-//    @Persisted var coloredCountPix: Int = 0
-//    @Persisted var isCompleted: Bool = false
-//
-//}
 
 class PaintView: UIView {
     

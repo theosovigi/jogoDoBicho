@@ -176,13 +176,13 @@ class MyFotoView: UIView {
 
         galleryBtn.snp.makeConstraints { make in
             make.top.equalTo(imageContainerView.snp.bottom).offset(20.autoSize)
-            make.centerX.equalToSuperview().offset(100.autoSize)
+            make.centerX.equalToSuperview().offset(-100.autoSize)
             make.size.equalTo(140.autoSize)
         }
         
         photoBtn.snp.makeConstraints { make in
             make.top.equalTo(imageContainerView.snp.bottom).offset(20.autoSize)
-            make.centerX.equalToSuperview().offset(-100.autoSize)
+            make.centerX.equalToSuperview().offset(100.autoSize)
             make.size.equalTo(140.autoSize)
         }
 

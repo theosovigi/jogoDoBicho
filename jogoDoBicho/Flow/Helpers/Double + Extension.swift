@@ -9,7 +9,7 @@ extension Double {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             let statusBarOrientation = windowScene.interfaceOrientation
             let screenSize = UIScreen.main.bounds.size
-            let referenceSize: CGFloat = 912 // Изменение размера с 395 на 756
+            let referenceSize: CGFloat = 852
             let screenSizeOrientation = statusBarOrientation.isPortrait ? screenSize.height : screenSize.width // Изменение ориентации
             let maxAspectRatio = screenSizeOrientation / referenceSize
             

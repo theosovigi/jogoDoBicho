@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-enum ImagePlanetName: String {
+enum ImagePlanetName: String, CaseIterable {
     case donkeyPix = "Donkey"
     case dogPix = "Dog"
     case goatPix = "Goat"

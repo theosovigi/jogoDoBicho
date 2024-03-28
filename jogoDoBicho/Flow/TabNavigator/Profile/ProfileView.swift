@@ -458,8 +458,7 @@ class ProfileView: UIView,UITextFieldDelegate {
             make.height.equalTo(46)
             make.width.equalTo(173)
         }
-
-
+        
         starsConteiner.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.left.equalToSuperview().offset(16)
