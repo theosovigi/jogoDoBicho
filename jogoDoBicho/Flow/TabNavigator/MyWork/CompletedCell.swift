@@ -10,55 +10,35 @@ class CompletedCell: UICollectionViewCell {
     
     var continueButtonAction: (() -> Void)?
 
-    
-   private(set) var nameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .customOrange
-        label.textAlignment = .center
-        label.font = .customFont(font: .baloo, style: .regular, size: 16)
-        return label
-    }()
-
-    private(set) var progressLabel: UILabel = {
+    private(set) var nameLabel: UILabel = {
          let label = UILabel()
-         label.textColor = .white
-         label.text = "3%"
+         label.textColor = .black
          label.textAlignment = .center
-         label.font = .customFont(font: .baloo, style: .regular, size: 20)
+         label.font = .customFont(font: .baloo, style: .regular, size: 10)
          return label
      }()
 
-    
+     private(set) var numberLabel: UILabel = {
+          let label = UILabel()
+          label.textColor = .customRed
+          label.textAlignment = .center
+          label.font = .customFont(font: .baloo, style: .regular, size: 12)
+          return label
+      }()
+     
+     private(set) var labelStackView: UIStackView = {
+         let stackView = UIStackView()
+         stackView.axis = .horizontal
+         stackView.spacing = 4
+         return stackView
+     }()
+
     private(set) lazy var imageAnimal: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
-    
-    private(set) lazy var repaintBtn: UIButton = {
-        let button = UIButton()
-        button.setImage(.repaintBtn, for: .normal)
-        return button
-    }()
-    
-    private lazy var imageArt: PaintView = {
-        let ia = PaintView()
-        ia.backgroundColor = .clear
-        ia.contentMode = .scaleAspectFit
-        return ia
-    }()
-    
-//    override func layoutSubviews() {
-//         super.layoutSubviews()
-//         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-//             let converter = PixelArtConverter()
-//             let image = self.imageAnimal.image!
-//             let convertedImage = converter.convertToPixelArt(image: image)
-//             self.imageArt.setup(image: convertedImage!)
-//         }
-//     }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -74,42 +54,48 @@ class CompletedCell: UICollectionViewCell {
         self.layer.borderColor = UIColor.customOrange.cgColor
         self.layer.borderWidth = 2.0
         self.layer.cornerRadius = 8
-        addSubview(progressLabel)
+//        addSubview(progressLabel)
+        labelStackView.addArrangedSubview(nameLabel)
+        labelStackView.addArrangedSubview(numberLabel)
+        addSubview(labelStackView)
         addSubview(imageAnimal)
-        addSubview(repaintBtn)
-//        addSubview(imageArt)
-        repaintBtn.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }
-    
-    @objc private func continueButtonTapped() {
-        continueButtonAction?()
-    }
-
 
     private func setupConstraints() {
-        progressLabel.snp.makeConstraints { (make) in
+        
+        labelStackView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(12)
-            make.left.equalToSuperview().offset(12)
+            make.centerX.equalToSuperview()
         }
+
+//        progressLabel.snp.makeConstraints { (make) in
+//            make.top.equalToSuperview().offset(12)
+//            make.left.equalToSuperview().offset(12)
+//        }
         
         imageAnimal.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(20)
             make.left.right.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-60)
         }
-        
-        repaintBtn.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview().inset(12)
-            make.bottom.equalToSuperview().offset(-20)
-        }
     }
     
-    func configureCompleted(with matrix: Matrix) {
-        let progressScore = matrix.totalCountPix - matrix.coloredCountPix
-        imageAnimal.image = UIImage(named: "\(matrix.name.lowercased())PixColor")
-        progressLabel.text = "\(progressScore)"
-//        imageArt.namePic = matrix.name
-
+    func configureCompleted(with matrix: Matrix, userImage: UIImage?,cellIndex: Int) {
+        let totalCountPix = matrix.totalCountPix
+        let coloredCountPix = matrix.coloredCountPix
+        
+        let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
+        self.nameLabel.text = "\(matrix.name.uppercased())"
+        self.numberLabel.text = "\(cellIndex + 1)"
+        if let defaultImage = UIImage(named: "\(matrix.name.lowercased())PixColor") {
+            self.imageAnimal.image = defaultImage
+            
+        } else if let image = userImage { // Затем пытаемся использовать пользовательское изображение
+            self.imageAnimal.image = image
+        } else {
+            self.imageAnimal.image = nil // Нет изображений доступно
+        }
     }
+
 
 }

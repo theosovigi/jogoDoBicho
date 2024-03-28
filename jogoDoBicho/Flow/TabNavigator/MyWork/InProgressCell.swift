@@ -18,10 +18,24 @@ class InProgressCell: UICollectionViewCell {
         return label
     }()
 
+    private(set) var numberLabel: UILabel = {
+         let label = UILabel()
+         label.textColor = .customRed
+         label.textAlignment = .center
+         label.font = .customFont(font: .baloo, style: .regular, size: 12)
+         return label
+     }()
+    
+    private(set) var labelStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        return stackView
+    }()
+
     private(set) var progressLabel: UILabel = {
          let label = UILabel()
          label.textColor = .red
-         label.text = "3%"
          label.textAlignment = .center
          label.font = .customFont(font: .baloo, style: .regular, size: 10)
          return label
@@ -39,13 +53,6 @@ class InProgressCell: UICollectionViewCell {
         button.setImage(.continueBtn, for: .normal)
         return button
     }()
-    
-    private(set) lazy var imageArt: PaintView = {
-        let ia = PaintView()
-        ia.backgroundColor = .clear
-        ia.contentMode = .scaleAspectFit
-        return ia
-    }()
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,71 +68,46 @@ class InProgressCell: UICollectionViewCell {
         self.backgroundColor = .customGreen
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.borderWidth = 1.0
-        addSubview(nameLabel)
-        addSubview(progressLabel)
-//        addSubview(imageArt)
+        labelStackView.addArrangedSubview(nameLabel)
+        labelStackView.addArrangedSubview(numberLabel)
+        addSubview(labelStackView)
         addSubview(imageAnimal)
-        addSubview(continueBtn)
-        continueBtn.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
+//        addSubview(progressLabel)
     }
-    
-    @objc private func continueButtonTapped() {
-        continueButtonAction?()
-    }
-
 
     private func setupConstraints() {
         
-        nameLabel.snp.makeConstraints { (make) in
+        labelStackView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(12)
-            make.left.equalToSuperview().offset(4)
+            make.centerX.equalToSuperview()
         }
 
-        progressLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(12)
-            make.right.equalToSuperview().offset(-4)
-        }
+//        progressLabel.snp.makeConstraints { (make) in
+//            make.top.equalToSuperview().offset(12)
+//            make.right.equalToSuperview().offset(-4)
+//        }
         
         imageAnimal.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(12)
             make.size.equalTo(52)
         }
-        
-        continueBtn.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview().inset(4)
-            make.bottom.equalToSuperview()
-        }
     }
-    
-//    func configure(with matrix: Matrix) {
-//        let totalCountPix = matrix.totalCountPix
-//        let coloredCountPix = matrix.coloredCountPix
-//        
-//        let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
-////        imageArt.namePic = matrix.name
-//        nameLabel.text = matrix.name.uppercased()
-//        if let image = UIImage(named: "\(matrix.name.lowercased())PixColor") {
-//              imageAnimal.image = image
-//          } else {
-//              imageAnimal.image =  nil
-//          }
-//        progressLabel.text = "\(percentProgress)%"
-//    }
-    func configure(with matrix: Matrix, userImage: UIImage?) {
-
-            let totalCountPix = matrix.totalCountPix
-            let coloredCountPix = matrix.coloredCountPix
+    func configure(with matrix: Matrix, userImage: UIImage?,cellIndex: Int) {
+        
+        let totalCountPix = matrix.totalCountPix
+        let coloredCountPix = matrix.coloredCountPix
+        
+        let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
+        self.nameLabel.text = "\(matrix.name.uppercased())"
+        self.numberLabel.text = "\(cellIndex + 1)"
+        if let defaultImage = UIImage(named: "\(matrix.name.lowercased())PixColor") {
+            self.imageAnimal.image = defaultImage
             
-            let percentProgress = Int((Double(coloredCountPix) / Double(totalCountPix)) * 100)
-            self.imageArt.namePic = matrix.name
-            self.nameLabel.text = matrix.name.uppercased()
-            if let defaultImage = UIImage(named: "\(matrix.name.lowercased())PixColor") {
-                self.imageAnimal.image = defaultImage
-
-            } else if let image = userImage { // Затем пытаемся использовать пользовательское изображение
-                self.imageAnimal.image = image
-            } else {
-                self.imageAnimal.image = nil // Нет изображений доступно
-            }
+        } else if let image = userImage {
+            self.imageAnimal.image = image
+        } else {
+            self.imageAnimal.image = nil
+        }
     }
 }

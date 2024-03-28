@@ -13,7 +13,6 @@ class Matrix: Object {
     @Persisted var totalCountPix: Int = 0
     @Persisted var coloredCountPix: Int = 0
     @Persisted var isCompleted: Bool = false
-//    @Persisted var namePlanet: String
 
 }
 
@@ -62,6 +61,7 @@ func checkAfrica() {
     }
     
     if allCompleted {
+        UD.shared.africaIsOpen = true
         print("Победа")
     } else {
         print("Не подходит Африка")
@@ -97,6 +97,8 @@ func checkPlanet() {
     }
     
     if allCompleted {
+        UD.shared.planetIsOpen = true
+
         print("Победа")
     } else {
         print("Не подходит Планета")
@@ -132,6 +134,7 @@ func checkCanada() {
     }
     
     if allCompleted {
+        UD.shared.canadaIsOpen = true
         print("Победа")
     } else {
         print("Не подходит Канада")

@@ -26,15 +26,6 @@ class UD {
         }
     }
     
-    var scoreMeat: Int {
-        get {
-            return defaults.integer(forKey: "scoreMeat", defaultValue: 2)
-        }
-        set {
-            defaults.set(newValue, forKey: "scoreMeat")
-        }
-    }
-    
     var lastBonusDate: Date? {
         get {
             return defaults.object(forKey: "lastBonusDate") as? Date
@@ -44,7 +35,7 @@ class UD {
         }
     }
     
-    var isOpen: Bool {
+    var africaIsOpen: Bool {
         get {
             return defaults.bool(forKey: "isOpen")
         }
@@ -53,6 +44,24 @@ class UD {
         }
     }
     
+    var planetIsOpen: Bool {
+        get {
+            return defaults.bool(forKey: "isOpen")
+        }
+        set {
+            defaults.set(newValue, forKey: "isOpen")
+        }
+    }
+
+    var canadaIsOpen: Bool {
+        get {
+            return defaults.bool(forKey: "isOpen")
+        }
+        set {
+            defaults.set(newValue, forKey: "isOpen")
+        }
+    }
+
     var userName: String? {
         get {
             return defaults.string(forKey: "userName")
@@ -80,6 +89,16 @@ class UD {
         }
     }
 
+    var savedImagePaths: [String]? {
+          get {
+              // Получение массива из UserDefaults
+              return UserDefaults.standard.array(forKey: "savedImagePaths") as? [String]
+          }
+          set {
+              // Сохранение массива в UserDefaults
+              UserDefaults.standard.set(newValue, forKey: "savedImagePaths")
+          }
+      }
     
 }
 

@@ -49,7 +49,7 @@ class AfricaView: UIView {
         let label = UILabel()
         label.textAlignment = .center
         label.font = .customFont(font: .baloo, style: .regular, size: 36)
-        let attrString = CustomTextStyle.titleLabelAttrString.attributedString(with: "Farm Planet")
+        let attrString = CustomTextStyle.titleLabelAttrString.attributedString(with: "Africa Planet")
         label.attributedText = attrString
         label.textColor = .customBlue
         return label
@@ -120,7 +120,7 @@ class AfricaView: UIView {
     
     
     private func setupUI() {
-        [bgImage,closeBtn,starsConteiner,titleLabel,imageContainerView,imageView,imageLabel,forwardButton,didSelectButton,backwardButton,pageControl] .forEach(addSubview(_:))
+        [bgImage,closeBtn,starsConteiner,titleLabel,imageContainerView,imageView,forwardButton,didSelectButton,backwardButton,pageControl] .forEach(addSubview(_:))
         starsConteiner.addSubview(starsImg)
         starsConteiner.addSubview(starsScore)
         imageContainerView.addSubview(imageView)
@@ -163,18 +163,18 @@ class AfricaView: UIView {
         
         imageContainerView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.height.equalTo(374)
-            make.width.equalTo(300)
+            make.height.equalTo(374.autoSize)
+            make.width.equalTo(300.autoSize)
         }
 
         imageView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(32)
-            make.left.right.equalToSuperview().inset(20)
-            make.size.equalTo(260)
+            make.top.equalToSuperview().offset(32.autoSize)
+            make.left.right.equalToSuperview().inset(20.autoSize)
+            make.size.equalTo(260.autoSize)
         }
         
         imageLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(imageView.snp.bottom).offset(28)
+            make.top.equalTo(imageView.snp.bottom).offset(12.autoSize)
             make.centerX.equalToSuperview()
         }
 

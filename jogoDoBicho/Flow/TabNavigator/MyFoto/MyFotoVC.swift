@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 
 class MyFotoVC: UIViewController {
-    
+    private var imageName: String?
     private var savedImageImport: UIImage?
     private let uD = UD.shared
     private let imagePicker = UIImagePickerController()
@@ -89,15 +89,61 @@ private func checkFotoLoad() {
 
 extension MyFotoVC: UIImagePickerControllerDelegate {
     
+//    func saveImageToLocalImport(image: UIImage) {
+//        if let data = image.jpegData(compressionQuality: 1.0),
+//            let id = uD.userID {
+//            // Получаем текущий массив путей
+//            var savedImages = uD.savedImagePaths ?? []
+//            
+//            // Определяем номер следующего изображения
+//            let nextImageNumber = savedImages.count + 1
+//            
+//            // Создаем имя файла на основе порядкового номера изображения
+//            let fileName = "Your image \(nextImageNumber).png"
+//            let fileURL = getDocumentsDirectory().appendingPathComponent(fileName)
+//            
+//            do {
+//                try data.write(to: fileURL)
+//                
+//                // Добавляем новый путь к массиву и сохраняем его в UserDefaults
+//                savedImages.append(fileURL.path)
+//                uD.savedImagePaths = savedImages
+//                
+//            } catch {
+//                print("Error saving image: \(error)")
+//            }
+//        }
+//    }
+
     func saveImageToLocalImport(image: UIImage) {
         if let data = image.jpegData(compressionQuality: 1.0),
-            let id  = uD.userID {
-            let timeStamp = Date().timeIntervalSince1970 // Получаем текущую временную метку
-            let fileName = "\(id)_\(timeStamp).png" // Создаем уникальное имя файла
-            let fileURL = getDocumentsDirectory().appendingPathComponent("\(id).png")
-            try? data.write(to: fileURL)
+            let id = uD.userID {
+            // Получаем текущий массив путей
+            var savedImages = uD.savedImagePaths ?? []
+            
+            // Определяем номер следующего изображения
+            let nextImageNumber = savedImages.count + 1
+            
+            // Создаем имя файла на основе порядкового номера изображения
+            let fileName = "image \(nextImageNumber)"
+            let fileURL = getDocumentsDirectory().appendingPathComponent(fileName)
+            
+            do {
+                try data.write(to: fileURL)
+                
+                // Добавляем новый путь к массиву и сохраняем его в UserDefaults
+                savedImages.append(fileURL.path)
+                uD.savedImagePaths = savedImages
+                
+                // Сохраняем имя файла в переменной imageName
+                self.imageName = fileName
+                
+            } catch {
+                print("Error saving image: \(error)")
+            }
         }
     }
+
     
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -122,7 +168,7 @@ extension MyFotoVC: UIImagePickerControllerDelegate {
               savedImageImport = image // Сохраняем изображение в свойство savedImage
               let importVC = MyImportVC()
               importVC.importedImage = image // Передаем изображение на MyImportVC
-              importVC.imageName = "\(uD.userID ?? 0)_\(Int(Date().timeIntervalSince1970)).png" // Уникальное имя файла
+              importVC.imageName = self.imageName ?? "DefaultImageName"
               navigationController?.pushViewController(importVC, animated: true)
           }
         

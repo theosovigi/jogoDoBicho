@@ -87,7 +87,7 @@ class MyImportView: UIView {
 
     private(set) lazy var visionBtn: UIButton = {
         let button = UIButton()
-        button.setImage(.visionBtn, for: .normal)
+        button.setImage(.visionMyImportBtn, for: .normal)
         return button
     }()
 
@@ -95,6 +95,13 @@ class MyImportView: UIView {
         let button = UIButton()
         button.setImage(.paintBtn, for: .normal)
         return button
+    }()
+
+    private(set) var buttonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 20
+        return stackView
     }()
 
     
@@ -109,13 +116,14 @@ class MyImportView: UIView {
     }
     
     private func setupUI() {
+        buttonStackView.addArrangedSubview(visionBtn)
+        buttonStackView.addArrangedSubview(paintBtn)
         [bgImage,cloudOneImg,cloudTwoImg,cloudThreeImg,cloudFourImg,starsConteiner,closeBtn,infoContainer] .forEach(addSubview(_:))
         starsConteiner.addSubview(starsImg)
         starsConteiner.addSubview(starsScore)
-        
+
         infoContainer.addSubview(imageYouView)
-        infoContainer.addSubview(visionBtn)
-        infoContainer.addSubview(paintBtn)
+        infoContainer.addSubview(buttonStackView)
 
 
     }
@@ -183,7 +191,6 @@ class MyImportView: UIView {
         
         infoContainer.snp.makeConstraints { make in
             make.center.equalToSuperview()
-//            make.left.right.equalToSuperview().inset(16)
             make.height.equalTo(500)
             make.width.equalTo(infoContainer.snp.height).multipliedBy(0.67)
         }
@@ -193,16 +200,10 @@ class MyImportView: UIView {
             make.bottom.equalToSuperview().offset(-120)
         }
 
-        visionBtn.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(28)
-            make.top.equalTo(imageYouView.snp.bottom).offset(28)
-        }
-
-        paintBtn.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-28)
+        buttonStackView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
             make.top.equalTo(imageYouView.snp.bottom).offset(28)
         }
     }
-
 }
 

@@ -9,6 +9,8 @@ import RealmSwift
 
 final class ProfileVC: UIViewController {
     
+
+    
     private let uD = UD.shared
     private let post = PostServiceBack.shared
     private let imagePicker = UIImagePickerController()
@@ -48,6 +50,21 @@ final class ProfileVC: UIViewController {
         contentView.achievementImageThree.image = uD.scorePaint > 9 ? .achievementDoneImg : .achievementImg
         contentView.achievementImageFour.image = uD.scorePaint > 19 ? .achievementDoneImg : .achievementImg
         contentView.achievementImageFive.image = uD.scorePaint > 14 ? .achievementDoneImg : .achievementImg
+        var trueFlagsCount: Int {
+            var count = 0
+            
+            if uD.planetIsOpen { count += 1 }
+            if uD.canadaIsOpen { count += 1 }
+            if uD.africaIsOpen { count += 1 }
+            
+            return count
+        }
+        if trueFlagsCount == 3 {
+            contentView.achievementImageSix.image = .achievementDoneImg
+        } else {
+            contentView.achievementImageSix.image = .achievementImg
+        }
+        print("planetCount == \(trueFlagsCount)")
     }
     
     private func tappedButtons() {
@@ -72,15 +89,6 @@ final class ProfileVC: UIViewController {
         }
     }
 
-//    private func checkPlanet() {
-//        
-//        if realm.objects(Matrix.self).filter("namePlanet == %@ && isCompleted == false", "Africa").isEmpty {
-//            
-//        }
-//    }
-    
-    
-    
     func updateName() {
         if uD.userName != nil {
             let payload = UpdatePayload(name: uD.userName, score: nil)

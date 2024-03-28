@@ -98,7 +98,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
 
         scrollView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.size.equalTo(300)
+            make.size.equalTo(300.autoSize)
         }
         configureImageArt()
 
@@ -264,7 +264,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     private func tappedButtons() {
         contentView.closeBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchDown), for: .touchDown)
-        contentView.zoomBtn.addTarget(self, action: #selector(visionButtonTouchUpInside), for: .touchUpInside)
+        contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchUpInside), for: .touchUpInside)
         contentView.eraserBtn.addTarget(self, action: #selector(eraserButtonTapped), for: .touchUpInside)
         contentView.zoomBtn.addTarget(self, action: #selector(toggleZoom), for: .touchUpInside)
 

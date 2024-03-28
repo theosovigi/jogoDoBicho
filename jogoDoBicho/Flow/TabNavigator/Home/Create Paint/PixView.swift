@@ -128,7 +128,7 @@ class PixView: UIView {
     }
 
     private func setupUI() {
-        [bgImage,fillView,closeBtn,timerContainer,imageContainerView,imageView,imageLabel,zoomBtn,eraserBtn,visionBtn,fillColorsView] .forEach(addSubview(_:))
+        [bgImage,fillView,closeBtn,timerContainer,imageContainerView,zoomBtn,eraserBtn,visionBtn,fillColorsView] .forEach(addSubview(_:))
         timerContainer.addSubview(timeImg)
         timerContainer.addSubview(timeLabel)
         imageContainerView.addSubview(imageView)
@@ -173,19 +173,18 @@ class PixView: UIView {
 
         imageContainerView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.height.equalTo(420)
+            make.height.equalTo(420.autoSize)
             make.left.right.equalToSuperview().inset(16)
         }
 
         imageLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(24)
+            make.top.equalToSuperview().offset(12.autoSize)
             make.centerX.equalToSuperview()
         }
 
         imageView.snp.makeConstraints { (make) in
-            make.top.equalTo(imageLabel.snp.bottom).offset(20)
-            make.left.right.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().offset(-24)
+            make.center.equalToSuperview()
+            make.size.equalTo(300.autoSize)
         }
 
         eraserBtn.snp.makeConstraints { (make) in

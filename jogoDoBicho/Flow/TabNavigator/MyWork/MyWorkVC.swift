@@ -9,7 +9,7 @@ import RealmSwift
 
 class MyWorkVC: UIViewController {
     
-    
+
     var contentView: MyWorkView {
         view as? MyWorkView ?? MyWorkView()
     }
@@ -65,28 +65,24 @@ class MyWorkVC: UIViewController {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
-    
-    func getImageForUserID(_ userID: String) -> UIImage? {
-        let fileURL = getDocumentsDirectory().appendingPathComponent("\(userID).png")
-        do {
-            let data = try Data(contentsOf: fileURL)
-            return UIImage(data: data)
-        } catch {
-            print("Error loading image from local storage")
-            return nil
+
+    func getImageForUserID(_ userID: String, atIndex index: Int) -> UIImage? {
+        guard let savedImagePaths = UD.shared.savedImagePaths else { return nil }
+        
+        if savedImagePaths.isEmpty { return nil }
+        
+        // Выбираем изображение циклически по индексу
+        let imagePath = savedImagePaths[index % savedImagePaths.count]
+        let url = URL(fileURLWithPath: imagePath)
+        if let imageData = try? Data(contentsOf: url), let image = UIImage(data: imageData) {
+            return image
         }
+        
+        return nil
     }
+    
 
     private func updateCollectionView() {
-        
-//        let config = Realm.Configuration(
-//            schemaVersion: 3, // Предполагаем, что предыдущая версия была 0
-//            migrationBlock: { migration, oldSchemaVersion in
-//                if oldSchemaVersion < 1 {
-//                }
-//            }
-//        )
-//        Realm.Configuration.defaultConfiguration = config
         let realm = try! Realm()
         let objectsCount = realm.objects(Matrix.self).count
         
@@ -100,6 +96,17 @@ class MyWorkVC: UIViewController {
         
     }
     
+    func colorsForMatrixName(_ name: String) -> [UIColor]? {
+        if let imageAfricaName = ImageAfricaName(rawValue: name) {
+            return imageAfricaName.colors
+        } else if let imagePlanetName = ImagePlanetName(rawValue: name) {
+            return imagePlanetName.colors
+        } else if let imageCanadaName = ImageCanadaName(rawValue: name) {
+            return imageCanadaName.colors
+        }
+        return nil
+    }
+
     @objc private func inProgressTapped() {
         let attributes: [NSAttributedString.Key: Any] = [
             .underlineStyle: NSUnderlineStyle.single.rawValue,
@@ -151,73 +158,87 @@ extension MyWorkVC: UICollectionViewDelegate,UICollectionViewDataSource {
         return 0
     }
     
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let realm = try! Realm()
+//        
+//        // Получаем объекты в зависимости от статуса завершенности и выбранного collectionView
+//        let matrixObjects = collectionView == contentView.inProgressCollection ?
+//            realm.objects(Matrix.self).filter("isCompleted == false") :
+//            realm.objects(Matrix.self).filter("isCompleted == true")
+//        
+//        let matrix = matrixObjects[indexPath.row] // Получаем данные для конкретной ячейки
+//
+//        if collectionView == contentView.inProgressCollection {
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InProgressCell", for: indexPath) as! InProgressCell
+//            let userImage = getImageForUserID("\(UD.shared.userID ?? 0)")
+//            cell.configure(with: matrix, userImage: userImage, cellIndex: indexPath.row)
+//            return cell
+//        } else if collectionView == contentView.completedCollection {
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompletedCell", for: indexPath) as! CompletedCell
+//            let userImage = getImageForUserID("\(UD.shared.userID ?? 0)")
+//            cell.configureCompleted(with: matrix, userImage: userImage, cellIndex: indexPath.row)
+//            return cell
+//        }
+//        
+//        return UICollectionViewCell()
+//    }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let realm = try! Realm()
         
-        // Получаем объекты в зависимости от статуса завершенности и выбранного collectionView
         let matrixObjects = collectionView == contentView.inProgressCollection ?
             realm.objects(Matrix.self).filter("isCompleted == false") :
             realm.objects(Matrix.self).filter("isCompleted == true")
         
-        let matrix = matrixObjects[indexPath.row] // Получаем данные для конкретной ячейки
+        let matrix = matrixObjects[indexPath.row]
 
         if collectionView == contentView.inProgressCollection {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InProgressCell", for: indexPath) as! InProgressCell
-            let userImage = getImageForUserID("\(UD.shared.userID ?? 0)")
-            cell.configure(with: matrix, userImage: userImage)
-//            cell.configure(with: matrix)
-            cell.continueButtonAction = {
-                // Попытка загрузить изображение по имени из ресурсов проекта
-                if let image = UIImage(named: "\(matrix.name.lowercased())PixColor") {
-//                    let paintVC = PaintVC(image: image, labelText: matrix.name)
-//                    self.navigationController?.pushViewController(paintVC, animated: true)
-                } else {
-                    // Попытка загрузить пользовательское изображение из локального хранилища
-                    if let userImage = self.getImageForUserID("\(UD.shared.userID ?? 0)") {
-                        // Создаем PaintVC с пользовательским изображением
-//                        let paintVC = PaintVC(image: userImage, labelText: matrix.name)
-//                        self.navigationController?.pushViewController(paintVC, animated: true)
-                    } else {
-                        // Если изображение не найдено, выводим сообщение об ошибке
-                        print("Изображение \(matrix.name.lowercased())PixColor или пользовательское изображение не найдено")
-                    }
-                }
-            }
-
-            
+            // Получаем изображение по индексу
+            let userImage = getImageForUserID("\(UD.shared.userID ?? 0)", atIndex: indexPath.row)
+            cell.configure(with: matrix, userImage: userImage, cellIndex: indexPath.row)
             return cell
         } else if collectionView == contentView.completedCollection {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompletedCell", for: indexPath) as! CompletedCell
-            cell.configureCompleted(with: matrix) // Предполагаем, что у вас есть такой метод для CompletedCell
-            // Дополнительная конфигурация cell
+            // Получаем изображение по индексу
+            let userImage = getImageForUserID("\(UD.shared.userID ?? 0)", atIndex: indexPath.row)
+            cell.configureCompleted(with: matrix, userImage: userImage, cellIndex: indexPath.row)
             return cell
         }
         
         return UICollectionViewCell()
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let realm = try! Realm()
+        
+        let matrixObjects = collectionView == contentView.inProgressCollection ?
+            realm.objects(Matrix.self).filter("isCompleted == false") :
+            realm.objects(Matrix.self).filter("isCompleted == true")
+        
+        let matrix = matrixObjects[indexPath.row]
+
+        // Получаем цвета на основе имени matrix или устанавливаем цвета по умолчанию
+        let colors = colorsForMatrixName(matrix.name) ?? [.yellow, .red, .green, .blue, .brown, .black, .cyan, .purple, .systemPink]
+
+        // Попытка загрузить изображение по имени из ресурсов проекта
+        if let image = UIImage(named: "\(matrix.name.lowercased())PixColor") {
+            let paintVC = PaintVC(image: image, labelText: matrix.name, colors: colors)
+            self.navigationController?.pushViewController(paintVC, animated: true)
+        } else {
+            // Попытка загрузить пользовательское изображение из локального хранилища
+            if let userImage = self.getImageForUserID("\(UD.shared.userID ?? 0)", atIndex: indexPath.row) {
+                let paintVC = PaintVC(image: userImage, labelText: matrix.name, colors: colors)
+                self.navigationController?.pushViewController(paintVC, animated: true)
+            } else {
+                // Если изображение не найдено, выводим сообщение об ошибке
+                print("Изображение \(matrix.name.lowercased())PixColor или пользовательское изображение не найдено")
+            }
+        }
+    }
+
+
 }
 
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let realm = try! Realm()
-//        let matrix = realm.objects(Matrix.self)[indexPath.row] // Пример получения данных
-//        
-//        if collectionView == contentView.inProgressCollection {
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InProgressCell", for: indexPath) as! InProgressCell
-//            cell.configure(with: matrix)
-//            cell.continueButtonAction = {
-//                let paintVC = PaintVC(image: UIImage(named: "\(matrix.name)PixColor")!, labelText: matrix.name)
-//                self.navigationController?.pushViewController(paintVC, animated: true)
-//            }
-//            return cell
-//        } else if collectionView == contentView.completedCollection {
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompletedCell", for: indexPath) as! CompletedCell
-//            cell.configureCompleted(with: matrix) // Предполагаем, что у вас есть такой метод для CompletedCell
-//            // Дополнительная конфигурация cell
-//            return cell
-//        }
-//        return UICollectionViewCell()
-//    }
-//
 extension MyWorkVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.frame.width
