@@ -106,12 +106,6 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     private func configureImageArt() {
         scrollView.addSubview(imageArt)
-//        contentView.imageContainerView.addSubview(imageArt)
-//        imageArt.snp.makeConstraints { (make) in
-//            make.top.equalTo(contentView.imageLabel.snp.bottom).offset(20)
-//            make.left.right.equalToSuperview().inset(32)
-//            make.bottom.equalToSuperview().offset(-24)
-//        }
         imageArt.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
             make.centerX.equalToSuperview()
@@ -120,6 +114,14 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
 
     }
     
+    private func tappedButtons() {
+        contentView.closeBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
+        contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchDown), for: .touchDown)
+        contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchUpInside), for: .touchUpInside)
+        contentView.eraserBtn.addTarget(self, action: #selector(eraserButtonTapped), for: .touchUpInside)
+        contentView.zoomBtn.addTarget(self, action: #selector(toggleZoom), for: .touchUpInside)
+    }
+
     private func configureView() {
         contentView.imageView.image = imageView.image
         contentView.imageLabel.text = imageLabelText
@@ -129,7 +131,6 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         contentView.colorCollectionView.colorSelectionHandler = { [weak self] selectedColor in
             self?.handleColorSelection(selectedColor)
         }
-        
     }
     
     private func setupGestureRecognizer() {
@@ -141,7 +142,6 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             self?.handleTap(gestureRecognizer)
         }
     }
-    
     
     private func ifCompletedWin() {
         imageArt.tapCongratilation = {
@@ -167,14 +167,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         imageArt.colored -= 1
         imageArt.setupStackView()
     }
-    
-//    @objc private func handleTap(_ location: CGPoint) {
-//        print("Нажали")
-//        let cellWidth = imageArt.frame.width / 50
-//        let cellHeight = imageArt.frame.height / 50
-        
-//        let columnIndex = Int(location.x / cellWidth)
-//        let rowIndex = Int(location.y / cellHeight)
+
     @objc private func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         let locationInView = gestureRecognizer.location(in: gestureRecognizer.view)
         
@@ -190,37 +183,31 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         if rowIndex < imageArt.colorMatrix.count && columnIndex < imageArt.colorMatrix[rowIndex].count {
             let currentColor = imageArt.colorMatrix[rowIndex][columnIndex]
             
-            // Проверяем, является ли цвет не прозрачным
             if !isTransparentColor(color: currentColor) {
-                // Обрабатываем случай, если цвет оттенка серого
                 if isGrayColor(color: currentColor) {
                     let previousColor = imageArt.colorMatrix[rowIndex][columnIndex]
                     imageArt.colorMatrix[rowIndex][columnIndex] = selectedColor
                     print("selectedColor -- \(selectedColor)")
-                    imageArt.changedCells.append((rowIndex, columnIndex)) // Добавление координат измененной ячейки
+                    imageArt.changedCells.append((rowIndex, columnIndex))
                     print("Предыдущий цвет: \(previousColor)")
                     clearColor = previousColor
                     lastColor.append(CGPoint(x: rowIndex, y: columnIndex))
                     print("lastColor --: \(lastColor)")
                     imageArt.colored += 1
                     imageArt.progressScore = imageArt.totalCountPix - imageArt.colored
-                    
                     print("Осталось закрасить пикселей: \(imageArt.progressScore)")
                 } else {
-                    // Просто закрашиваем выбранным цветом, если цвет не оттенок серого
                     if !isAlreadyPainted(atRow: rowIndex, column: columnIndex) {
                         let previousColor = imageArt.colorMatrix[rowIndex][columnIndex]
-                        imageArt.colorMatrix[rowIndex][columnIndex] = selectedColor // Используйте выбранный цвет
+                        imageArt.colorMatrix[rowIndex][columnIndex] = selectedColor
                         print("selectedColor -- \(selectedColor)")
-                        imageArt.changedCells.append((rowIndex, columnIndex)) // Добавление координат измененной ячейки
+                        imageArt.changedCells.append((rowIndex, columnIndex))
                         print("Предыдущий цвет: \(previousColor)")
                         clearColor = previousColor
                         lastColor.append(CGPoint(x: rowIndex, y: columnIndex))
                         print("lastColor --: \(lastColor)")
-                        // Увеличиваем счетчик закрашенных пикселей
                         imageArt.colored += 1
                         imageArt.progressScore = imageArt.totalCountPix - imageArt.colored
-                        
                         print("Осталось закрасить пикселей: \(imageArt.progressScore)")
                     } else {
                         print("Пиксель уже закрашен.")
@@ -238,39 +225,25 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         let currentColor = imageArt.colorMatrix[row][column]
         return !isTransparentColor(color: currentColor)
     }
-    // Функция для проверки, является ли цвет оттенком серого
+
     private func isGrayColor(color: UIColor) -> Bool {
         var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        return red == green && green == blue // Проверяем, равны ли каналы красного, зеленого и синего
+        return red == green && green == blue
     }
     
-    // Проверка, является ли цвет прозрачным
     private func isTransparentColor(color: UIColor) -> Bool {
         var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
         color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        return alpha == 0 // Проверка на прозрачный цвет
+        return alpha == 0
     }
-    
     
     private func handleColorSelection(_ color: UIColor) {
         selectedColor = color
         contentView.brushImg.backgroundColor = color
-        print("Selected color: \(selectedColor)") // Добавьте это для отладки
+        print("Selected color: \(selectedColor)")
+    }
         
-    }
-    
-    
-    private func tappedButtons() {
-        contentView.closeBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
-        contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchDown), for: .touchDown)
-        contentView.visionBtn.addTarget(self, action: #selector(visionButtonTouchUpInside), for: .touchUpInside)
-        contentView.eraserBtn.addTarget(self, action: #selector(eraserButtonTapped), for: .touchUpInside)
-        contentView.zoomBtn.addTarget(self, action: #selector(toggleZoom), for: .touchUpInside)
-
-    }
-    
-    
     private func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
@@ -281,13 +254,10 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     @objc private func toggleZoom() {
         if isZoomed {
-            // Если уже увеличено, то уменьшаем до исходного масштаба
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
         } else {
-            // Если содержимое в исходном масштабе, то увеличиваем
             scrollView.setZoomScale(scrollView.maximumZoomScale, animated: true)
         }
-        // Переключаем состояние
         isZoomed.toggle()
     }
 
@@ -301,7 +271,7 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     }
     
     @objc private func backTapped() {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     @objc private func visionButtonTouchDown() {
@@ -332,8 +302,6 @@ class PaintVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         let grayscaleImage = convertToGrayscale(image: image)
         let width = view.frame.width * 0.9 / 10
         let size = CGSize(width: width, height: width)
-        
-        // Resize to 20x20
         UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
         grayscaleImage?.draw(in: CGRect(origin: .zero, size: size))
         let resizedImage = UIGraphicsGetImageFromCurrentImageContext()

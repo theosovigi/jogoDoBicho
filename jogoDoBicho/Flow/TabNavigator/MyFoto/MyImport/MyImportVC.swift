@@ -33,19 +33,14 @@ class MyImportVC: UIViewController {
         setupUI()
         configureImportArt()
         tappedButtons()
-        print("Import -- \(importedImage)")
-        print("imageName-- \(imageName)")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            let converter = PixelArtConverter()
             if let image = self.importedImage {
                 let converter = PixelArtConverter()
                 if let convertedImage = converter.convertToPixelArtColor(image: image) {
-                    print("ImportONE -- \(convertedImage)")
-
                     self.imageArt.setup(image: convertedImage)
                 } else {
                     print("Не удалось конвертировать изображение")

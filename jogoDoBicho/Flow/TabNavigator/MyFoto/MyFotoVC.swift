@@ -89,32 +89,6 @@ private func checkFotoLoad() {
 
 extension MyFotoVC: UIImagePickerControllerDelegate {
     
-//    func saveImageToLocalImport(image: UIImage) {
-//        if let data = image.jpegData(compressionQuality: 1.0),
-//            let id = uD.userID {
-//            // Получаем текущий массив путей
-//            var savedImages = uD.savedImagePaths ?? []
-//            
-//            // Определяем номер следующего изображения
-//            let nextImageNumber = savedImages.count + 1
-//            
-//            // Создаем имя файла на основе порядкового номера изображения
-//            let fileName = "Your image \(nextImageNumber).png"
-//            let fileURL = getDocumentsDirectory().appendingPathComponent(fileName)
-//            
-//            do {
-//                try data.write(to: fileURL)
-//                
-//                // Добавляем новый путь к массиву и сохраняем его в UserDefaults
-//                savedImages.append(fileURL.path)
-//                uD.savedImagePaths = savedImages
-//                
-//            } catch {
-//                print("Error saving image: \(error)")
-//            }
-//        }
-//    }
-
     func saveImageToLocalImport(image: UIImage) {
         if let data = image.jpegData(compressionQuality: 1.0),
             let id = uD.userID {
@@ -125,7 +99,7 @@ extension MyFotoVC: UIImagePickerControllerDelegate {
             let nextImageNumber = savedImages.count + 1
             
             // Создаем имя файла на основе порядкового номера изображения
-            let fileName = "image \(nextImageNumber)"
+            let fileName = "image\(nextImageNumber)"
             let fileURL = getDocumentsDirectory().appendingPathComponent(fileName)
             
             do {

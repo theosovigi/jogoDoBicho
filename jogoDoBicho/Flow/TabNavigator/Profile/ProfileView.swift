@@ -434,37 +434,37 @@ class ProfileView: UIView,UITextFieldDelegate {
         cloudOneImg.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(68)
             make.left.equalToSuperview().offset(36)
-            make.height.equalTo(26.autoSize)
-            make.width.equalTo(75.autoSize)
+            make.height.equalTo(26)
+            make.width.equalTo(75)
         }
         
         cloudTwoImg.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(56)
             make.right.equalToSuperview().offset(46)
-            make.height.equalTo(40.autoSize)
-            make.width.equalTo(188.autoSize)
+            make.height.equalTo(40)
+            make.width.equalTo(188)
         }
 
         cloudThreeImg.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(188)
             make.left.equalToSuperview().offset(-41)
-            make.height.equalTo(46.autoSize)
-            make.width.equalTo(147.autoSize)
+            make.height.equalTo(46)
+            make.width.equalTo(147)
         }
         
         cloudFourImg.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(229)
             make.right.equalToSuperview().offset(50)
-            make.height.equalTo(46.autoSize)
-            make.width.equalTo(173.autoSize)
+            make.height.equalTo(46)
+            make.width.equalTo(173)
         }
 
 
         starsConteiner.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.left.equalToSuperview().offset(16)
-            make.height.equalTo(40.autoSize)
-            make.width.equalTo(100.autoSize)
+            make.height.equalTo(40)
+            make.width.equalTo(100)
         }
 
         starsImg.snp.makeConstraints { make in
@@ -601,7 +601,7 @@ class ProfileView: UIView,UITextFieldDelegate {
 
         achievementImageTwo.snp.makeConstraints { (make) in
             make.top.equalTo(achievementsLabel.snp.bottom)
-            make.left.equalTo(achievementImage.snp.right).offset(14.autoSize)
+            make.left.equalTo(achievementImage.snp.right).offset(14)
             make.size.equalTo(90.autoSize)
         }
         
@@ -613,7 +613,7 @@ class ProfileView: UIView,UITextFieldDelegate {
 
         achievementImageThree.snp.makeConstraints { (make) in
             make.top.equalTo(achievementsLabel.snp.bottom)
-            make.right.equalTo(achievementImage.snp.left).offset(-14.autoSize)
+            make.right.equalTo(achievementImage.snp.left).offset(-14)
             make.size.equalTo(90.autoSize)
         }
         
@@ -637,7 +637,7 @@ class ProfileView: UIView,UITextFieldDelegate {
 
         achievementImageFive.snp.makeConstraints { (make) in
             make.top.equalTo(achievementImage.snp.bottom).offset(12.autoSize)
-            make.left.equalTo(achievementImageFour.snp.right).offset(14.autoSize)
+            make.left.equalTo(achievementImageFour.snp.right).offset(14)
             make.size.equalTo(90.autoSize)
         }
 
@@ -649,7 +649,7 @@ class ProfileView: UIView,UITextFieldDelegate {
 
         achievementImageSix.snp.makeConstraints { (make) in
             make.top.equalTo(achievementImage.snp.bottom).offset(12.autoSize)
-            make.right.equalTo(achievementImageFour.snp.left).offset(-14.autoSize)
+            make.right.equalTo(achievementImageFour.snp.left).offset(-14)
             make.size.equalTo(90.autoSize)
         }
         

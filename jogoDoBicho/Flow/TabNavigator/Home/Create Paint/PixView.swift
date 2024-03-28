@@ -112,6 +112,7 @@ class PixView: UIView {
 
     private(set) var colorCollectionView: ColorCollectionView = {
         let collectionView = ColorCollectionView()
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
      }()
     

@@ -161,25 +161,29 @@ class MyFotoView: UIView {
         }
         
         imageContainerView.snp.makeConstraints { make in
-            make.top.equalTo(starsConteiner.snp.bottom).offset(40)
-            make.left.right.equalToSuperview().inset(40)
-            make.height.equalTo(400)
+            make.top.equalTo(starsConteiner.snp.bottom).offset(40.autoSize)
+            make.left.right.equalToSuperview().inset(40.autoSize)
+            make.height.equalTo(400.autoSize)
+            make.width.equalTo(315.autoSize)
         }
         
         imageFaceView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview().inset(20)
+            make.centerY.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.height.equalTo(325.autoSize)
+            make.width.equalTo(275.autoSize)
         }
 
         galleryBtn.snp.makeConstraints { make in
-            make.top.equalTo(imageContainerView.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(46)
-            make.size.equalTo(140)
+            make.top.equalTo(imageContainerView.snp.bottom).offset(20.autoSize)
+            make.centerX.equalToSuperview().offset(100.autoSize)
+            make.size.equalTo(140.autoSize)
         }
         
         photoBtn.snp.makeConstraints { make in
-            make.top.equalTo(imageContainerView.snp.bottom).offset(20)
-            make.right.equalToSuperview().offset(-46)
-            make.size.equalTo(140)
+            make.top.equalTo(imageContainerView.snp.bottom).offset(20.autoSize)
+            make.centerX.equalToSuperview().offset(-100.autoSize)
+            make.size.equalTo(140.autoSize)
         }
 
     }

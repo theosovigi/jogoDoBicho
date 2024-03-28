@@ -29,7 +29,7 @@ class PaintView: UIView {
     var changedCells: [(Int, Int)] = []
     var onTotalPixelsUpdated: ((Int) -> Void)?
     private var pixelArtImage: UIImage!
-    var tapCongratilation: (() -> Void)? // Замыкание для обработки нажатия
+    var tapCongratilation: (() -> Void)?
 
     private lazy var bgImage: UIImageView = {
         let imageView = UIImageView()
@@ -47,7 +47,7 @@ class PaintView: UIView {
     
     @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: self)
-        tapHandler?(gesture) // Вызываем tapHandler с gestureRecognizer
+        tapHandler?(gesture)
         setupStackView()
         saveMatrix(total: nil, colored: colored)
 
@@ -104,18 +104,6 @@ class PaintView: UIView {
 
     // Восстановление данных
     private func restoreMatrix(imageName: String) {
-//        // Восстановление Matrix из Realm
-//        let config = Realm.Configuration(
-//            schemaVersion: 3, // Предполагаем, что предыдущая версия была 0
-//            migrationBlock: { migration, oldSchemaVersion in
-//                if oldSchemaVersion < 3 {
-//                    // Для этой миграции не требуется выполнение кода,
-//                    // так как добавление новых полей обрабатывается автоматически
-//                }
-//            }
-//        )
-//        Realm.Configuration.defaultConfiguration = config
-        
         let realm = try! Realm()
             if let matrix = realm.objects(Matrix.self).filter("name == %@", imageName).first {
                 // Восстановление progressScore
@@ -140,7 +128,6 @@ class PaintView: UIView {
                     }
                     restoredColorMatrix.append(row)
                 }
-                
                 self.colorMatrix = restoredColorMatrix // Обновляем локальную матрицу цветов
             }
     }
@@ -188,7 +175,6 @@ class PaintView: UIView {
         saveMatrix(total: count, colored: nil)
         progressScore = count
         totalCountPix = count
-        print("count-- \(count)")
     }
     
     

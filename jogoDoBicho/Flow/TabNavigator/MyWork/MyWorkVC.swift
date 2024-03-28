@@ -37,7 +37,7 @@ class MyWorkVC: UIViewController {
     
     private func checkObjects() {
         let realm = try! Realm()
-        let objectsCount = realm.objects(Matrix.self).count
+        let objectsCount = realm.objects(Matrix.self)
         print("Количество объектов в базе данных: \(objectsCount)")
     }
     

@@ -83,7 +83,7 @@ class InfoView: UIView {
     private lazy var containerImg: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .containerImg
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
     
@@ -207,7 +207,7 @@ class InfoView: UIView {
         infoContainer.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(56)
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-32)
-            make.left.right.equalToSuperview().inset(16)
+            make.left.right.equalToSuperview().inset(16.autoSize)
         }
         
         containerImg.snp.makeConstraints { make in
@@ -235,6 +235,5 @@ class InfoView: UIView {
             make.bottom.equalToSuperview().offset(-40)
         }
     }
-
 }
 

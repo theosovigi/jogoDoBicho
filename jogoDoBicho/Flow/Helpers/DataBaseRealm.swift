@@ -13,7 +13,7 @@ class Matrix: Object {
     @Persisted var totalCountPix: Int = 0
     @Persisted var coloredCountPix: Int = 0
     @Persisted var isCompleted: Bool = false
-
+    @Persisted var localImageName : String?
 }
 
 func checkIfAllCompleted(_ matrices: Results<Matrix>) -> Bool {
